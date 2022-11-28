@@ -6,10 +6,9 @@ import person_4 from '../assets/person_4.png';
 
 const Wheel = (props) => {
     const [degree, setdegree] = useState(0);
-    const [picDegree, setPicDegree] = useState(0)
-
-    const rotateWheelOnClick = () => {
+    const rotateWheelOnClick = (e) => {
         setdegree((prevRotation) => prevRotation + 90);
+        props.handleClick();
     };
     /*useEffect(() => {
         setTimeout(() => {
@@ -29,15 +28,19 @@ const Wheel = (props) => {
     };
 
     
-    const founders_data = [[person_1, "right-0"], [person_2, "bottom-0"], [person_3, "left-0"], [person_4, "top-0"]];
-
-    const pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-20% w-20% z-50 ";
+    const founders_data = [[person_1, "right-0", 0], [person_2, "top-0",1], [person_3, "left-0",2], [person_4, "bottom-0",3]];
+    let pic_style =""
     const founders = founders_data.map(data => {
-        return (<button key={data[1]} onClick={rotateWheelOnClick} style={picRotation} className={pic_style + data[1]} ><img className="w-full" src={data[0]} /></button>);
+        const index = founders_data.indexOf(data);
+        if (index == props.current) {
+            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-30% w-30% dropshadow-2xl rounded-full z-50 ";
+        } else {
+            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-20% w-20% z-50 ";
+        }
+        return (<button key={data[2]} id={`data[2]`} onClick={rotateWheelOnClick} style={picRotation} className={pic_style + data[1]} ><img className="w-full" src={data[0]} /></button>);
     });
 
     const style = `"transform" : rotate(${props.rotation}deg)`;
-    console.log(style)
     
     
 

@@ -3,28 +3,19 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import Root from './Root';
 import reportWebVitals from './reportWebVitals';
-import {
-    createBrowserRouter,
-    RouterProvider,
-    Route,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import Main from './views/softLaunch/Main';
 import About from './views/softLaunch/About';
+import Header from './views/softLaunch/components/Header';
+import App from './App';
 
-const router = createBrowserRouter([
-    {
-        path: "/",
-        element: <Main/>,
-    },
-    {
-        path: "/ourStory",
-        element: <About />,
-    },
-]);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-        <RouterProvider router={router} />
+    <React.StrictMode>
+        <BrowserRouter>
+            <App/>
+        </BrowserRouter>
   </React.StrictMode>
 );
 

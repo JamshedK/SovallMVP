@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import Wheel from "./components/About.wheel";
 import FounderInfo from "./components/About.FounderInfo";
 import Header from './components/Header';
@@ -6,7 +6,7 @@ import sovall_main from './assets/sovall_main.svg';
 
 
 const About = (props) => {
-
+    
     const aboutText = ["2022, spring semester at Ringling College of Art and Design: a conversation that sparked the creation of Sovall. I told my friend Elena about a transportation project I was working on for a neighborhood in Cleveland, Ohio, in collaboration with another good friend.",
         "It has been difficult for Elena, having lost her mother to cancer in 2021. She loves making art, but grief made her reexamine her choices. She thought she could be helping others more directly, just as her mother did as an accomplished professor and clinician. She has stunning artistic skills and, most importantly, a creative mind wholly open to new learning experiences and challenges. All of those elements indicate the immense, unimaginable potential she has. But she did not know where to start.",
         "She asked if she could be invited onto any projects I had ongoing. \"I want to help make the world a better place.Life is fragile - I want to do something that matters today.How do you come up with ideas for your projects ?\"",
@@ -15,14 +15,16 @@ const About = (props) => {
         "I chose the name Sovall because one of our approaches is root cause analysis. Many problems originate from a primary issue; if we don't identify and solve that, many secondary problems will always arise. By solving the root cause, so too can we address secondary problems: Sovall is the shorter version of \"Solve All\".",
         "I want to thank Mafer Bencomo Arevalo for help with making the first version of the phone app of Sovall and Rin Yokoi for her help with the demo video's music."
     ];
+    const [currentF, setCurrentF] = useState(0);
 
+    const handleFounderChange = () => {
+        setCurrentF(prev => (prev + 1) % 4);
+    };
     const about = aboutText.map(p => {
-        return <p>{p}</p>
+        return <p key={Math.random()}>{p}</p>
     });
     return (
-        <div className="bg-green-2 h-full md:screen md:h-screen">
-            <Header />
-            <div className="h-90% w-full flex max-md:flex-col max-md:gap-4  md:pt-4 md:justify-center items-center select-none ">
+        <div className="h-90% w-full flex max-md:flex-col max-md:gap-4  md:pt-4 md:justify-center items-center select-none ">
                 {/*Wheel*/}
                 <div className="relative flex justify-center  h-[30rem] md:h-full md:w-1/2 md:pt-8">
                     
@@ -30,7 +32,7 @@ const About = (props) => {
                         <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[22rem]  2xl:h-[22rem]  relative flex justify-center items-center">
 
                             <div className="absolute h-full w-full z-10 select-none">
-                                <Wheel />
+                            <Wheel current={currentF} handleClick={handleFounderChange} />
 
                             </div>
 
@@ -40,7 +42,7 @@ const About = (props) => {
                         </div>
                     </div>
                     {/*Founder Info*/ }
-                    <FounderInfo />
+                <FounderInfo current={currentF} />
                     <a className="text-yellow-2 absolute bottom-4 max-md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
                 </div>
                 <a className="text-yellow-2 md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
@@ -65,7 +67,6 @@ const About = (props) => {
 
                 </div>
             </div>
-        </div>
         );
 }
 
