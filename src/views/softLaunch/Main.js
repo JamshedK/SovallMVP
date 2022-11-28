@@ -74,7 +74,7 @@ function Main() {
                                 </div>
                                 <button className="block bg-white text-green-2  rounded-full px-2 py-1 mt-2 font-medium italic">Count me in!</button>
                             </form>
-                            <a className="h-6 flex gap-x-2 justify-center" href="https://www.instagram.com/salazar_rich/">
+                            <a className="h-6 flex gap-x-2 justify-center" href="https://www.instagram.com/sovall_com/">
                                 <p className="text-xs">Follow us: </p>
                                 <img className="h-4" src={instagram}/>
                             </a>
