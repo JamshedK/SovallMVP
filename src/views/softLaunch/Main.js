@@ -25,9 +25,9 @@ const list = items.map(item => {
 function Main() {
     const [submit, setSubmit] = useState(false);
     const [canSubmit, setCanSubmit] = useState(false);
-    const [email, setEmail] = useState("yourname@email.com")
+    const [email, setEmail] = useState("")
     const [validEmail, setValidEmail] = useState(false);
-    const [name, setName] = useState("Name Lastname");
+    const [name, setName] = useState("");
     const [validName, setValidName] = useState(false);
     const handleSubmit = (e) => {
         e.preventDefault();
