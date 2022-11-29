@@ -81,7 +81,7 @@ function Main() {
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 md:w-[13rem] lg:w-[60%] xl:w-2/3 pl-6 xl:w-4/5 ">
-                        <h1 className="font-medium text-lg text-yellow-3">Demo Video </h1>
+                        <h1 className="font-medium text-lg text-yellow-3 xl:text-[1.7rem]">Demo Video </h1>
                         <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                     </div>
@@ -94,17 +94,17 @@ function Main() {
                         <div className="h-4/6 text-white flex flex-col gap-y-4">
                             <img src={mascot} className="h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
-                                <p className="font-medium md:text-sm max-2xl:text-normal 2xl:text-normal">IT'S TIME TO SHINE</p>
-                                <p className="max-xl:text-sm max-2xl:text-normal">JOIN FOR UPDATES!</p>
+                                <p className="font-medium md:text-sm max-2xl:text-normal xl:text-[1.4rem]">IT'S TIME TO SHINE</p>
+                                <p className="max-xl:text-sm max-lg:text-normal xl:text-[1.4rem]">JOIN FOR UPDATES!</p>
                             </div>
 
                         </div>
                         <form className={submit ? "hidden": "w-full h-full flex flex-col items-center w-full gap-y-3 text-xs"} onSubmit={handleSubmit}>
                             <div className={"border-b block w-full border-white xl:w-2/3 " + (validName ? "" : "focus-within:border-rose-600")}>
-                                <input value={name} className="border-none bg-transparent pl-4 text-white text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="text" placeholder="Name Lastname" onChange={handleName}/>
+                                <input value={name} className="border-none bg-transparent pl-4 text-white text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="text" placeholder="Name" onChange={handleName}/>
                             </div>
                             <div className={"border-b block w-full border-white xl:w-2/3 " + (validEmail ? "": "focus-within:border-rose-600")}>
-                                <input value={email} className="border-none text-white  bg-transparent pl-4 text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="yourname@email.com" onChange={handleEmail}></input>
+                                <input value={email} className="border-none text-white  bg-transparent pl-4 text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email" onChange={handleEmail}></input>
                             </div>
                             <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Count me in!</button>
                         </form>
