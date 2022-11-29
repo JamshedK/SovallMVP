@@ -75,7 +75,7 @@ function Main() {
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col max-md:items-center md:w-1/2 md:h-full text-white text-sm md:justify-between md:py-2 lg:gap-4 xl:gap-4 lg:justify-center " >
                     
                     <div className="w-full md:w-2/3 lg:w-4/5 lg:text-sm xl:text-xl xl:pb-14">
-                        <h1 className="font-medium text-xl xl:text-[1.7rem] pb-2 text-yellow-3 max-md:w-full">Collaborative Innovative Education!</h1>
+                        <h1 className="font-medium text-xl xl:text-[1.7rem] pb-2 text-yellow-3 max-md:w-full">Collaborative Innovation Education</h1>
                         <div className="pl-8 flex flex-col gap-1">
                             {list}
                         </div>

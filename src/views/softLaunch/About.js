@@ -48,19 +48,19 @@ const About = (props) => {
                 </div>
                 <a className="text-yellow-2 md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
                 {/*Vision and Story*/ }
-                <div className="w-85% md:w-1/2 md:h-full text-white flex justify-center md:overflow-auto scrollbar-hide">
-                    <div className="md:w-1/2 pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm"> 
+                <div className="w-85% md:w-1/2 md:h-full text-white flex pl-32 md:overflow-auto scrollbar-hide">
+                <div className="md:w-1/2 pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm xl:w-[65%] pt-8"> 
                         <div className="text-white border-b max-md:pl-2">
-                            <h1 className=" text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0">Our Vision</h1>
+                        <h1 className=" text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem] xl:pb-2 xl:pt-6">Our Vision</h1>
                             <p className="max-md:ml-2 pb-2 ">
                                 To help people have a good impact on the world, live fulfilled lives, and have an exciting future through their passion.
                             </p>
                         </div>
                         <div>
                             <div className="pb-4 max-md:pl-2">
-                                <h1 className="text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0"> Our story</h1>
-                                <p className="text-xs">Hamid Mubariz, Founder</p>
-                                <div className="flex flex-col gap-3 max-md:ml-2 md:pt-2"> {about}</div>
+                            <h1 className="text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem] xl:pb-2"> Our story</h1>
+                            <p className="text-xs xl:text-[1rem]">Hamid Mubariz, Founder</p>
+                            <div className="flex flex-col gap-3 max-md:ml-2 md:pt-2 xl:text-[1rem]"> {about}</div>
                             </div>
                             
                         </div>
