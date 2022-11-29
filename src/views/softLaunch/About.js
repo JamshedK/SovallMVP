@@ -29,8 +29,8 @@ const About = (props) => {
                 {/*Wheel*/}
                 <div className="relative flex justify-center  h-[30rem] md:h-full md:w-1/2 md:pt-8">
                     
-                    <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[25rem] 2xl:h-[25rem] flex justify-center items-center">
-                        <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[22rem]  2xl:h-[22rem]  relative flex justify-center items-center">
+                    <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[27rem] 2xl:h-[27rem] flex justify-center items-center">
+                        <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[25rem]  2xl:h-[25rem]  relative flex justify-center items-center">
 
                             <div className="absolute h-full w-full z-10 select-none max-md:rotate-90">
                             <Wheel current={currentF} handleClick={handleFounderChange} />
