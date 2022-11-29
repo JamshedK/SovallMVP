@@ -8,9 +8,10 @@ import gradientbg from './assets/gradient_bg.png';
 
 
 const items = ["Find, shape, and pursue your passion",
-                "Celebrate your creativity and curiosity",
-                "Connect with hobbyists and creatives",
-                "Get support for your project"]
+                "Connect with creatives and hobbyists",
+                "Get support for your project",
+                "Enjoy affordable high quality education"
+                ]
 
 const list = items.map(item => {
     return (
@@ -69,32 +70,27 @@ function Main() {
 
     return (
         <div className="h-90% w-full flex max-md:flex-col justify-center items-center">
-            <div className="md:w-80% lg:w-70% xl:w-2/3 max-md:flex-col h-95% flex">
+            <div className="md:w-80% lg:w-70% lg:w-2/3 max-md:flex-col h-95% lg:h-80% flex">
                 {/*Left panel*/}
-                <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col max-md:items-center md:w-1/2 md:h-full text-white text-sm md:justify-between md:py-2" >
-                    <div className="md:w-2/3 text-sm ">
-                        <h1 className="underline max-md:w-full md:w-fit md:pr-1 mb-4 max-md:pb-1 font-medium text-lg text-yellow-3 border-b border-yellow-1 ">PURSUE YOUR PASSION</h1>
-                        <p>
-                            Under the pressure of its one-size-fits-all cookie-cutter, the current education system has crushed the genius of creatives, misfits, and rebels.
-                        </p>
-                    </div>
-                    <div className="w-full md:w-2/3">
-                        <h1 className="font-medium text-lg text-yellow-3 max-md:w-full">JOIN US!</h1>
-                        <div className="pl-4 flex flex-col gap-1">
+                <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col max-md:items-center md:w-1/2 md:h-full text-white text-sm md:justify-between md:py-2 lg:gap-4 xl:gap-4 lg:justify-center border" >
+                    
+                    <div className="w-full md:w-2/3 lg:w-4/5 border lg:text-sm xl:text-xl xl:pb-14">
+                        <h1 className="font-medium text-xl xl:text-[1.7rem] pb-2 text-yellow-3 max-md:w-full">Collaborative Innovative Education!</h1>
+                        <div className="pl-8 flex flex-col gap-1">
                             {list}
                         </div>
                     </div>
-                    <div className="flex flex-col gap-2 md:w-[13rem]">
-                        <h1 className="font-medium">DEMO VIDEO </h1>
-                        <iframe className="w-full aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                    <div className="flex flex-col gap-2 md:w-[13rem] lg:w-[60%] xl:w-2/3 pl-6 border xl:w-4/5 ">
+                        <h1 className="font-medium text-lg text-yellow-3">Demo Video </h1>
+                        <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                     </div>
 
                 </div>
 
                 {/*Right panel*/}
-                <div className="h-[32rem] max-md:h-[50rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white">
-                    <div style={gradient} className="bg-cover bg-center w-5/6  h-[30rem] max-md:w-2/3 max-md:h-[40rem] md:h-full lg:w-2/3 flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
+                <div className="h-[32rem] max-md:h-[50rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white border">
+                    <div style={gradient} className="bg-cover bg-center w-5/6  h-[30rem] max-md:w-2/3 max-md:h-[40rem] md:h-full lg:w-2/3 xl:h-4/5 flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
                         <div className="h-4/6 text-white flex flex-col gap-y-4">
                             <img src={mascot} className="h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
