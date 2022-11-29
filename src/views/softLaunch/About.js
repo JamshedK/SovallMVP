@@ -16,10 +16,11 @@ const About = (props) => {
         "I want to thank Mafer Bencomo Arevalo for help with making the first version of the phone app of Sovall and Rin Yokoi for her help with the demo video's music."
     ];
     const [currentF, setCurrentF] = useState(0);
-
+    
     const handleFounderChange = () => {
         setCurrentF(prev => (prev + 1) % 4);
     };
+   
     const about = aboutText.map(p => {
         return <p key={Math.random()}>{p}</p>
     });
@@ -31,7 +32,7 @@ const About = (props) => {
                     <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[25rem] 2xl:h-[25rem] flex justify-center items-center">
                         <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[22rem]  2xl:h-[22rem]  relative flex justify-center items-center">
 
-                            <div className="absolute h-full w-full z-10 select-none">
+                            <div className="absolute h-full w-full z-10 select-none max-md:rotate-90">
                             <Wheel current={currentF} handleClick={handleFounderChange} />
 
                             </div>

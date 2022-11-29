@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\views",
+    "\\src\\views\\softLaunch",
+    "\\src\\views\\softLaunch\\components"
   ],
-  "SelectedNode": "\\C:\\Users\\salaz\\ReactProjects\\sovall",
+  "SelectedNode": "\\src\\views\\softLaunch\\About.js",
   "PreviewInSolutionExplorer": false
 }

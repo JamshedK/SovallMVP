@@ -22,9 +22,49 @@ const list = items.map(item => {
     }
 );
 function Main() {
+    const [submit, setSubmit] = useState(false);
+    const [canSubmit, setCanSubmit] = useState(false);
+    const [email, setEmail] = useState("yourname@email.com")
+    const [validEmail, setValidEmail] = useState(false);
+    const [name, setName] = useState("Name Lastname");
+    const [validName, setValidName] = useState(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSubmit(true);
+    }
 
     const gradient = {
         backgroundImage: `url(${gradientbg})`
+    };
+
+    function isValidEmail(email) {
+        return /\S+@\S+\.\S+/.test(email);
+    }
+    const handleEmail = (e) => {
+        const email = e.target.value;
+        const isValid = isValidEmail(email)
+        setEmail(email)
+        if (isValid) {
+            setValidEmail(true)
+        } else {
+            setValidEmail(false)
+        }
+
+        if (isValid && email != "yourname@email.com" && validName) {
+            setCanSubmit(true)
+        } else {
+            setCanSubmit(false)
+        }
+    };
+
+    const handleName = (e) => {
+        const name = e.target.value;
+        const lower = name.toLowerCase();
+        
+        if (lower != "name" && lower != "lastName" && lower != "name lastname" && lower != "namelastname" && lower != "namelast") {
+            setValidName(name)
+        }
+        setName(name);
     };
 
     return (
@@ -54,7 +94,7 @@ function Main() {
 
                 {/*Right panel*/}
                 <div className="h-[32rem] max-md:h-[50rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white">
-                    <div style={gradient} className="bg-cover bg-center w-5/6  h-[30rem] max-md:w-2/3 max-md:h-[40rem] md:h-full lg:w-2/3 flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl">
+                    <div style={gradient} className="bg-cover bg-center w-5/6  h-[30rem] max-md:w-2/3 max-md:h-[40rem] md:h-full lg:w-2/3 flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
                         <div className="h-4/6 text-white flex flex-col gap-y-4">
                             <img src={mascot} className="h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
@@ -63,15 +103,16 @@ function Main() {
                             </div>
 
                         </div>
-                        <form className="w-full h-full flex flex-col items-center w-full gap-y-3 text-xs">
-                            <div className="border-b border-white block pl-4 w-full">
-                                <input className="border-none bg-transparent text-white text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="text" placeholder="Name" />
+                        <form className={submit ? "hidden": "w-full h-full flex flex-col items-center w-full gap-y-3 text-xs"} onSubmit={handleSubmit}>
+                            <div className="border-b border-white block  w-full">
+                                <input value={name} className="border-none bg-transparent pl-4 text-white text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="text" placeholder="Name" onChange={handleName}/>
                             </div>
-                            <div className="border-b border-white block pl-4 w-full">
-                                <input className="border-none text-white bg-transparent text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email"></input>
+                            <div className={"border-b block w-full border-white" + (validEmail ? "": "focus-within:border-rose-600")}>
+                                <input value={email} className="border-none text-white  bg-transparent pl-4 text-xs w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email" onChange={handleEmail}></input>
                             </div>
-                            <button className="block bg-white text-green-2  rounded-full px-2 py-1 mt-2 font-medium italic">Count me in!</button>
+                            <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Count me in!</button>
                         </form>
+                        <p className={submit ? "font-bold flex text-center" :"hidden"}>Thank you for signing up for updates!</p>
                         <a className="h-6 flex gap-x-2 justify-center" href="https://www.instagram.com/sovall_com/">
                             <p className="text-xs">Follow us: </p>
                             <img className="h-4" src={instagram} />
