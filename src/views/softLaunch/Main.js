@@ -69,7 +69,7 @@ function Main() {
     };
 
     return (
-        <div className="h-90% w-full flex max-md:flex-col justify-center items-center border">
+        <div className="h-90% w-full flex max-md:flex-col justify-center items-center">
             <div className="md:w-80% lg:w-[70%] lg:w-2/3 max-md:flex-col h-95% lg:h-[85%] flex">
                 {/*Left panel*/}
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col max-md:items-center md:w-1/2 md:h-full text-white text-sm md:justify-between md:py-2 lg:gap-4 xl:gap-4 lg:justify-center " >
