@@ -10,6 +10,7 @@ module.exports = {
                 'green-2': '#0A7D7D',
                 'green-3': '#025B5B',
                 'green-4': '#3C9A9A',
+                'green-4': '#044A54',
                 'orange-1': '#F7B618',
                 'yellow-1': '#FBD987',
                 'yellow-2': '#F7B618',
@@ -61,6 +62,10 @@ module.exports = {
             fontSize: {
                 'xxs': '.5rem',
                 'xs': '.6rem',
+            },
+
+            fontFamily: {
+                'nunito': ['Nunito', 'sans-serif'],
             },
             keyframes: {
                 step1: {

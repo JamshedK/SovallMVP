@@ -16,7 +16,7 @@ function Header(props) {
 	console.log("goback:"+goBack);
 
 	return (
-		<div className="sticky top-0 md:w-screen h-10% bg-green-3 py-3 px-10 drop-shadow-md flex text-white z-50 flex justify-between">
+		<div className="sticky top-0 md:w-screen h-10% bg-green-4 py-3 px-10 drop-shadow-md flex text-white z-50 flex justify-between">
 			<Link to="/" className="flex gap-2 items-center max-md:w-1/3 max-md:h-full w-full w-fit transition duration-200 " onClick={clickFalse}>
 				<img className={goBack ? "md:h-40% " : "hidden"} src={arrowBack} />
 				<img className="h-80% md:h-3/5" src={logo} alt="logo" />

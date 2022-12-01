@@ -7,7 +7,7 @@ import Main from "./views/softLaunch/Main";
 export default function App() {
     return (
         
-        <div className="bg-green-2 h-full md:screen md:h-screen">
+        <div className="bg-green-2 h-full md:screen md:h-screen font-nunito">
             <Header />
             <Routes>
                 <Route path="/" element={<Main/>} />
