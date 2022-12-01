@@ -27,14 +27,13 @@ const About = (props) => {
     return (
         <div className="h-90% w-full flex max-md:flex-col max-md:gap-4  md:pt-4 md:justify-center items-center select-none ">
                 {/*Wheel*/}
-                <div className="relative flex justify-center  h-[30rem] md:h-full md:w-1/2 md:pt-8">
+                <div className="relative flex justify-center w-full h-[35rem] md:h-full md:w-1/2 md:pt-8 ">
                     
                     <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[27rem] 2xl:h-[27rem] flex justify-center items-center">
                         <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[25rem]  2xl:h-[25rem]  relative flex justify-center items-center">
 
-                            <div className="absolute h-full w-full z-10 select-none max-md:rotate-90">
-                            <Wheel current={currentF} handleClick={handleFounderChange} />
-
+                            <div className="absolute h-full w-full z-10 select-none ">
+                                <Wheel current={currentF} handleClick={handleFounderChange} />
                             </div>
 
                             <div className="border border-green-4 h-80% w-80% rounded-full flex justify-center items-center z-0">
@@ -43,13 +42,13 @@ const About = (props) => {
                         </div>
                     </div>
                     {/*Founder Info*/ }
-                <FounderInfo current={currentF} />
+                    <FounderInfo current={currentF} />
                     <a className="text-yellow-2 absolute bottom-4 max-md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
                 </div>
                 <a className="text-yellow-2 md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
                 {/*Vision and Story*/ }
-                <div className="w-85% md:w-1/2 md:h-full text-white flex pl-32 md:overflow-auto scrollbar-hide">
-                <div className="md:w-1/2 pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm xl:w-[65%] pt-8"> 
+                <div className="w-85% md:w-1/2 md:h-full text-white flex 2xl:pl-32 md:overflow-auto scrollbar-hide">
+                    <div className="w-full md:w-1/2 pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm xl:w-[65%] pt-8"> 
                         <div className="text-white border-b max-md:pl-2">
                         <h1 className=" text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem] xl:pb-2 xl:pt-6">Our Vision</h1>
                             <p className="max-md:ml-2 pb-2 ">
@@ -59,7 +58,7 @@ const About = (props) => {
                         <div>
                             <div className="pb-4 max-md:pl-2">
                             <h1 className="text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem] xl:pb-2"> Our story</h1>
-                            <p className="text-xs xl:text-[1rem]">Hamid Mubariz, Founder</p>
+                            <p className="text-sm xl:text-[1rem]">Hamid Mubariz, Founder</p>
                             <div className="flex flex-col gap-3 max-md:ml-2 md:pt-2 xl:text-[1rem]"> {about}</div>
                             </div>
                             

@@ -28,9 +28,9 @@ const founders= [
         name: "Ricardo Salazar",
         title: "Cofounder",
         description: [
-            "Hello! I'm Ricardo from Ecuador and Colombia",
-            "I love both coding and art-making",
-            "Also I love anime, manga, boba and shrimps",
+            "Hello! I'm Ricardo from Ecuador and Colombia.",
+            "I love both coding and art-making.",
+            "Also I love anime, manga, boba, and shrimps.",
         ]
     },
 ];
@@ -41,11 +41,11 @@ const FounderInfo = (props) => {
     });
 
     return (
-        <div className="absolute max-md:bottom-0 max-md:p-0 md:w-1/2 md:right-0 md:mt-[9rem] xl:mt-[17.5rem] md:pl-[5rem] 2xl:pl-[9.5rem] ">
-            <div className=" h-[10rem] md:h-[7rem] md:w-full lg:w-1/2 xl:w-[65%] md:ml-[rem] md:text-xs h-auto flex flex-col max-md:items-center ">
-                <p className="text-yellow-2 max-md:w-1/2 flex max-md:justify-center xl:text-[1.5rem]"> {person.name}</p>
-                <p className="max-md:text-sm text-yellow-2 w-fit xl:text-[1.1rem] italic">{person.title }</p>
-                <div className="w-full max-md:px-1 flex flex-col text-white flex-wrap xl:text-[.9rem]">
+        <div className="absolute right-0 top-0 mt-[13rem] md:mt-[11rem] xl:mt-[11rem] w-1/2  md:pl-[5rem] 2xl:pl-[9.5rem]">
+            <div className=" md:h-[7rem] md:w-full xl:w-[85%] md:ml-[rem] md:text-xs h-auto flex flex-col">
+                <p className="text-yellow-2 max-md:w-full flex max-md:justify-center lg:text-[0.7rem] 2xl:text-[1.5rem]"> {person.name}</p>
+                <p className="max-md:text-sm max-md:text-center text-yellow-2 w-full  lg:text-[0.7rem] 2xl:text-[1.1rem] italic">{person.title }</p>
+                <div className="w-[70%] max-md:mr-3 flex max-md:self-end max-md:mt-3 flex-col text-white flex-wrap lg:text-[0.7rem] 2xl:text-[.9rem]">
                     {description }
                 </div>
             </div>

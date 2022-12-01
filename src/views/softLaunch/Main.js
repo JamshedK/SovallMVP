@@ -51,7 +51,7 @@ function Main() {
             setValidEmail(false)
         }
 
-        if (isValid && email != "yourname@email.com" && validName) {
+        if (isValid && email !== "yourname@email.com" && validName) {
             setCanSubmit(true)
         } else {
             setCanSubmit(false)
@@ -62,26 +62,26 @@ function Main() {
         const name = e.target.value;
         const lower = name.toLowerCase();
         
-        if (lower != "name" && lower != "lastName" && lower != "name lastname" && lower != "namelastname" && lower != "namelast") {
+        if (lower !== "name" && lower !== "lastName" && lower !== "name lastname" && lower !== "namelastname" && lower !== "namelast") {
             setValidName(name)
         }
         setName(name);
     };
 
     return (
-        <div className="h-90% w-full flex max-md:flex-col justify-center items-center">
+        <div className="h-90% w-full flex max-md:flex-col justify-center items-center border">
             <div className="md:w-80% lg:w-[70%] lg:w-2/3 max-md:flex-col h-95% lg:h-[85%] flex">
                 {/*Left panel*/}
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col max-md:items-center md:w-1/2 md:h-full text-white text-sm md:justify-between md:py-2 lg:gap-4 xl:gap-4 lg:justify-center " >
                     
-                    <div className="w-full md:w-2/3 lg:w-4/5 lg:text-sm xl:text-xl xl:pb-14">
-                        <h1 className="font-medium text-xl xl:text-[1.7rem] pb-2 text-yellow-3 max-md:w-full">Collaborative Innovation Education</h1>
+                    <div className="w-full md:w-2/3 lg:w-4/5 2xl:text-xl 2xl:pb-14">
+                        <h1 className="font-medium text-normal xl:text-[1.3rem] 2xl:text-[1.5rem] pb-2 text-yellow-3 max-md:w-full">Collaborative Innovation Education</h1>
                         <div className="pl-8 flex flex-col gap-1">
                             {list}
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 md:w-[13rem] lg:w-[60%] xl:w-2/3 pl-6 xl:w-4/5 ">
-                        <h1 className="font-medium text-lg text-yellow-3 xl:text-[1.7rem]">Demo Video </h1>
+                        <h1 className="font-medium text-lg text-yellow-3  xl:text-[1.3rem] 2xl:text-[1.7rem]">Demo Video </h1>
                         <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                     </div>
@@ -90,12 +90,12 @@ function Main() {
 
                 {/*Right panel*/}
                 <div className="h-[32rem] max-md:h-[50rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white">
-                    <div style={gradient} className="bg-cover bg-center w-5/6  h-[30rem] max-md:w-2/3 max-md:h-[40rem] md:h-full lg:w-2/3 xl:h-4/5 flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
+                    <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-2/3 max-md:h-[32rem] md:h-full lg:w-2/3 xl:h-full flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
                         <div className="h-4/6 text-white flex flex-col gap-y-4">
                             <img src={mascot} className="h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
-                                <p className="font-medium md:text-sm max-2xl:text-normal xl:text-[1.4rem]">IT'S TIME TO SHINE</p>
-                                <p className="max-xl:text-sm max-lg:text-normal xl:text-[1.4rem]">JOIN FOR UPDATES!</p>
+                                <p className="font-medium md:text-sm max-2xl:text-normal  xl:text-[1rem]  2xl:text-[1.4rem]">IT'S TIME TO SHINE</p>
+                                <p className="max-lg:text-sm lg:text-normal xl:text-[1rem] 2xl:text-[1.4rem]">JOIN FOR UPDATES!</p>
                             </div>
 
                         </div>

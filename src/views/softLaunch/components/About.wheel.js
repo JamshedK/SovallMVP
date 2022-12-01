@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import person_1 from '../assets/person_1.png';
 import person_2 from '../assets/person_2.png';
 import person_3 from '../assets/person_3.png';
@@ -10,11 +10,6 @@ const Wheel = (props) => {
         setdegree((prevRotation) => prevRotation + 90);
         props.handleClick();
     };
-    /*useEffect(() => {
-        setTimeout(() => {
-            rotateWheelOnClick();
-        }, 20000);
-    });*/
 
     const wheelR = 'rotate(' + degree + 'deg)';
     const picR = 'rotate(-' +degree + 'deg)';
@@ -32,7 +27,7 @@ const Wheel = (props) => {
     let pic_style =""
     const founders = founders_data.map(data => {
         const index = founders_data.indexOf(data);
-        if (index == props.current) {
+        if (index === props.current) {
             pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-30% w-30% dropshadow-2xl rounded-full z-50 ";
         } else {
             pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-20% w-20% z-50 ";
@@ -45,7 +40,7 @@ const Wheel = (props) => {
     
 
     return (
-        <div style={wheelRotation} className="w-full h-full relative flex justify-center items-center duration-500 ease-in-out z-40 ">
+        <div style={wheelRotation} className="w-full h-full relative flex justify-center items-center duration-500 ease-in-out z-40">
             {founders}
         </div>
         );
