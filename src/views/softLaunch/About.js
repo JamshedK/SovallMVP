@@ -36,7 +36,7 @@ const About = (props) => {
                                 <Wheel current={currentF} handleClick={handleFounderChange} />
                             </div>
 
-                            <div className="border border-green-4 h-80% w-80% rounded-full flex justify-center items-center z-0">
+                            <div className="border border-green-5 h-80% w-80% rounded-full flex justify-center items-center z-0">
                                 <img className="h-20 md:h-12 2xl:h-20" src={sovall_main} />
                             </div>
                         </div>
