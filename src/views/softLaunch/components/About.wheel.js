@@ -23,7 +23,7 @@ const Wheel = (props) => {
     };
 
     
-    const founders_data = [[person_1, "right-0", 0], [person_2, "top-0",1], [person_3, "left-0",2], [person_4, "bottom-0",3]];
+    const founders_data = [[person_1, "bottom-0", 0], [person_2, "right-0",1], [person_3, "top-0",2], [person_4, "left-0",3]];
     let pic_style =""
     const founders = founders_data.map(data => {
         const index = founders_data.indexOf(data);

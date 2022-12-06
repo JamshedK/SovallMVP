@@ -5,6 +5,7 @@ import Header from './views/softLaunch/components/Header';
 import Main from "./views/softLaunch/Main";
 
 export default function App() {
+    const [subscription, setSubscription] = React.useState(false);
     return (
         
         <div className="bg-green-2 h-full md:screen md:h-screen font-nunito">
