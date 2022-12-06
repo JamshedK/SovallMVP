@@ -114,7 +114,7 @@ function Main() {
                 </div>
 
                 {/*Right panel*/}
-                <div className="h-[32rem] max-md:h-[35rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2  xl:bg-black text-white border">
+                <div className="h-[32rem] max-md:h-[35rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2  xl:bg-black text-white">
                     <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-[80%] max-md:h-[32rem] md:h-full lg:w-[70%] xl:w-2/3 lg:bg-white xl:h-full flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
                         <div className="h-[50%] lg:h-[60%] text-white flex flex-col gap-y-4 ">
                             <img src={mascot} className="h-[70%] lg:h-4/6" />
