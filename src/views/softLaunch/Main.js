@@ -100,13 +100,13 @@ function Main() {
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col md:justify-center md:w-1/2 md:h-full text-white text-sm md:py-2 md:gap-8" >
                     
                     <div className="w-full lg:w-4/5 2xl:text-xl 2xl:pb-14">
-                        <h1 className="font-medium text-normal pb-4 md:text-[14pt] lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt] pb-2 text-yellow-3 max-md:w-full ">Solve Social Problems</h1>
+                        <h1 className="font-medium text-[15pt] pb-4 lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt] pb-2 text-yellow-3 max-md:w-full ">Solve Social Problems</h1>
                         <div className="pl-8 flex flex-col gap-3 md:text-[13pt] lg:text-[15pt] xl:text-[16pt] 2xl:text-[22pt]">
                             {list}
                         </div>
                     </div>
                     <div className="flex flex-col gap-2 md:w-[13rem] lg:w-[60%] xl:w-2/3 xl:w-4/5 ">
-                        <h1 className="font-medium text-lg text-yellow-3  md:text-[15pt] lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt]">Demo Video </h1>
+                        <h1 className="font-medium text-lg text-yellow-3  text-[15pt] lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt]">Demo Video </h1>
                         <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
 
                     </div>
