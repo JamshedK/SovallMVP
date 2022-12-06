@@ -49,7 +49,10 @@ function Main(props) {
                             "email": email,
                             "fields": {
                                 "name": name
-                            }
+                            },
+                            "groups": [
+                                "73708665152996612"
+                            ]                        
                           }
         postData('https://connect.mailerlite.com/api/subscribers', userInfo)
             .then((data) => {
