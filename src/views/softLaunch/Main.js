@@ -34,9 +34,9 @@ const list = items.map(item => {
         );
     }
 );
-function Main() {
+function Main(props) {
 
-    const [submit, setSubmit] = useState(false);
+    const subcription = props.subcription;
     const [canSubmit, setCanSubmit] = useState(false);
     const [email, setEmail] = useState("")
     const [validEmail, setValidEmail] = useState(false);
@@ -55,7 +55,7 @@ function Main() {
             .then((data) => {
                 console.log(data)
             });
-        setSubmit(true);
+        props.setSubscription(true);
 
     }
 
@@ -124,7 +124,7 @@ function Main() {
                             </div>
 
                         </div>
-                        <form className={submit ? "hidden": "w-full h-full flex flex-col items-center gap-y-3 text-xs"} onSubmit={handleSubmit}>
+                        <form className={subcription ? "hidden": "w-full h-full flex flex-col items-center gap-y-3 text-xs"} onSubmit={handleSubmit}>
                             <div className={"border-b block w-full border-white xl:w-[85%] 2xl:h-[20%] " + (validName ? "" : "focus-within:border-rose-600")}>
                                 <input value={name} className="border-none h-full bg-transparent pl-4 text-white text-xs xl:placeholder:text-[10pt] xl:text-[10pt] 2xl:placeholder:text-[12pt] 2xl:text-[12pt] w-full focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white " type="text" placeholder="Name" onChange={handleName}/>
                             </div>
@@ -133,7 +133,7 @@ function Main() {
                             </div>
                             <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Count me in!</button>
                         </form>
-                        <p className={submit ? "font-bold text-center 2xl:text-[1.5rem]" :"hidden"}>Thank you for signing up for updates!</p>
+                        <p className={subcription ? "font-bold text-center 2xl:text-[1.5rem]" :"hidden"}>Thank you for signing up for updates!</p>
                         <a className="h-6 2xl:h-9 flex gap-x-2 justify-center items-center " href="https://www.instagram.com/sovall_com/">
                             <p className="text-xs 2xl:text-[1.1rem]">Follow us: </p>
                             <img className="h-4 2xl:h-6" src={instagram} />

@@ -47,8 +47,8 @@ const About = (props) => {
                 </div>
                 
                 {/*Vision and Story*/ }
-            <div className="w-85% md:w-1/2 md:h-95% text-white flex 2xl:pl-32 md:overflow-auto scrollbar-hide">
-                    <div className="w-fit pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm w-[80%] mt-7"> 
+            <div className="w-85% md:w-1/2 md:h-95% text-white flex 2xl:pl-32 md:overflow-auto scrollbar-hide ">
+                    <div className="w-fit pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm md:w-[80%] mt-7"> 
                         <div className="text-white border-b max-md:pl-2 flex flex-col gap-2">
                             <h1 className=" text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem]">Our Vision</h1>
                             <p className="max-md:ml-2 pb-2 ">
@@ -64,7 +64,7 @@ const About = (props) => {
 
                 </div>
 
-                <a className="text-yellow-2 border py-5 w-full text-center md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
+                <a className="text-yellow-2 py-5 w-full text-center md:hidden" href="mailto:info@soval.com"> Reach out: info@sovall.com</a>
             </div>
         );
 }
