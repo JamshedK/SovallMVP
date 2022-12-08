@@ -98,10 +98,6 @@ function Main(props) {
 
     return (
         <div className="h-90% w-full flex max-md:flex-col justify-center items-center ">
-            <head>
-                <title>Sovall</title>
-                <meta name='description' content = 'We help university students to pursue their independent projects'/>
-            </head>
             <div className="md:w-80% lg:w-[70%] lg:w-2/3 max-md:flex-col h-95% lg:h-[85%] flex">
                 {/*Left panel*/}
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col md:justify-center md:w-1/2 md:h-full text-white text-sm md:py-2 md:gap-8" >
