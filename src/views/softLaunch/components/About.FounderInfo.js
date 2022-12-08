@@ -20,7 +20,7 @@ const founders= [
         title: "Cofounder",
         description: [
             "You can usually find me nose - deep in a good horror story or trying to keep my plants alive.",
-            "Occasionally, I draw pictures.I once correctly diagnosed someone's appendicitis."
+            "Occasionally, I draw pictures. I once correctly diagnosed someone's appendicitis."
         ]
     },
     {
