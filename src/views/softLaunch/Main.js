@@ -110,8 +110,7 @@ function Main(props) {
                     </div>
                     <div className="flex flex-col gap-2 md:w-[13rem] lg:w-[60%] xl:w-2/3 xl:w-4/5 ">
                         <h1 className="font-medium text-lg text-yellow-3  text-[15pt] lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt]">Demo Video </h1>
-                        <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/fzsjbcMxIEo" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-
+                        <iframe className="w-full xl:w-4/5 aspect-video" src="https://www.youtube.com/embed/uw7UkWrxQFc" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
 
                 </div>
