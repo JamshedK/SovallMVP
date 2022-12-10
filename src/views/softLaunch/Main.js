@@ -116,7 +116,7 @@ function Main(props) {
 
                 {/*Right panel*/}
                 <div className="h-[32rem] max-md:h-[35rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white">
-                    <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-[80%] max-md:h-[32rem] md:h-full lg:w-[70%] xl:w-2/3 lg:bg-white xl:h-full flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
+                    <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-[80%] max-md:h-[32rem] md:h-full lg:w-[70%] xl:w-2/3 lg:bg-white xl:h-full 2xl:h-[45rem] flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between border">
                         <div className="h-[50%] lg:h-[60%] text-white flex flex-col gap-y-4 ">
                             <img src={mascot} className="h-[70%] lg:h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
