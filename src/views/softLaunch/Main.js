@@ -132,7 +132,7 @@ function Main(props) {
                             <div className={"border-b block w-full border-white xl:w-[85%] h-fit" + (validEmail ? "": "focus-within:border-rose-600")}>
                                 <input value={email} className="border-none h-fit text-white  bg-transparent pl-4 text-xs  xl:placeholder:text-[10pt] xl:text-[10pt] 2xl:placeholder:text-[12pt] 2xl:text-[12pt] w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email" onChange={handleEmail}></input>
                             </div>
-                            <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Count me in!</button>
+                            <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Join the waitlist</button>
                         </form>
                         <p className={subcription ? "font-bold text-center 2xl:text-[1.5rem]" :"hidden"}>Thank you for signing up for updates!</p>
                         <a className="h-6 2xl:h-9 flex gap-x-2 justify-center items-center " href="https://www.instagram.com/sovall_com/">
