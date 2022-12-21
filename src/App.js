@@ -15,12 +15,11 @@ export default function App() {
         <div className="bg-green-2 h-full md:screen md:h-screen font-nunito">
             <Header />
             <Routes>
-                <Route path="/" element={<Main subcription={subscription} setSubscription={setSubscription} />} />
+                <Route path="/" element={<Main subcription={subscription} setSubscription={setSubscription}/>} />
                 <Route path="/ourStory" element={<About />} />
-
             </Routes>
-
+            
         </div>
         
-        );
+      );
 }
