@@ -4,10 +4,12 @@ import './index.css';
 import Root from './Root';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import Main from './views/softLaunch/Main';
-import About from './views/softLaunch/About';
 import Header from './views/softLaunch/components/Header';
 import App from './App';
+import LogIn from "./views/logIn/LogIn";
+import About from "./views/about/About";
+import ForgotPassword from "./views/password/ForgotPassword";
+import ChangePassword from "./views/password/ChangePassword";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

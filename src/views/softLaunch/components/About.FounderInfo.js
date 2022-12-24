@@ -40,7 +40,7 @@ const FounderInfo = (props) => {
     });
 
     return (
-        <div className="absolute w-[18rem] md:w-[13rem] 2xl:w-[23rem] h-fit top-0 mt-[19rem] md:mt-[16rem] 2xl:mt-[28rem]">
+        <div className="absolute w-[18rem] md:w-[13rem] 2xl:w-[23rem] h-fit top-0 mt-[19rem] md:mt-[13.5rem] 2xl:mt-[15.2rem]">
             <div className=" md:h-fit md:w-full  md:text-xs h-auto flex flex-col items-center">
                 <p className="text-yellow-2 max-md:w-full flex max-md:justify-center lg:text-[0.7rem] 2xl:text-[1.5rem]"> {person.name}</p>
                 <p className="max-md:text-sm text-center text-yellow-2 w-full  lg:text-[0.7rem] 2xl:text-[1.1rem] italic">{person.title }</p>

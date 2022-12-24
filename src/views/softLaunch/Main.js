@@ -21,8 +21,11 @@ async function postData(url = '', data = {}) {
 
 
 
-const items = ["Find solutions in teams",
-                "Get support from us"
+const items = [
+    "Educational resources",
+    "Network opportunities",
+    "Budget support"
+
                 ]
 
 const list = items.map(item => {
@@ -97,13 +100,13 @@ function Main(props) {
     };
 
     return (
-        <div className="h-90% w-full flex max-md:flex-col justify-center items-center ">
+        <div className="h-90% w-full flex max-md:flex-col justify-center items-center overflow-auto">
             <div className="md:w-80% lg:w-[70%] lg:w-2/3 max-md:flex-col h-95% lg:h-[85%] flex">
                 {/*Left panel*/}
                 <div className="max-md:h-full max-md:px-12 max-md:py-8 max-md:gap-8 flex flex-col md:justify-center md:w-1/2 md:h-full text-white text-sm md:py-2 md:gap-8" >
                     
                     <div className="w-full lg:w-4/5 2xl:text-xl 2xl:pb-14">
-                        <h1 className="font-medium text-[15pt] pb-4 lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt] pb-2 text-yellow-3 max-md:w-full ">Solve Social Problems</h1>
+                        <h1 className="font-medium text-[15pt] pb-4 lg:text-[16pt] xl:text-[18pt] 2xl:text-[22pt] pb-2 text-yellow-3 max-md:w-full ">Solve Problems</h1>
                         <div className="pl-8 flex flex-col gap-3 md:text-[13pt] lg:text-[15pt] xl:text-[16pt] 2xl:text-[22pt]">
                             {list}
                         </div>
@@ -116,26 +119,26 @@ function Main(props) {
 
                 {/*Right panel*/}
                 <div className="h-[32rem] max-md:h-[35rem] max-md:py-8 md:w-1/2 md:h-full flex justify-center items-center md:py-2 text-white">
-                    <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-[80%] max-md:h-[32rem] md:h-full lg:w-[70%] xl:w-2/3 lg:bg-white xl:h-full 2xl:h-[45rem] flex rounded-lg flex-col py-10 px-14 gap-3 shadow-2xl justify-between">
+                    <div style={gradient} className="max-md:bg-cover bg-center w-5/6 max-md:w-[80%] max-md:h-[32rem] md:h-full lg:w-[70%] xl:w-2/3 lg:bg-white xl:h-full py-8 flex rounded-lg flex-col px-14 shadow-2xl">
                         <div className="h-[50%] lg:h-[60%] text-white flex flex-col gap-y-4 ">
                             <img src={mascot} className="h-[70%] lg:h-4/6" />
                             <div className="flex flex-col align-items-center flex flex-col justify-center items-center">
                                 <p className="font-medium md:text-sm max-2xl:text-normal xl:text-[1rem]  2xl:text-[1.4rem]">IT'S TIME TO SHINE</p>
-                                <p className="max-lg:text-sm lg:text-normal xl:text-[1rem] 2xl:text-[1.4rem]">JOIN FOR UPDATES!</p>
+                                <p className="max-lg:text-sm lg:text-[11pt] xl:text-[1rem] 2xl:text-[1.4rem]">JOIN FOR UPDATES!</p>
                             </div>
 
                         </div>
                         <form className={subcription ? "hidden": "w-full h-full flex flex-col items-center gap-y-3 text-xs"} onSubmit={handleSubmit}>
-                            <div className={"border-b block w-full border-white xl:w-[85%] 2xl:h-[20%] " + (validName ? "" : "focus-within:border-rose-600")}>
-                                <input value={name} className="border-none h-full bg-transparent pl-4 text-white text-xs xl:placeholder:text-[10pt] xl:text-[10pt] 2xl:placeholder:text-[12pt] 2xl:text-[12pt] w-full focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white " type="text" placeholder="Name" onChange={handleName}/>
+                            <div className={"border-b block w-full border-white xl:w-[85%] " + (validName ? "" : " focus-within:border-rose-600")}>
+                                <input value={name} className="border-none h-full bg-transparent pl-4 text-white text-xs xl:placeholder:text-[10pt] xl:text-[10pt] ] w-full focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white " type="text" placeholder="Name" onChange={handleName}/>
                             </div>
-                            <div className={"border-b block w-full border-white xl:w-[85%] h-fit" + (validEmail ? "": "focus-within:border-rose-600")}>
-                                <input value={email} className="border-none h-fit text-white  bg-transparent pl-4 text-xs  xl:placeholder:text-[10pt] xl:text-[10pt] 2xl:placeholder:text-[12pt] 2xl:text-[12pt] w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email" onChange={handleEmail}></input>
+                            <div className={"border-b block w-full border-white xl:w-[85%]" + (validEmail ? "": " focus-within:border-rose-600")}>
+                                <input value={email} className="border-none h-fit text-white  bg-transparent pl-4 text-xs  xl:placeholder:text-[10pt] xl:text-[10pt] w-full p-0 focus:border-transparent focus:ring-0 placeholder:text-xs placeholder:text-white" type="email" placeholder="Email" onChange={handleEmail}></input>
                             </div>
                             <button className="block bg-white text-green-2  dropshadow-xl rounded-full px-2 py-1 mt-2 font-medium italic disabled:bg-gray-200 disabled:hover:cursor-no-drop" disabled={!canSubmit}>Join the waitlist</button>
                         </form>
                         <p className={subcription ? "font-bold text-center 2xl:text-[1.5rem]" :"hidden"}>Thank you for signing up for updates!</p>
-                        <a className="h-6 2xl:h-9 flex gap-x-2 justify-center items-center " href="https://www.instagram.com/sovall_com/">
+                        <a className="h-6 2xl:h-9 flex gap-x-2 justify-center items-center" href="https://www.instagram.com/sovall_com/">
                             <p className="text-xs 2xl:text-[1.1rem]">Follow us: </p>
                             <img className="h-4 2xl:h-6" src={instagram} />
                         </a>

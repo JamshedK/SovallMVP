@@ -25,12 +25,12 @@ const About = (props) => {
         return <p key={Math.random()}>{p}</p>
     });
     return (
-        <div className="h-90% flex max-md:flex-col max-md:gap-4 md:pt-4 md:justify-center items-center select-none">
+        <div className="h-90% flex max-md:flex-col max-md:gap-4 md:pt-4 md:justify-center items-center select-none overflow-auto">
                 {/*Wheel*/}
-                <div className="relative flex justify-center w-full max-md:h-[30rem] md:h-95% md:w-1/2 md:pt-8 2xl:h-[50rem] ">
+                <div className="relative flex justify-center w-full max-md:h-[30rem] md:h-full md:w-1/2 ">
                     
-                    <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[27rem] 2xl:h-[27rem] flex justify-center items-center">
-                        <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[25rem]  2xl:h-[25rem]  relative flex justify-center items-center">
+                    <div className=" w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[16rem] 2xl:h-[16rem] flex justify-center items-center ">
+                        <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[15rem]  2xl:h-[15rem]  relative flex justify-center items-center">
 
                             <div className="absolute h-full w-full z-10 select-none ">
                                 <Wheel current={currentF} handleClick={handleFounderChange} />
@@ -47,7 +47,7 @@ const About = (props) => {
                 </div>
                 
                 {/*Vision and Story*/ }
-            <div className="w-85% md:w-1/2 md:h-95% text-white flex 2xl:pl-32 md:overflow-auto scrollbar-hide 2xl:h-[50rem]">
+            <div className="w-85% md:w-1/2 md:h-full text-white flex 2xl:pl-32 md:overflow-auto scrollbar-hide">
                     <div className="w-fit pb-8 flex flex-col max-md:gap-6 md:gap-4 md:text-sm md:w-[80%] mt-7"> 
                         <div className="text-white border-b max-md:pl-2 flex flex-col gap-2">
                             <h1 className=" text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem]">Our Vision</h1>

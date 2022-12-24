@@ -28,9 +28,9 @@ const Wheel = (props) => {
     const founders = founders_data.map(data => {
         const index = founders_data.indexOf(data);
         if (index === props.current) {
-            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-30% w-30% dropshadow-2xl rounded-full z-50 ";
+            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 focus-none h-30% w-30% dropshadow-2xl rounded-full z-50 ";
         } else {
-            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 h-20% w-20% z-50 ";
+            pic_style = "absolute transition ease-in-out hover:scale-125 duration-500 focus-none h-20% w-20% z-50 ";
         }
         return (<button key={data[2]} id={`data[2]`} onClick={rotateWheelOnClick} style={picRotation} className={pic_style + data[1]} ><img className="w-full" src={data[0]} /></button>);
     });
