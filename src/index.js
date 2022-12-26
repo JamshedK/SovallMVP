@@ -10,13 +10,15 @@ import LogIn from "./views/logIn/LogIn";
 import About from "./views/about/About";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
+import AccountSetUp from './views/accountSetUp/AccountSetUp';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App/>
+            {/*<App/>*/}
+            <AccountSetUp/>
         </BrowserRouter>
   </React.StrictMode>
 );

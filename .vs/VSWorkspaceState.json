@@ -5,10 +5,12 @@
     "\\src\\assets",
     "\\src\\assets\\common",
     "\\src\\views",
-    "\\src\\views\\logIn\\components",
+    "\\src\\views\\accountSetUp",
+    "\\src\\views\\accountSetUp\\components",
+    "\\src\\views\\common",
     "\\src\\views\\softLaunch",
     "\\src\\views\\softLaunch\\components"
   ],
-  "SelectedNode": "\\src\\views\\softLaunch\\components\\Header.js",
+  "SelectedNode": "\\src\\views\\accountSetUp\\AccountSetUp.js",
   "PreviewInSolutionExplorer": false
 }
