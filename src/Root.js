@@ -1,5 +1,4 @@
-import Main from './views/softLaunch/Main';
-import About from './views/softLaunch/About';
+
 import {
     createBrowserRouter,
     RouterProvider,
@@ -8,7 +7,7 @@ import {
 
 function Root() {
     return (
-        <Main/>
+        <div>test</div>
         );
 
 }

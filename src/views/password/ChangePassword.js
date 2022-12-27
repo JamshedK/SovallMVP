@@ -13,8 +13,8 @@ const ChangePassword = () => {
 	const [canSubmit, setCanSubmit] = useState(false);
 	const [passMatch, setPassMatch] = useState(true);
 	const [reqs, setReqs] = useState([true, true, true, true]);
-	const [email, setEmail] = useState("");
-	const [emailConfirmation, setEmailConfirmation] = useState("");
+	const [password, setPassword] = useState("");
+	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
 
 	const requirements = data.map(req => {
@@ -29,34 +29,34 @@ const ChangePassword = () => {
 
 
 	const handleEmail = (e) => {
-		setEmail(e.target.value)
+		setPassword(e.target.value)
 	}
 	const handleEmailConfirmation = (e) => {
-		setEmailConfirmation(e.target.value)
+		setPasswordConfirmation(e.target.value)
 	}
 	
 
 	const checkRequirements = () => {
 		const update = [...reqs];
-		if (email.length >= 12) {
+		if (password.length >= 12) {
 			update[0] = true;
 		} else {
 			update[0] = false;
 		}
 
-		if (/[A-Z]/.test(email) && /[a-z]/.test(email)) {
+		if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
 			update[1] = true;
 		} else {
 			update[1] = false;
 		}
 
-		if (/[0-9]/.test(email)) {
+		if (/[0-9]/.test(password)) {
 			update[2] = true;
 		} else {
 			update[2] = false;
 		}
 
-		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(email)) {
+		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
 			update[3] = true;
 		} else {
 			update[3] = false;
@@ -74,11 +74,11 @@ const ChangePassword = () => {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		if (email.length === 0 && emailConfirmation.length == 0) {
+		if (password.length === 0 && passwordConfirmation.length == 0) {
 			return;
 		}
 
-		if (email === emailConfirmation) {
+		if (password === passwordConfirmation) {
 			setPassMatch(true);
 			if (checkRequirements()) {
 				//Insert here the HTTP POST request
@@ -102,8 +102,8 @@ const ChangePassword = () => {
 				</div>
 				<form className="w-full flex flex-col items-center gap-8 text-orange-1">
 					<p className={"w-full text-[8pt] " + (passMatch ? "hidden" : "")}>*The Passwords don't match</p>
-					<Password value={email} onChange={handleEmail} placeholder="Password" visible={true} match={passMatch}/>
-					<Password value={emailConfirmation} onChange={handleEmailConfirmation} placeholder="Re-enter your password" visible={true} match={passMatch} />
+					<Password value={password} onChange={handleEmail} placeholder="Password" visible={true} match={passMatch}/>
+					<Password value={passwordConfirmation} onChange={handleEmailConfirmation} placeholder="Re-enter your password" visible={true} match={passMatch} />
 					<button className="block bg-white text-green-2  dropshadow-xl rounded-full px-4 py-1 mt-6 font-medium disabled:bg-gray-200 disabled:hover:cursor-no-drop" onClick={handleSubmit}>Change Password</button>
 
 				</form>

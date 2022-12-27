@@ -8,9 +8,9 @@
     "\\src\\views\\accountSetUp",
     "\\src\\views\\accountSetUp\\components",
     "\\src\\views\\common",
-    "\\src\\views\\softLaunch",
+    "\\src\\views\\password",
     "\\src\\views\\softLaunch\\components"
   ],
-  "SelectedNode": "\\src\\views\\accountSetUp\\AccountSetUp.js",
+  "SelectedNode": "\\src\\views\\softLaunch",
   "PreviewInSolutionExplorer": false
 }
