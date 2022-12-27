@@ -5,22 +5,23 @@ import { useState } from 'react';
 
 const Input = (props) => {
 
-    const [hidden, setHidden] = useState(true);
-    const type = hidden ? "text" : "password";
+    const [visible, setVisible] = useState(false);
+    const type = visible ? "text" : "password";
 
     
     const handleValue = (e) => {
-        props.setValue(e.target.value);
+        const value = e.target.value;
+        props.setValue(value);
     }
     const handleClick = (e) => {
         e.preventDefault();
-        setHidden(prev => !prev);
+        setVisible(prev => !prev);
     }
 
     const Button = () => {
         return (
             <button onClick={handleClick}>
-                <img src={hidden?hide:show} />
+                <img src={visible?hide:show} />
             </button>
         );
     }

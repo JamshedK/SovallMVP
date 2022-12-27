@@ -1,10 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Root from './Root';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from "react-router-dom";
-import Header from './views/softLaunch/components/Header';
 import App from './App';
 import LogIn from "./views/logIn/LogIn";
 import About from "./views/about/About";
