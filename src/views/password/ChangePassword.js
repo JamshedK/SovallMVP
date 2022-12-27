@@ -8,7 +8,7 @@ const data = [
 ];
 
 
-const ForgotPassword = () => {
+const ChangePassword = () => {
 
 	const [canSubmit, setCanSubmit] = useState(false);
 	const [passMatch, setPassMatch] = useState(true);
@@ -112,4 +112,4 @@ const ForgotPassword = () => {
     );
 }
 
-export default ForgotPassword;
+export default ChangePassword;
