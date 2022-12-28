@@ -4,6 +4,7 @@ import LogIn from "./views/logIn/LogIn";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
 import AccountSetUp from "./views/accountSetUp/AccountSetUp";
+import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 export default function App() {
     const [subscription, setSubscription] = React.useState(false);
     console.log(subscription);
@@ -14,7 +15,9 @@ export default function App() {
                 <Route path="/" element = {<LogIn/>}/>
                 <Route path="/forgotpassword" element={<ForgotPassword/>}/>
                 <Route path="/changepassword" element = {<ChangePassword/>}/>
-                <Route path="/accountsetup" element = {<AccountSetUp/>}/>
+                <Route path="/accountsetup" element={<AccountSetUp />} />
+                <Route path="/skills-interests" element={<SkillsAndInterests />} />
+
             </Routes>
             
         </div>

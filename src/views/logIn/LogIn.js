@@ -1,4 +1,4 @@
-﻿import React, { useContext, useState } from "react";
+import React, { Fragment, useContext, useState } from "react";
 import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
 import AuthContext from "../../store/auth-context";
@@ -11,10 +11,10 @@ const points = [
 const LogIn = (props) => {
     
     const [isLogin, setIsLogin] = useState(false);
-    const [email, setEmail] = useState('test@gmail.com');
-    const [password, setPassword] = useState('123456');
     const authCtx = useContext(AuthContext);
 
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
     const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
     const bullet_points = points.map(point => {
         return <li key={point[0]} className="flex gap-1">
@@ -61,9 +61,9 @@ const LogIn = (props) => {
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
                         <a href = '/signup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
-                    <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
-                        <Input type="email" placeholder="Email"/>
-                        <Input type="password" placeholder="Password"/>
+                    <form className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
+                        <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>
+                        <Input type="password" placeholder="Password" value={password} setValue={setPassword} ps={true}/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>
                     </form>
                     <a href = '/forgotpassword' className="underline text-[8pt] lg:text-[10pt] xl:text-[12pt]">Forgot password?</a>

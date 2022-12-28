@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 
 const Input = (props) => {
-
     const def = props.ps ? false: true;
     const [visible, setVisible] = useState(def);
     const type = visible ? "text" : "password";
