@@ -1,4 +1,4 @@
-﻿import React, { Fragment } from "react";
+﻿import React, { Fragment, useState } from "react";
 import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
 
@@ -8,6 +8,8 @@ const points = [
     "Budget support"]
 
 const LogIn = (props) => {
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
     const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
     const bullet_points = points.map(point => {
         return <li key={point[0]} className="flex gap-1">
@@ -26,8 +28,8 @@ const LogIn = (props) => {
                         <a href = '/signup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
                     <form className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
-                        <Input type="email" placeholder="Email" />
-                        <Input type="password" placeholder="Password"/>
+                        <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>
+                        <Input type="password" placeholder="Password" value={password} setValue={setPassword} ps={true}/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>
                     </form>
                     <a href = '/forgotpassword' className="underline text-[8pt] lg:text-[10pt] xl:text-[12pt]">Forgot password?</a>
