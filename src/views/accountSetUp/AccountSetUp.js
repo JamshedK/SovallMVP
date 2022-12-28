@@ -17,7 +17,7 @@ const AccountSetUp = () => {
 	const [isLogin, setIsLogin] = useState(true);
 
 	// For the context management
-	const authCtx = useContext(AuthContext);
+	const authCtx = useContext(AuthContext);  
 
 	const data = [
 		"At least 12 characters",
@@ -99,7 +99,7 @@ const AccountSetUp = () => {
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
 			// if (checkAndUpdateRequirements()) {
-				//Insert here the HTTP POST request
+				//Adding the authentication
 			fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA',
 			{
 				method: 'POST',
@@ -115,7 +115,8 @@ const AccountSetUp = () => {
 			).then(res => {
 				if (res.ok){
 					res.json().then(data => {
-						console.log(data);
+						alert('Successfully Created the account');
+						authCtx.login(data.idToken);
 					})
 				}else{
 					return res.json().then(data => {

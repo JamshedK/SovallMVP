@@ -1,6 +1,7 @@
-﻿import React, { Fragment } from "react";
+﻿import React, { useContext, useState } from "react";
 import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
+import AuthContext from "../../store/auth-context";
 
 const points = [
     "Educational resources",
@@ -8,6 +9,12 @@ const points = [
     "Budget support"]
 
 const LogIn = (props) => {
+    
+    const [isLogin, setIsLogin] = useState(false);
+    const [email, setEmail] = useState('test@gmail.com');
+    const [password, setPassword] = useState('123456');
+    const authCtx = useContext(AuthContext);
+
     const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
     const bullet_points = points.map(point => {
         return <li key={point[0]} className="flex gap-1">
@@ -15,6 +22,35 @@ const LogIn = (props) => {
                     <p>{point}</p>
                </li>
     });
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                email: email, 
+                password: password,
+                returnSecureToken: true
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        ).then(res => {
+            if (res.ok){
+                res.json().then(data => {
+                    alert('Successfully logged in');
+                    console.log(data.idToken);
+                    authCtx.login(data.idToken);
+                })
+            }else{
+                return res.json().then(data => {
+                    console.log(data);
+                })
+            }
+        });
+    }
 
     return (
         <div className="relative bg-green-6 h-screen flex justify-center flex-col items-center text-white overflow-auto">
@@ -25,8 +61,8 @@ const LogIn = (props) => {
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
                         <a href = '/signup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
-                    <form className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
-                        <Input type="email" placeholder="Email" />
+                    <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
+                        <Input type="email" placeholder="Email"/>
                         <Input type="password" placeholder="Password"/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>
                     </form>
