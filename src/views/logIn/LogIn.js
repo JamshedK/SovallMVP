@@ -1,7 +1,7 @@
 import React, { Fragment, useContext, useState } from "react";
 import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../contexts/auth-context";
 
 const points = [
     "Educational resources",
@@ -10,11 +10,10 @@ const points = [
 
 const LogIn = (props) => {
     
-    const [isLogin, setIsLogin] = useState(false);
     const authCtx = useContext(AuthContext);
+    const [email,setEmail] = useState("test@gmail.com");
+    const [password,setPassword] = useState("123456");
 
-    const [email,setEmail] = useState("");
-    const [password,setPassword] = useState("");
     const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
     const bullet_points = points.map(point => {
         return <li key={point[0]} className="flex gap-1">
@@ -23,33 +22,33 @@ const LogIn = (props) => {
                </li>
     });
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
-        fetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA',
-        {
-            method: 'POST',
-            body: JSON.stringify({
-                email: email, 
-                password: password,
-                returnSecureToken: true
-            }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-        ).then(res => {
-            if (res.ok){
-                res.json().then(data => {
-                    alert('Successfully logged in');
-                    console.log(data.idToken);
-                    authCtx.login(data.idToken);
-                })
+        const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
+        const response = await fetch(url, {
+                            method: 'POST',
+                            body: JSON.stringify({
+                                email: email, 
+                                password: password,
+                                returnSecureToken: true
+                            }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        }
+        );
+        try{
+            const data = await response.json();
+            if(response.ok){
+                authCtx.login(data.idToken);
+                console.log(authCtx.token)
             }else{
-                return res.json().then(data => {
-                    console.log(data);
-                })
+                console.log(data)
             }
-        });
+        }catch(e){
+            console.log(e)
+        }
+        
     }
 
     return (
@@ -61,7 +60,7 @@ const LogIn = (props) => {
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
                         <a href = '/signup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
-                    <form className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
+                    <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
                         <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>
                         <Input type="password" placeholder="Password" value={password} setValue={setPassword} ps={true}/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>

@@ -2,7 +2,7 @@
 import Confirmation from './components/AccountSetUp.Confirmation';
 import Input from '../common/Input';
 import { useState, useContext } from 'react';
-import AuthContext from '../../store/auth-context';
+import AuthContext from "../../contexts/auth-context";
 
 
 
@@ -90,7 +90,7 @@ const AccountSetUp = () => {
 	}
 
 
-	const handleContinue = (e) => {
+	const handleContinue = async (e) => {
 		e.preventDefault();
 		if (password.length === 0 && passwordConfirmation.length == 0) {
 			return;
@@ -99,31 +99,33 @@ const AccountSetUp = () => {
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
 			// if (checkAndUpdateRequirements()) {
-				//Adding the authentication
-			fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA',
-			{
-				method: 'POST',
-				body: JSON.stringify({
-					email: email, 
-					password: password,
-					returnSecureToken: true
-				}),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}
-			).then(res => {
-				if (res.ok){
-					res.json().then(data => {
-						alert('Successfully Created the account');
-						authCtx.login(data.idToken);
-					})
+				
+			const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
+			const response = await fetch(url, {
+								method: 'POST',
+								body: JSON.stringify({
+									email: email, 
+									password: password,
+									returnSecureToken: true
+								}),
+								headers: {
+									'Content-Type': 'application/json'
+								}
+							}
+			);
+			try{
+				const data = await response.json();
+				if(response.ok){
+					console.log(data.idToken);
+					authCtx.login(data.idToken);
+					console.log(authCtx.token)
 				}else{
-					return res.json().then(data => {
-						console.log(data);
-					})
+					console.log(data)
 				}
-			});
+			}catch(e){
+				console.log(e)
+			}
+			
 			}
 		// } else {
 		// 	setPassMatch(false);
