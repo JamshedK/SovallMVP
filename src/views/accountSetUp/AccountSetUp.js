@@ -14,7 +14,7 @@ const AccountSetUp = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
-	// useHistory hook for redirects
+	// useNavigate hook for redirects
 	const navigate = useNavigate(); 
 	// For the context management
 	const authCtx = useContext(AuthContext);  
@@ -118,7 +118,7 @@ const AccountSetUp = () => {
 				if(response.ok){
 					// store the token
 					authCtx.login(data.idToken);
-					console.log(authCtx.token)
+					console.log(authCtx.token);
 					// redirect the user to skils and interests
 					navigate('/skills-interests');
 				}else{
