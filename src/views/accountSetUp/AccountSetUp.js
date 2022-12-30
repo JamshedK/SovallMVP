@@ -1,7 +1,8 @@
 ﻿import Form from './components/AccountSetUp.Form';
 import Confirmation from './components/AccountSetUp.Confirmation';
 import Input from '../common/Input';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import AuthContext from "../../contexts/auth-context";
 
 
 
@@ -13,6 +14,10 @@ const AccountSetUp = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
+	const [isLogin, setIsLogin] = useState(true);
+
+	// For the context management
+	const authCtx = useContext(AuthContext);  
 
 	const data = [
 		"At least 12 characters",
@@ -85,21 +90,47 @@ const AccountSetUp = () => {
 	}
 
 
-	const handleContinue = () => {
+	const handleContinue = async (e) => {
+		e.preventDefault();
 		if (password.length === 0 && passwordConfirmation.length == 0) {
 			return;
 		}
 
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
-			if (checkAndUpdateRequirements()) {
-				//Insert here the HTTP POST request
-				console.log("Correct");
+			// if (checkAndUpdateRequirements()) {
+				
+			const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
+			const response = await fetch(url, {
+								method: 'POST',
+								body: JSON.stringify({
+									email: email, 
+									password: password,
+									returnSecureToken: true
+								}),
+								headers: {
+									'Content-Type': 'application/json'
+								}
+							}
+			);
+			try{
+				const data = await response.json();
+				if(response.ok){
+					console.log(data.idToken);
+					authCtx.login(data.idToken);
+					console.log(authCtx.token)
+				}else{
+					console.log(data)
+				}
+			}catch(e){
+				console.log(e)
 			}
-		} else {
-			setPassMatch(false);
-			return;
-		}
+			
+			}
+		// } else {
+		// 	setPassMatch(false);
+		// 	return;
+		// }
 	}
 
 	return (
