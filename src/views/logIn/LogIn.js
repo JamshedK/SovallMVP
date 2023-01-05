@@ -42,6 +42,7 @@ const LogIn = (props) => {
             if(response.ok){
                 authCtx.login(data.idToken);
                 console.log(authCtx.token)
+                // redirect the user after login
             }else{
                 console.log(data)
             }

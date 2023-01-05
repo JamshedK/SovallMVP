@@ -3,7 +3,9 @@ import Confirmation from './components/AccountSetUp.Confirmation';
 import Input from '../common/Input';
 import { useState, useContext } from 'react';
 import AuthContext from "../../contexts/auth-context";
-
+import { useNavigate } from 'react-router-dom';
+import {db} from '../../firebase-config'
+import { addDoc, collection, getDocs } from '@firebase/firestore';
 
 
 const AccountSetUp = () => {
@@ -14,10 +16,12 @@ const AccountSetUp = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
-	const [isLogin, setIsLogin] = useState(true);
-
+	// useNavigate hook for redirects
+	const navigate = useNavigate(); 
 	// For the context management
-	const authCtx = useContext(AuthContext);  
+	const authCtx = useContext(AuthContext); 
+	// Reference to users collection 
+	const usersCollectionRef = collection(db, 'users'); 
 
 	const data = [
 		"At least 12 characters",
@@ -89,6 +93,9 @@ const AccountSetUp = () => {
 			);
 	}
 
+	const addUserToFirestore = async (e) => {
+		await addDoc(usersCollectionRef, {firstname:name, lastname: lastName, email: email})
+	}
 
 	const handleContinue = async (e) => {
 		e.preventDefault();
@@ -116,9 +123,13 @@ const AccountSetUp = () => {
 			try{
 				const data = await response.json();
 				if(response.ok){
-					console.log(data.idToken);
+					// store the token
 					authCtx.login(data.idToken);
-					console.log(authCtx.token)
+					console.log(authCtx.token);
+					// redirect the user to skils and interests
+					navigate('/skills-interests');
+					// add the user to firestore
+					addUserToFirestore();
 				}else{
 					console.log(data)
 				}

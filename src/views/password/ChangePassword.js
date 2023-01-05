@@ -1,5 +1,7 @@
-﻿import { useState } from "react";
+﻿import { useState, useContext} from "react";
 import Password from './components/ChangePassword.Password';
+import AuthContext from "../../contexts/auth-context";
+
 const data = [
 	"At least 12 characters (required for your Muhlenberg password)—the more characters, the better",
 	"A mixture of both uppercase and lowercase letters",
@@ -15,6 +17,8 @@ const ChangePassword = () => {
 	const [reqs, setReqs] = useState([true, true, true, true]);
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+	const authCtx = useContext(AuthContext);
 
 
 	const requirements = data.map(req => {
@@ -71,7 +75,7 @@ const ChangePassword = () => {
 		
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		if (password.length === 0 && passwordConfirmation.length == 0) {
@@ -80,14 +84,29 @@ const ChangePassword = () => {
 
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
-			if (checkRequirements()) {
+			// if (checkRequirements()) {
 				//Insert here the HTTP POST request
 				console.log("Correct");
+				try{
+					const url = 'https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
+					const response = await fetch(url, {
+							method: 'POST',
+							body: JSON.stringify({
+								'idToken': authCtx.token,
+								'password': password,
+								'returnSecureToken': true
+							})
+						})
+					const data = await response.json();
+					console.log(data);
+				}catch(e){
+					console.log(e);
+				}
 			}
-		} else {
-			setPassMatch(false);
-			return;
-        }
+		// } else {
+		// 	setPassMatch(false);
+		// 	return;
+        // }
 
     }
 	return (
