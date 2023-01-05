@@ -15,20 +15,18 @@ const Card = (props) => {
 
     const options = props.data.map(item => {
         const id = props.data.indexOf(item);
-        return <Toggle key={id} value={item} selectedStyle="bg-green-4 text-white" isSelected={false} />
+        return <Toggle key={id} value={item} selectedStyle={props.accentStyle} isSelected={false} />
     });
     return (
-        <div className="bg-white rounded-xl h-fit w-[20rem] flex flex-col px-4 py-8">
+        <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
             <h1 className="font-bold">{props.title}</h1>
-            <p className="pl-4">Select at least three</p>
-            <Search placeholder="Search" />
-            <div className="flex w-full border">
-                <Arrow src={arrowPrev} />
-                <div className="w-[96%] border h-[7rem] flex flex-col overflow-auto">
-                    {options }
-                </div>
-                <Arrow src={arrowNext}/>
-
+            <div>
+                <p className="pl-4">Select at least three</p>
+                {/*I consider that the next line is unnecesary for the MVP*/}
+                {/*<Search placeholder="Search" />*/} 
+            </div>
+            <div className="h-[9rem] flex flex-wrap gap-3 overflow-auto">
+                {options}
             </div>
         </div>
     );
