@@ -1,16 +1,15 @@
 {
   "ExpandedNodes": [
     "",
+    "\\public",
     "\\src",
     "\\src\\assets",
     "\\src\\assets\\common",
     "\\src\\views",
-    "\\src\\views\\accountSetUp",
-    "\\src\\views\\accountSetUp\\components",
     "\\src\\views\\common",
-    "\\src\\views\\password",
-    "\\src\\views\\softLaunch\\components"
+    "\\src\\views\\home",
+    "\\src\\views\\home\\components"
   ],
-  "SelectedNode": "\\src\\views\\softLaunch",
+  "SelectedNode": "\\src\\assets\\common",
   "PreviewInSolutionExplorer": false
 }

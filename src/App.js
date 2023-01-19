@@ -5,6 +5,7 @@ import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
 import AccountSetUp from "./views/accountSetUp/AccountSetUp";
 import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
+import Home from "./views/home/Home";
 import { AuthContextProvider } from "./contexts/auth-context";
 export default function App() {
     const [subscription, setSubscription] = React.useState(false);
@@ -19,6 +20,7 @@ export default function App() {
                     <Route path="/changepassword" element = {<ChangePassword/>}/>
                     <Route path="/accountsetup" element={<AccountSetUp />} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
+                    <Route path="/home" element={<Home/>} />
 
                 </Routes>  
             </div>
