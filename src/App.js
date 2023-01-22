@@ -16,7 +16,6 @@ export default function App() {
     const [subscription, setSubscription] = React.useState(false);
     const [temp, setTemp] = React.useState(true); //this is just a temporary way to switch between the 2 different headers, or no header
     const authCtx = React.useContext(AuthContext);
-    console.log('authCtx: ' + authCtx.isLoggedIn)
 
     return (
         <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">

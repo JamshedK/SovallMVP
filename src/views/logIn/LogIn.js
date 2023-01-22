@@ -48,7 +48,13 @@ const LogIn = (props) => {
                 // redirect the user after login
                 navigate('/home')
             }else{
-                console.log(data)
+                // if we get an error that the password is incorrect
+                console.log(data);
+                if(data?.error?.message){
+                    if(data.error.message === "INVALID_PASSWORD"){
+                        alert('Incorrect password or login');
+                    }
+                }
             }
         }catch(e){
             console.log(e)
