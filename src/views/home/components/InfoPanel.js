@@ -32,11 +32,11 @@ const InfoBlock = (props) => {
 
 }
 
-const skills = skills_data.map(skill => {
-    return <Label value={skill} bg="bg-green-4"/>
+const skills = skills_data.map((skill,i) => {
+    return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4"/>
 });
-const interests = interests_data.map(interest => {
-    return <Label value={interest} bg="bg-yellow-4" />
+const interests = interests_data.map((interest,i) => {
+    return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
 });
 
 const Own = () => {

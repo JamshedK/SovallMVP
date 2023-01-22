@@ -8,12 +8,12 @@ const MessagesToggle = (props) => {
         props.setValue(prev => !prev);
     }
     return (
-        <div className="flex items-center w-fit h-8 gap-2 absolute right-6 mt-0">
-            <button  onClick={handleToggle}>
-                <img src={messages} />
+        <div className={"flex items-center w-fit h-5 gap-2 mt-2 mr-4 "+ (props.value? "hidden" : "") }>
+            <button className="h-fit w-fit" onClick={handleToggle}>
+                <img className="h-4 w-fit"  src={messages} />
             </button>
-            <button className={"h-fit " + (props.value ? "rotate-180" : "")}  onClick={handleToggle}>
-                <img src={rightExpandArrow} />
+            <button className="w-fit h-fit"  onClick={handleToggle}>
+                <img className="h-2 w-fit"  src={rightExpandArrow} />
             </button>
             
         </div>

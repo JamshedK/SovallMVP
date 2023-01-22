@@ -16,8 +16,8 @@ const Button = props => {
 const FeedCard= (props) => {
     const data = props.data;
     const interactorsData = data.interactors;
-    const interactors = interactorsData.map(interactor => {
-        return <Interactor data={interactor} />
+    const interactors = interactorsData.map((interactor,i) => {
+        return <Interactor key={"-interactor-"+i} data={interactor} />
     });
     const px = "px-8";
     return (

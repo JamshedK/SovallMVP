@@ -110,7 +110,7 @@ const ChangePassword = () => {
 
     }
 	return (
-		<div className="relative bg-green-5 h-screen sm:text-white flex justify-center pt-20 overflow-auto pb-8">
+		<div className="relative bg-green-5 h-full sm:text-white flex justify-center pt-20 overflow-auto pb-8">
 			<div className=" w-[20rem]  xl:w-[23rem] h-fit text-white flex flex-col items-center gap-8">
 				<h1 className="w-full font-bold text-[14pt]">Change Password</h1>
 				<div className="flex flex-col gap-2">

@@ -25,7 +25,7 @@ function Paragraph(props) {
     });
 
     return (
-        <div className="max-md:px-10 md:w-[31.5rem] xl:w-[35.5rem] text-white">
+        <div className="">
             <button className="text-[16pt] underline font-bold flex flex-wrap w-fit hover:text-orange-1" onClick={handleClick}> {info.title}</button>
             <div className={hidden ? "hidden" : "w-11/12 pl-10 my-6 flex flex-col gap-8"}>
                 {content}

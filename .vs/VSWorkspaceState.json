@@ -1,15 +1,15 @@
 {
   "ExpandedNodes": [
     "",
-    "\\public",
     "\\src",
-    "\\src\\assets",
     "\\src\\assets\\common",
+    "\\src\\assets\\home",
     "\\src\\views",
-    "\\src\\views\\common",
     "\\src\\views\\home",
-    "\\src\\views\\home\\components"
+    "\\src\\views\\home\\components",
+    "\\src\\views\\skillsAndInterests\\components",
+    "\\src\\views\\skillsAndInterests\\store"
   ],
-  "SelectedNode": "\\src\\assets\\common",
+  "SelectedNode": "\\src\\views\\home\\components\\ChatHistory.js",
   "PreviewInSolutionExplorer": false
 }

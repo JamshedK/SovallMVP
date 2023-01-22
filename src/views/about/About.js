@@ -1,4 +1,5 @@
-﻿import Paragraph from './components/Paragraph';
+﻿import { Fragment } from 'react';
+import Paragraph from './components/Paragraph';
 const data = [
 	{
 		title: "Our Values",
@@ -73,13 +74,17 @@ const content = data.map(section => {
 });
 const About = () => {
 
-    return (
-		<div className="relative bg-green-5 h-screen sm:text-white flex justify-center">
-			<div className="py-16 overflow-auto scrollbar-hide w-full flex flex-col gap-6 md:items-center">
-				{content}
+	return (
+		<Fragment>
+			<div className="bg-green-5 h-full w-full flex justify-center py-8 overflow-auto scrollbar-hide border">
+				<div className="p-8 h-fit rounded-lg w-[25rem] md:p-20 md:w-[35rem] flex flex-col gap-6 bg-white">
+					{content}
+				</div>
+			
 			</div>
 			<a href="mailto:info@sovall.com" className="absolute bg-[#2C8888] bottom-4 text-white rounded-full py-2 px-5 drop-shadow-lg"> Reach out: info@sovall.com</a>
-		</div>
+		</Fragment>
+		
         );
 }
 

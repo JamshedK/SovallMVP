@@ -5,9 +5,9 @@ import doc from '../../../assets/home/doc.svg';
 import poll from '../../../assets/home/poll.svg';
 
 const images = [photo, doc];
-const buttons = images.map(image => {
+const buttons = images.map((image,i) => {
     return (
-        <button>
+        <button key={"new-post-image-"+i}>
             <img className="h-full" src={image} />
         </button>
         );

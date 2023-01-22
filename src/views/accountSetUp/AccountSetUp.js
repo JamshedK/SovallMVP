@@ -145,7 +145,7 @@ const AccountSetUp = () => {
 	}
 
 	return (
-		<div className="h-screen w-full bg-green-5 flex items-center pt-10 flex flex-col gap-8 overflow-auto">
+		<div className="h-full w-full bg-green-5 flex items-center pt-10 flex flex-col gap-8 overflow-auto">
 			<div className="w-[23rem] h-[26rem] bg-white rounded-xl px-8 py-4">
 				<div className={"flex flex-col gap-2"}>
 					<h1 className="text-black font-bold text-[14pt]">Account Set-up</h1>

@@ -53,7 +53,7 @@ const LogIn = (props) => {
     }
 
     return (
-        <div className="relative bg-green-6 h-screen flex justify-center flex-col items-center text-white overflow-auto">
+        <div className="relative bg-green-6 h-full w-full flex justify-center flex-col items-center text-white overflow-auto">
             <div className="h-fit flex justify-center items-center p-1 gap-20">
                 {/*Left panel*/ }
                 <div className={containerStyle +" rounded-xl bg-[#197474] flex justify-between md:py-8 items-center"}>
@@ -75,6 +75,7 @@ const LogIn = (props) => {
                     <p className="text-yellow-4 underline font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt]">Solve problems</p>
                     <ul className="md:text-[10pt] lg:text-[13pt]  xl:text-[15pt]  2xl:text-[17pt] md:ml-6">
                         {bullet_points}
+                        <a className="text-[11pt]" href="/about">Learn more...</a>
                     </ul>
                     <div className="h-auto flex py-1">
                         <iframe className="md:w-[85%] aspect-video" src="https://www.youtube.com/embed/uw7UkWrxQFc" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
