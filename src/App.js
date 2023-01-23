@@ -1,6 +1,7 @@
 import * as React from "react";
 import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import LogIn from "./views/logIn/LogIn";
+import Logout from "./views/logout/Logout";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
 import AccountSetUp from "./views/accountSetUp/AccountSetUp";
@@ -32,9 +33,9 @@ export default function App() {
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     {authCtx.isLoggedIn && <Route path="/home" element={<Home />} />}
                     <Route path="/about" element={<About />} />
-                    <Route path="/signout" element={authCtx.logout() }/>
-                    <Route path='*' element={<Navigate to='/'/>}>
-                    </Route>
+                    <Route path="/signout" element={<Logout/>}/>
+                    {/* <Route path='/*' element={<Navigate to='/'/>}> 
+                    </Route> */}
                 </Routes>
             </div>
         </div>        

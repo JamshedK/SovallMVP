@@ -68,7 +68,7 @@ const LogIn = (props) => {
                 <div className={containerStyle +" rounded-xl bg-[#197474] flex justify-between md:py-8 items-center"}>
                     <div className="flex flex-col items-center">
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
-                        <a href = '/signup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
+                        <a href = '/accountsetup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
                     <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
                         <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>

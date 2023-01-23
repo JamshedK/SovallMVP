@@ -122,6 +122,7 @@ const AccountSetUp = () => {
 			);
 			try{
 				const data = await response.json();
+				console.log(data);
 				if(response.ok){
 					// store the token
 					authCtx.login(data.idToken);
