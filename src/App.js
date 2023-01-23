@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Routes, Route, Outlet, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
 import LogIn from "./views/logIn/LogIn";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
@@ -25,16 +25,17 @@ export default function App() {
             </header>
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
                 <Routes>
-                    <Route path="/signup" element={<AccountSetUp />} />
                     <Route path="/" element={<LogIn />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={<AccountSetUp />} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
-                    <Route path="/home" element={<Home />} />
+                    {authCtx.isLoggedIn && <Route path="/home" element={<Home />} />}
                     <Route path="/about" element={<About />} />
-
-                </Routes>  
+                    <Route path="/signout" element={authCtx.logout() }/>
+                    <Route path='*' element={<Navigate to='/'/>}>
+                    </Route>
+                </Routes>
             </div>
         </div>        
       );
