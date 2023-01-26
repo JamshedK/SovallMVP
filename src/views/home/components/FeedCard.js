@@ -81,16 +81,8 @@ const FeedCard= (props) => {
 
             {/*interactors*/}
             <label className={"w-full " + px}>Members who intereacted with this post</label>
-            <div className={"flex w-full items-start justify-between " + px}>
-                <button className="w-fit h-9 flex" >
-                    <img className="w-2" src={arrowBack} />
-                </button>
-                <div className="w-11/12 flex overflow-auto no-scroll scrollbar-hide">
-                    {interactors}
-                </div>
-                <button className="w-fit h-9 flex">
-                    <img className="w-2"  src={arrowForth} />
-                </button>
+            <div className={"relative flex w-full items-start justify-between overflow-auto " + px}>
+                {interactors}
             </div>
         </div>
         );

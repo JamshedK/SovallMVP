@@ -15,7 +15,7 @@ const Card = (props) => {
 
     const options = props.data.map(item => {
         const id = props.data.indexOf(item);
-        return <Toggle key={id} value={item} selectedStyle={props.accentStyle} isSelected={false} />
+        return <Toggle key={id} value={item} selectedStyle={props.accentStyle} isSelected={false} selectedItems={props.selectedItems} setSelectedItems={props.setSelectedItems} />
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">

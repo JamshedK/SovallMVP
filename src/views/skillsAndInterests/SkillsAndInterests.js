@@ -16,7 +16,7 @@ const SkillsAndInterests = (props) => {
         console.log(interests);
     }
     return (
-        <div className="w-full h-full flex flex-col py-10 items-center overflow-auto">
+        <div className="w-full h-full flex flex-col bg-green-5 py-10 items-center overflow-auto">
             <div className="flex max-md:flex-col gap-8 max-md:items-center md:justify-center  py-10 md:gap-8 ">
                 <Card title="Skills" data={skills_data} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>
                 <Card title="Interests" data={interests_data} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />
