@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BrowserRouter, Routes, Route, Outlet, Navigate } from "react-router-dom";
+import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import LogIn from "./views/logIn/LogIn";
 import Logout from "./views/logout/Logout";
 import ForgotPassword from "./views/password/ForgotPassword";
@@ -8,6 +8,7 @@ import AccountSetUp from "./views/accountSetUp/AccountSetUp";
 import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
+import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
 import HeaderB from "./views/common/HeaderB";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
@@ -34,8 +35,7 @@ export default function App() {
                     {authCtx.isLoggedIn && <Route path="/home" element={<Home />} />}
                     <Route path="/about" element={<About />} />
                     <Route path="/signout" element={<Logout/>}/>
-                    {/* <Route path='/*' element={<Navigate to='/'/>}> 
-                    </Route> */}
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
         </div>        
