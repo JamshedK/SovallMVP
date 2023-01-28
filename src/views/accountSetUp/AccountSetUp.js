@@ -20,8 +20,6 @@ const AccountSetUp = () => {
 	const navigate = useNavigate(); 
 	// For the context management
 	const authCtx = useContext(AuthContext); 
-	// Reference to users collection 
-	const usersCollectionRef = collection(db, 'users'); 
 
 	const data = [
 		"At least 12 characters",

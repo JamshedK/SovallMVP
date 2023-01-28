@@ -4,9 +4,10 @@ import edit from '../../../assets/home/edit.svg';
 import messages from '../../../assets/home/messages.svg';
 import friends from '../../../assets/home/friends.svg';
 import arrow_up from '../../../assets/home/arrow_up.svg';
-import { useState } from 'react';
-const skills_data = ["Videography", "Copywriting", "Communication", "Collaboration", "Animation", "Strategy"];
-const interests_data = ["Problem Solving", "Physics", "Math", "Material Science", "Copywriting", "Adobe"];
+import { useState, useEffect, useContext } from 'react';
+import { doc, getDoc } from "firebase/firestore";
+import AuthContext from "../../../contexts/auth-context";
+import {db} from '../../../firebase-config'
 
 const QuickAccess = (props) => {
     return (
@@ -32,13 +33,6 @@ const InfoBlock = (props) => {
 
 }
 
-const skills = skills_data.map((skill,i) => {
-    return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4"/>
-});
-const interests = interests_data.map((interest,i) => {
-    return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
-});
-
 const Own = () => {
     return (
         <div className="flex gap-2 text-gray-500" >
@@ -58,31 +52,53 @@ const Other = () => {
     )
 }
 
-
-
 const InfoPanel = (props) => {
     const [showDetails, setShowDetails] = useState(true);
+    const [userInfo, setUserInfo] = useState({});
+    const authCtx = useContext(AuthContext);
+    const [fullName, setFullName] = useState('')
+    const [email, setEmail] = useState('')
 
     const handleClick = () => {
         setShowDetails(prev => !prev);
     }
-   
+    useEffect(()=>{
+        console.log("useEffect called here")
+        const getUserInfo = async () =>{
+            const response = await getDoc(doc(db, "users", authCtx.userID))
+            const data = response.data(); 
+            setUserInfo(response.data())
+            setFullName(data.firstname + ' ' + data.lastName);
+            setEmail(data.email);
+        } 
+        getUserInfo();
+    }, [])
+
+     /* To make sure to render the skills component only when the request is complete
+        Check if array of interests is empty and if so, sets it to null
+    */
+    const skills = userInfo.skills && Array.isArray(userInfo.skills) ? userInfo.skills.map((skill,i) => {
+        return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4"/>
+    }) : null
+
+    const interests = userInfo.interests && Array.isArray(userInfo.interests) ? userInfo.interests.map((interest,i) => {
+        return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
+    }) : null;
+    
     return (
         <div className={"bg-white h-fit px-8 pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
             <div className="flex justify-between ">
                 <div className="flex gap-4">
                     <img className="w-16 h-16 rounded-full" src={profile} />
                     <div className="flex flex-col w-fit ">
-                        <a href="/home" className="font-bold">Hamid Mubariz</a>
-                        <a className="text-blue-500 text-[9pt]" href="/home">www.hamidmubariz.com</a>
+                        <a href="/home" className="font-bold">{fullName}</a>
+                        <a className="text-blue-500 text-[9pt]" href="/home">{email}</a>
                         <p className="text-[9pt]">Let's have fun with creativity!</p>
                     </div>
-
 
                 </div>
                 {props.own? <Own/> : <Other/>}
             </div>
-
 
             <div className={showDetails? "flex flex-col gap-6" : "hidden"}>
                 <InfoBlock title="Skills">{skills}</InfoBlock>
