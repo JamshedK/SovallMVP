@@ -9,7 +9,7 @@ const NotFound = () => {
                     <p>We're sorry,</p>
                     <p>It seems the page you're looking for has run away.</p>
                 </div>
-                <button className='font-bold bg-white text-green-2 dropshadow-xl rounded-full px-2 py-2 mt-2 font-lg italic w-30%'>Back to the main page</button>
+                <button className='font-bold bg-white text-green-2 dropshadow-xl rounded-full px-2 py-2 mt-2 font-lg w-30%'>Back to the main page</button>
             </div>
         </div>
     )
