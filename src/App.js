@@ -9,7 +9,7 @@ import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
 import NotFound from "./views/notFound/NotFound";
-import Loader from "./views/loader/Loaders";
+import Loader from "./views/loader/Loader";
 import HeaderA from "./views/common/HeaderA";
 import HeaderB from "./views/common/HeaderB";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
