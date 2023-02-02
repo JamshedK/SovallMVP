@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 import AuthContext from "../../contexts/auth-context";
 import { useNavigate } from 'react-router-dom';
 import {db} from '../../firebase-config'
-import { addDoc, collection, getDocs } from '@firebase/firestore';
+import {collection, doc, setDoc } from '@firebase/firestore';
 
 
 const AccountSetUp = () => {
@@ -20,8 +20,6 @@ const AccountSetUp = () => {
 	const navigate = useNavigate(); 
 	// For the context management
 	const authCtx = useContext(AuthContext); 
-	// Reference to users collection 
-	const usersCollectionRef = collection(db, 'users'); 
 
 	const data = [
 		"At least 12 characters",
@@ -93,8 +91,13 @@ const AccountSetUp = () => {
 			);
 	}
 
-	const addUserToFirestore = async (e) => {
-		await addDoc(usersCollectionRef, {firstname:name, lastname: lastName, email: email})
+	const addUserToFirestore = async (localId) => {
+		console.log(localId);
+		await setDoc(doc(db, 'users', localId), {
+			firstname:name, 
+			lastName: lastName,
+			email:email
+		})
 	}
 
 	const handleContinue = async (e) => {
@@ -122,14 +125,15 @@ const AccountSetUp = () => {
 			);
 			try{
 				const data = await response.json();
+				console.log(data);
 				if(response.ok){
 					// store the token
-					authCtx.login(data.idToken);
-					console.log(authCtx.token);
+					authCtx.accountSetup(data.idToken, data.localId);
+					console.log(authCtx.userID);
 					// redirect the user to skils and interests
 					navigate('/skills-interests');
 					// add the user to firestore
-					addUserToFirestore();
+					addUserToFirestore(data.localId);
 				}else{
 					console.log(data)
 				}

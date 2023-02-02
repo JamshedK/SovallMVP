@@ -1,6 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Card from './components/Card';
 import skills_file from "./skills.txt";
+import AuthContext from "../../contexts/auth-context";
+import {doc, updateDoc} from "firebase/firestore"
+import {db} from '../../firebase-config'
+
+
 
 //TODO: make the conection with the contexts in ./store
 //uodate the card components to scroll horizontally
@@ -10,11 +16,20 @@ const interests_data = ["Entrepreneurship", "Service industry", "Design", "Archi
 const SkillsAndInterests = (props) => {
     const [skills, setSkills] = useState([]);
     const [interests, setInterests] = useState([]);
+    const authCtx = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         console.log(skills);
         console.log(interests);
-    }
+        console.log(authCtx.userID);
+        await updateDoc(doc(db, "users", authCtx.userID),{
+            "skills": skills,
+            "interests": interests
+        })
+        navigate('/home')
+    };
+
     return (
         <div className="w-full h-full flex flex-col bg-green-5 py-10 items-center overflow-auto">
             <div className="flex max-md:flex-col gap-8 max-md:items-center md:justify-center  py-10 md:gap-8 ">
