@@ -16,11 +16,14 @@ const AccountSetUp = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
+	const [reqs, setReqs] = useState([true, true, true, true]);
+	
 	// useNavigate hook for redirects
 	const navigate = useNavigate(); 
 	// For the context management
 	const authCtx = useContext(AuthContext); 
-
+	
+	//hardtyped data for the password requirements
 	const data = [
 		"At least 12 characters",
 		"A mixture of uppercase and lowercase",
@@ -28,11 +31,21 @@ const AccountSetUp = () => {
 		"At least one special character, e.g., ! @ # ? ]"
 	];
 	
+	/*Components*/
 	const Button = (props) => {
 		return <button className="border rounded-full px-5 py-1 bg-white" onClick={props.onClick}>{props.value}</button>;
 	}
-	const [reqs, setReqs] = useState([true, true, true, true]);
-
+	
+	const Navigation = () => {
+		return (
+			<div className="w-[23rem] h-fit flex justify-between">
+				<Button value="Previous" />
+				<Button value="Next" onClick={handleContinue} />
+			</div>
+			);
+	}
+	
+	/*utility functions*/
 	const checkAndUpdateRequirements = () => {
 		const update = [...reqs];
 		if (password.length >= 12) {
@@ -70,26 +83,7 @@ const AccountSetUp = () => {
 
 	}
 
-
-	const requirements = data.map(req => {
-		const i = data.indexOf(req);
-		return (
-			<li key={i} className={"flex gap-1 " + (!reqs[i] ? "text-[#BD1B1B]" : "")} >
-				<span>●</span>
-				<p>{req}</p>
-			</li>
-
-		);
-	});
-
-	const Navigation = () => {
-		return (
-			<div className="w-[23rem] h-fit flex justify-between">
-				<Button value="Previous" />
-				<Button value="Next" onClick={handleContinue} />
-			</div>
-			);
-	}
+	
 
 	const addUserToFirestore = async (localId) => {
 		console.log(localId);
@@ -99,7 +93,8 @@ const AccountSetUp = () => {
 			email:email
 		})
 	}
-
+	
+	/*Handlers*/
 	const handleContinue = async (e) => {
 		e.preventDefault();
 		if (password.length === 0 && passwordConfirmation.length == 0) {
@@ -147,6 +142,20 @@ const AccountSetUp = () => {
 		// 	return;
 		// }
 	}
+	
+	
+	/*arrays of components*/
+	const requirements = data.map(req => {
+		const i = data.indexOf(req);
+		return (
+			<li key={i} className={"flex gap-1 " + (!reqs[i] ? "text-[#BD1B1B]" : "")} >
+				<span>●</span>
+				<p>{req}</p>
+			</li>
+
+		);
+	});
+
 
 	return (
 		<div className="h-full w-full bg-green-5 flex items-center pt-10 flex flex-col gap-8 overflow-auto">
