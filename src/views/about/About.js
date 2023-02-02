@@ -1,5 +1,8 @@
 ﻿import { Fragment } from 'react';
+/*component imports*/
 import Paragraph from './components/Paragraph';
+
+/* Dummy data*/
 const data = [
 	{
 		title: "Our Values",
@@ -69,9 +72,12 @@ const data = [
 		body: ["Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nulla purus, rhoncus ac blandit quis, pellentesque fringilla ex. Maecenas sed metus sed purus malesuada aliquam. Quisque pellentesque ligula dui, non eleifend massa efficitur nec. Donec efficitur nunc ex, ac ornare velit pellentesque sed. Nulla ut turpis et justo dapibus aliquet. Aenean felis mi, laoreet vel purus non, venenatis finibus urna. Donec molestie molestie lectus, non ornare lectus tristique nec. Vivamus sit amet mauris vitae elit iaculis cursus sed ut felis. Integer accumsan, sapien non consectetur auctor, tortor ante imperdiet libero, quis aliquet arcu arcu quis nulla."]
 	},
 ];
+
+
 const content = data.map(section => {
 	return <Paragraph data={section} />
 });
+
 const About = () => {
 
 	return (
