@@ -21,6 +21,7 @@ export default function App() {
     const authCtx = React.useContext(AuthContext);
 
     return (
+<<<<<<< Updated upstream
         <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {temp&& <HeaderA />}
@@ -43,3 +44,15 @@ export default function App() {
         </div>        
       );
 }
+=======
+        <div className="bg-green-2 h-full md:screen md:h-screen font-nunito">
+            <Header />
+            <Routes>
+                <Route path="/" element={<Main subcription={subscription} setSubscription={setSubscription} />} />
+                <Route path="/ourStory" element={<About />} />
+
+            </Routes>
+        </div>
+        );
+}
+>>>>>>> Stashed changes
