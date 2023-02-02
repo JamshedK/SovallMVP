@@ -26,7 +26,6 @@ export default function App() {
             <Routes>
                 <Route path="/" element={<Main subcription={subscription} setSubscription={setSubscription} />} />
                 <Route path="/ourStory" element={<About />} />
-
             </Routes>
         </div>
         );

@@ -9,16 +9,19 @@ import {db} from '../../firebase-config'
 
 
 //TODO: make the conection with the contexts in ./store
-//uodate the card components to scroll horizontally
+//update the card components to scroll horizontally
 
+/*Hardtyped arrays*/
 const skills_data = ["Management skills", "Design", "Crafts/arts", "Research", "Marketing and sales", "Entertainment", "Finances", "Engineering", "Programming", "Writing"];
 const interests_data = ["Entrepreneurship", "Service industry", "Design", "Architecture", "Engineering", "Programming", "Fine Arts", "Film/photography", "Science", "Social sciences", "Medical", "Politics", "Entertainment", "Writing", "Safety/security"];
+
 const SkillsAndInterests = (props) => {
     const [skills, setSkills] = useState([]);
     const [interests, setInterests] = useState([]);
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
 
+    /*Handlers*/
     const handleSubmit = async (e) => {
         console.log(skills);
         console.log(interests);

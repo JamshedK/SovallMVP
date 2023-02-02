@@ -1,3 +1,4 @@
+/*Custom input component*/
 import show from '../../assets/common/show_p_gray.svg';
 import hide from '../../assets/common/hide_p_gray.svg';
 import { useState } from 'react';

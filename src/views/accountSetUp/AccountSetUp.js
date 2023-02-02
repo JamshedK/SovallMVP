@@ -1,5 +1,5 @@
 ﻿import Form from './components/AccountSetUp.Form';
-import Confirmation from './components/AccountSetUp.Confirmation';
+import Confirmation from './components/AccountSetUp.Confirmation';//redirect to this component after finishing the sign up
 import Input from '../common/Input';
 import { useState, useContext } from 'react';
 import AuthContext from "../../contexts/auth-context";
@@ -162,14 +162,15 @@ const AccountSetUp = () => {
 			<div className="w-[23rem] h-[26rem] bg-white rounded-xl px-8 py-4">
 				<div className={"flex flex-col gap-2"}>
 					<h1 className="text-black font-bold text-[14pt]">Account Set-up</h1>
-					<div className="flex flex-col gap-4 py-4">
+					{/*Form input*/ }
+					<form className="flex flex-col gap-4 py-4">
 						<Input placeholder="First Name" value={name} setValue={setName} />
 						<Input placeholder="Last Name" value={lastName} setValue={setLastName} />
 						<Input placeholder="Email" value={email} setValue={setEmail} />
 						<Input placeholder="Password" value={password} setValue={setPassword} ps={true}/>
 						<Input placeholder="Re-enter your password" value={passwordConfirmation} setValue={setPasswordConfirmation} ps={true}/>
-					</div>
-				
+					</form>
+					{/*Requirement bullet points*/ }
 					<ul className="text-[10pt] text-gray-400 pl-8">
 						{requirements}
 						<li className={passMatch ? "hidden" : "text-[#BD1B1B]"}>*The Passwords don't match</li>

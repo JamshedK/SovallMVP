@@ -75,11 +75,11 @@ const data = [
 
 
 /*Arrays of components*/
-
-
 const content = data.map(section => {
 	return <Paragraph data={section} />
 });
+
+
 const About = () => {
 
 	return (

@@ -1,3 +1,4 @@
+/*Custom file input component*/
 import { Fragment } from 'react';
 const FileInput = (props) => {
     return (

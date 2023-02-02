@@ -1,3 +1,4 @@
+/*Toggle button component */
 import { Fragment, useState } from "react";
 
 const Toggle = (props) => {
