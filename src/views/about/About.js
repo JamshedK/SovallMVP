@@ -2,11 +2,7 @@
 /*component imports*/
 import Paragraph from './components/Paragraph';
 
-<<<<<<< HEAD
-/* Dummy data*/
-=======
 /*Dummy Data*/
->>>>>>> 0744c28d210f0396f9c52358f0a40367868a06fb
 const data = [
 	{
 		title: "Our Values",
@@ -78,19 +74,12 @@ const data = [
 ];
 
 
-<<<<<<< HEAD
-const content = data.map(section => {
-	return <Paragraph data={section} />
-});
-
-=======
 /*Arrays of components*/
+
+
 const content = data.map(section => {
 	return <Paragraph data={section} />
 });
-	
-	
->>>>>>> 0744c28d210f0396f9c52358f0a40367868a06fb
 const About = () => {
 
 	return (

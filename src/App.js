@@ -21,30 +21,6 @@ export default function App() {
     const authCtx = React.useContext(AuthContext);
 
     return (
-<<<<<<< Updated upstream
-        <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
-            <header className="flex h-fit w-full sticky top-0 z-20">
-                {temp&& <HeaderA />}
-                {!temp&& <HeaderB />}
-            </header>
-            <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
-                <Routes>
-                    <Route path="/" element={<LogIn />} />
-                    <Route path="/forgotpassword" element={<ForgotPassword />} />
-                    <Route path="/changepassword" element={<ChangePassword />} />
-                    <Route path="/accountsetup" element={<AccountSetUp />} />
-                    <Route path="/skills-interests" element={<SkillsAndInterests />} />
-                    {authCtx.isLoggedIn && <Route path="/home" element={<Home />} />}
-                    <Route path="/about" element={<About />} />
-                    <Route path="/signout" element={<Logout/>}/>
-                    <Route path="/loader" element={<Loader/>}/>
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </div>
-        </div>        
-      );
-}
-=======
         <div className="bg-green-2 h-full md:screen md:h-screen font-nunito">
             <Header />
             <Routes>
@@ -55,4 +31,3 @@ export default function App() {
         </div>
         );
 }
->>>>>>> Stashed changes

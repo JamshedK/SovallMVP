@@ -3,9 +3,8 @@
     "",
     "\\src",
     "\\src\\views",
-    "\\src\\views\\about",
-    "\\src\\views\\skillsAndInterests\\components"
+    "\\src\\views\\about"
   ],
-  "SelectedNode": "\\src\\views\\about\\About.js",
+  "SelectedNode": "\\src\\App.js",
   "PreviewInSolutionExplorer": false
 }
