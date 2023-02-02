@@ -1,15 +1,20 @@
 import react, { useState, Fragment } from 'react';
-function Paragraph(props) {
+
+const Paragraph = (props)=> {
     const [hidden, setHide] = useState(true);
     const info = props.data;
     const body = info.body;
     console.log(hidden);
+    
+    /*Handlers*/
     const handleClick = () => {
         console.log()
         setHide(prev => !prev);
 
     };
     
+    
+    /*Arrays of components*/
     const content = body.map(obj => {
         if (body.length === 1) {
             return (<p>{obj}</p>);
@@ -23,6 +28,7 @@ function Paragraph(props) {
         }
         
     });
+    
 
     return (
         <div className="">

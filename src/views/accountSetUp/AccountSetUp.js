@@ -5,7 +5,7 @@ import { useState, useContext } from 'react';
 import AuthContext from "../../contexts/auth-context";
 import { useNavigate } from 'react-router-dom';
 import {db} from '../../firebase-config'
-import { addDoc, collection, getDocs } from '@firebase/firestore';
+import {collection, doc, setDoc } from '@firebase/firestore';
 
 
 const AccountSetUp = () => {
@@ -16,13 +16,14 @@ const AccountSetUp = () => {
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
+	const [reqs, setReqs] = useState([true, true, true, true]);
+	
 	// useNavigate hook for redirects
 	const navigate = useNavigate(); 
 	// For the context management
 	const authCtx = useContext(AuthContext); 
-	// Reference to users collection 
-	const usersCollectionRef = collection(db, 'users'); 
-
+	
+	//hardtyped data for the password requirements
 	const data = [
 		"At least 12 characters",
 		"A mixture of uppercase and lowercase",
@@ -30,11 +31,21 @@ const AccountSetUp = () => {
 		"At least one special character, e.g., ! @ # ? ]"
 	];
 	
+	/*Components*/
 	const Button = (props) => {
 		return <button className="border rounded-full px-5 py-1 bg-white" onClick={props.onClick}>{props.value}</button>;
 	}
-	const [reqs, setReqs] = useState([true, true, true, true]);
-
+	
+	const Navigation = () => {
+		return (
+			<div className="w-[23rem] h-fit flex justify-between">
+				<Button value="Previous" />
+				<Button value="Next" onClick={handleContinue} />
+			</div>
+			);
+	}
+	
+	/*utility functions*/
 	const checkAndUpdateRequirements = () => {
 		const update = [...reqs];
 		if (password.length >= 12) {
@@ -72,31 +83,18 @@ const AccountSetUp = () => {
 
 	}
 
+	
 
-	const requirements = data.map(req => {
-		const i = data.indexOf(req);
-		return (
-			<li key={i} className={"flex gap-1 " + (!reqs[i] ? "text-[#BD1B1B]" : "")} >
-				<span>●</span>
-				<p>{req}</p>
-			</li>
-
-		);
-	});
-
-	const Navigation = () => {
-		return (
-			<div className="w-[23rem] h-fit flex justify-between">
-				<Button value="Previous" />
-				<Button value="Next" onClick={handleContinue} />
-			</div>
-			);
+	const addUserToFirestore = async (localId) => {
+		console.log(localId);
+		await setDoc(doc(db, 'users', localId), {
+			firstname:name, 
+			lastName: lastName,
+			email:email
+		})
 	}
-
-	const addUserToFirestore = async (e) => {
-		await addDoc(usersCollectionRef, {firstname:name, lastname: lastName, email: email})
-	}
-
+	
+	/*Handlers*/
 	const handleContinue = async (e) => {
 		e.preventDefault();
 		if (password.length === 0 && passwordConfirmation.length == 0) {
@@ -122,14 +120,15 @@ const AccountSetUp = () => {
 			);
 			try{
 				const data = await response.json();
+				console.log(data);
 				if(response.ok){
 					// store the token
-					authCtx.login(data.idToken);
-					console.log(authCtx.token);
+					authCtx.accountSetup(data.idToken, data.localId);
+					console.log(authCtx.userID);
 					// redirect the user to skils and interests
 					navigate('/skills-interests');
 					// add the user to firestore
-					addUserToFirestore();
+					addUserToFirestore(data.localId);
 				}else{
 					console.log(data)
 				}
@@ -143,6 +142,20 @@ const AccountSetUp = () => {
 		// 	return;
 		// }
 	}
+	
+	
+	/*arrays of components*/
+	const requirements = data.map(req => {
+		const i = data.indexOf(req);
+		return (
+			<li key={i} className={"flex gap-1 " + (!reqs[i] ? "text-[#BD1B1B]" : "")} >
+				<span>●</span>
+				<p>{req}</p>
+			</li>
+
+		);
+	});
+
 
 	return (
 		<div className="h-full w-full bg-green-5 flex items-center pt-10 flex flex-col gap-8 overflow-auto">
