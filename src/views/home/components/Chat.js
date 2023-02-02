@@ -24,15 +24,7 @@ const Chat = (props) => {
 
     const messages_data = props.data.messages;
 
-    /**Hadlers*/
-    const handleClose = () => {
-        let current = [...props.queue];
-        current.shift(0);
-        props.setQueue(current);
-
-    }
-
-
+    /**Handlers*/
     const handlePhoto = (e) => {
         const photo = e.target.files[0];
     }
@@ -143,14 +135,14 @@ const Chat = (props) => {
 
     const messageButtons = chat_icons.map((item, i) => {
         return (
-            <FileInput id={item.id} src={item.src} handler={item.handler} />
+            <FileInput id={item.id} key={"file-input-"+i} src={item.src} handler={item.handler} />
 
         );
     });
 
     const menuOptions = menu_options.map((item, i) => {
         return (
-            <button className="w-full h-fit text-[8pt] hover:bg-gray-100 py-1" onClick={item.onClick}>
+            <button key={"menu-options-"+i} className="w-full h-fit text-[8pt] hover:bg-gray-100 py-1" onClick={item.onClick}>
                 {item.value}
             </button>
             );
@@ -162,7 +154,7 @@ const Chat = (props) => {
             
             {/*Header*/ }
             <div className="bg-white h-12 w-full flex flex-col pl-2 pt-2 drop-shadow-lg">
-                <button className="h-20% w-fit" onClick={handleClose}>
+                <button className="h-20% w-fit" onClick={() => props.onClose(props.data.id)}>
                     <img className="h-full bg-gray-300 rounded-full hover:bg-[#BD1B1B]" src={closeIcon} />
                 </button>
                 <div className="h-[65%] w-full flex justify-between items-center pl-2 pr-4">

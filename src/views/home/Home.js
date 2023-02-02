@@ -313,7 +313,7 @@ const postsData = [
     }
 ];
 
-const chats = [
+const chats_data = [
     {
         id: 0,
         messages: [
@@ -613,6 +613,606 @@ const chats = [
                 ts: "2022-05-21",
             },
         ]
+    },
+    {
+        id: 7,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 8,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 9,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 10,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 11,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 12,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 13,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 14,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 15,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 16,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 17,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
+    },
+    {
+        id: 18,
+        messages: [
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+            {
+                type: "own",
+                text: "Hi how are you doing?",
+                ts: "2022-05-21",
+            },
+            {
+                type: "",
+                text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
+                ts: "2022-05-21",
+            },
+        ]
     }
 
 ]
@@ -620,105 +1220,129 @@ const chats = [
 const chat_history = [
     {
         pic: profile,
+        id: 0,
+        username: "reso_trs",
+        last_message: "Hello hola konnichiwa",
+        seen: true,
+    },
+    {
+        pic: profile,
+        id: 1,
         username: "salazar_rich",
-        last_message: "0 Hello hola konnichiwa",
+        last_message: "Hello hola konnichiwa",
         seen: true,
     },
     {
         pic: profile,
+        id: 2,
         username: "alim_satar",
-        last_message: "1 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id: 3,
         username: "kklemm.32",
-        last_message: "2 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: false,
     },
     {
         pic: profile,
+        id: 4,
         username: "ttttrem_3",
-        last_message: "3 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: false,
     },
     {
         pic: profile,
+        id:5,
         username: "casal.fundador",
-        last_message: "4 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
 
     },
     {
         pic: profile,
+        id:6,
         username: "caribouliss",
-        last_message: "5 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: false,
     },
     {
         pic: profile,
+        id:7,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:8,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:9,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:10,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:11,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:12,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:13,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:14,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:15,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:16,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     },
     {
         pic: profile,
+        id:17,
         username: "marcopolo24.e",
-        last_message: "6 Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
+        last_message: "Hello hola konnichiwa, como estas, esto es un mensaje de prueba",
         seen: true,
     }
 
@@ -733,29 +1357,34 @@ const Home = (props) => {
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
     const width = "w-[28rem] xl:w-[32rem]";
-    //console.log(chatQueue.length);
+    console.log(chatQueue);
 
+    /**Handlers*/
+    const handleChatClose = (id) => {
+        const index = chatQueue.indexOf(id);
+        let temp = [...chatQueue];
+        temp.splice(index, 1);
+        setChatQueue(temp);
 
-    const posts = postsData.map((post,i) => {
-        return <FeedCard key={"feed-card-"+i}  data={post} />
+    }
+
+    const handleChatOpen = (id) => {
+        if (!chatQueue.includes(id)) {
+            setChatQueue(prev => [...prev, id]);
+        } else {
+            console.log("already included");
+        }
+
+    }
+
+    const posts = postsData.map((post, i) => {
+        return <FeedCard key={"feed-card-" + i} data={post} />
 
     });
 
-   
-    const handleChatClose = (e) => {
-        console.log(e.target.cancelable);
-        let current = [...chatQueue];
-        //current.shift();
-        //setChatQueue(current);
-    }
-
-    const handleChatOpen = (e) => {
-        console.log(e.target);
-        const key = chatQueue.length;
-        let current = [...chatQueue];
-        current.push(<Chat key={"chat-" + key} queue={chatQueue} setQueue={setChatQueue} data={chats[key]}/>);
-        setChatQueue(current);
-    }
+    const chats = chatQueue.map(id => {
+        return <Chat key={"chat-" + id} onClose={handleChatClose} data={chats_data[id]} />
+    })
 
 
        return (
@@ -785,8 +1414,8 @@ const Home = (props) => {
 
 
                    {/*chat panel*/}
-                   <div className="absolute bottom-0 right-0 h-[20rem] w-fit flex gap-3">
-                       {chatQueue}
+                   <div className="absolute bottom-0 right-0 h-[20rem] w-fit flex gap-3 ">
+                       {chats}
                    </div>
 
             </div>

@@ -24,11 +24,11 @@ const Tab = (props) => {
 const Preview = props => {
     const data = props.data;
     return (
-        <button value={props.id} key={props.id} className="flex text-[8pt] gap-2 items-center w-full" onClick={props.onClick}>
+        <button className="flex text-[8pt] gap-2 items-center w-full" onClick={()=>props.onClick(data.id)}>
             <img className="h-6 rounded-full" src={data.pic} />
             <div className="flex flex-col justify-start w-fit">
                 <p className="w-fit font-semibold">{data.username}</p>
-                <p className={"text-[8pt] w-28 overflow-hidden truncate text-left " + (data.seen ? " text-gray-400" : "font-semibold") }>{data.last_message.substring(0,28)}</p>
+                <p className={"text-[8pt] w-28 overflow-hidden truncate text-left " + (data.seen ? " text-gray-400" : "font-semibold") }>{data.id+"! "+data.last_message.substring(0,28)}</p>
             </div>
         </button>
     );
@@ -38,11 +38,6 @@ const ChatHistory = (props) => {
     const unreadGeneral = 2;
     const unreadRequests = 3;
 
-    
-
-    const handleClick = (e) => {
-        console.log(e);
-    }
     const handleToggle = () => {
         props.setValue(prev => !prev);
     }

@@ -9,6 +9,7 @@ import About from "./views/about/About";
 import Home from "./views/home/Home";
 import HeaderA from "./views/common/HeaderA";
 import HeaderB from "./views/common/HeaderB";
+import Test from "./views/Test/Test";
 import { AuthContextProvider } from "./contexts/auth-context";
 
 export default function App() {

@@ -5,6 +5,7 @@ import messages from '../../../assets/home/messages.svg';
 import friends from '../../../assets/home/friends.svg';
 import arrow_up from '../../../assets/home/arrow_up.svg';
 import { useState } from 'react';
+
 const skills_data = ["Videography", "Copywriting", "Communication", "Collaboration", "Animation", "Strategy"];
 const interests_data = ["Problem Solving", "Physics", "Math", "Material Science", "Copywriting", "Adobe"];
 
