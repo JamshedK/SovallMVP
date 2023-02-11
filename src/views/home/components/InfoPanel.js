@@ -4,18 +4,11 @@ import edit from '../../../assets/home/edit.svg';
 import messages from '../../../assets/home/messages.svg';
 import friends from '../../../assets/home/friends.svg';
 import arrow_up from '../../../assets/home/arrow_up.svg';
-<<<<<<< HEAD
-import { useState } from 'react';
-
-const skills_data = ["Videography", "Copywriting", "Communication", "Collaboration", "Animation", "Strategy"];
-const interests_data = ["Problem Solving", "Physics", "Math", "Material Science", "Copywriting", "Adobe"];
-=======
 import { useState, useEffect, useContext } from 'react';
 import { doc, getDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
 import {db} from '../../../firebase-config'
 import Loader from '../../loader/Loader';
->>>>>>> 0744c28d210f0396f9c52358f0a40367868a06fb
 
 const QuickAccess = (props) => {
     return (
@@ -82,6 +75,7 @@ const InfoPanel = (props) => {
             setEmail(data.email);
         } 
         getUserInfo();
+        console.log('loading complete')
         setIsLoading(false);
     }, [])
 
@@ -96,11 +90,13 @@ const InfoPanel = (props) => {
         return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
     }) : null;
     if(isLoading){
+        console.log('loading')
         return (
             <Loader/>
-        )
+        );
     }
     else{
+        console.log('main page loading')
         return (
             <div className={"bg-white h-fit px-8 pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
                 <div className="flex justify-between ">
