@@ -75,6 +75,7 @@ const InfoPanel = (props) => {
             setEmail(data.email);
         } 
         getUserInfo();
+        console.log('loading complete')
         setIsLoading(false);
     }, [])
 
@@ -89,11 +90,13 @@ const InfoPanel = (props) => {
         return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
     }) : null;
     if(isLoading){
+        console.log('loading')
         return (
             <Loader/>
-        )
+        );
     }
     else{
+        console.log('main page loading')
         return (
             <div className={"bg-white h-fit px-8 pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
                 <div className="flex justify-between ">
