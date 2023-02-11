@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+/* Header for after LogIn */
 import react, { useState } from "react";
 import arrowPrev from "../../assets/common/arrow_prev.svg";
 import quick_1 from "../../assets/common/header_icon_1.svg";
@@ -11,20 +11,16 @@ import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
 
-const quickAccessData = [[quick_1, "/"], [quick_2, "/"], [quick_3, "/"], [quick_4, "/"],];
 
-const filterOptionsData = [["All", "/"], ["Problem", "/"], ["Resources", "/"], ["Opportunities", "/"], ["Other", "/"]];
+
 
 function HeaderB(props) {
-	const [goBack, setGoBack] = useState(false);
 	const [currentFilter, setCurrentFilter] = useState(0);
 
-	const clickTrue = () => {
-		setGoBack(true);
-	};
-	const clickFalse = () => {
-		setGoBack(false);
-	};
+	/*Hardtyped arrays*/
+	const quickAccessData = [[quick_1, "/"], [quick_2, "/"], [quick_3, "/"], [quick_4, "/"],];
+	const filterOptionsData = [["All", "/"], ["Problem", "/"], ["Resources", "/"], ["Opportunities", "/"], ["Other", "/"]];
+
 	const quickAccess = quickAccessData.map((item,i) => {
 		const h = i === 1 ? "h-full" : "h-[80%]";
 		return (
@@ -34,11 +30,16 @@ function HeaderB(props) {
 			);
 	});
 
+	/*Handlers*/
 	const handleFilter = (e) => {
 		const value = parseInt(e.target.value);
 		setCurrentFilter(value);
 
-    }
+	}
+
+
+
+	/*Arrays of components*/
 	const filterOptions = filterOptionsData.map((item, i) => {
 		const style = i === currentFilter ? "bg-white text-green-4" : "bg-green-7 text-white";
 		return (

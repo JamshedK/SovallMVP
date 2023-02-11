@@ -1,3 +1,4 @@
+/*Search component*/
 const Search = (props) => {
     const dimesions = "h-" + props.h + " w-" + props.w;
     const placeholderColor = "placeholder:" + props.placeholderColor;

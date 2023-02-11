@@ -4,11 +4,18 @@ import edit from '../../../assets/home/edit.svg';
 import messages from '../../../assets/home/messages.svg';
 import friends from '../../../assets/home/friends.svg';
 import arrow_up from '../../../assets/home/arrow_up.svg';
+<<<<<<< HEAD
+import { useState } from 'react';
+
+const skills_data = ["Videography", "Copywriting", "Communication", "Collaboration", "Animation", "Strategy"];
+const interests_data = ["Problem Solving", "Physics", "Math", "Material Science", "Copywriting", "Adobe"];
+=======
 import { useState, useEffect, useContext } from 'react';
 import { doc, getDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
 import {db} from '../../../firebase-config'
 import Loader from '../../loader/Loader';
+>>>>>>> 0744c28d210f0396f9c52358f0a40367868a06fb
 
 const QuickAccess = (props) => {
     return (

@@ -4,10 +4,7 @@ import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
 import AuthContext from "../../contexts/auth-context";
 
-const points = [
-    "Educational resources",
-    "Network opportunities",
-    "Budget support"]
+
 
 const LogIn = (props) => {
     
@@ -17,14 +14,16 @@ const LogIn = (props) => {
 
     const navigate = useNavigate();
 
-    const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
-    const bullet_points = points.map(point => {
-        return <li key={point[0]} className="flex gap-1">
-                    <span>●</span>
-                    <p>{point}</p>
-               </li>
-    });
+    /*hardtyped arrays*/
+    const points = [
+        "Educational resources",
+        "Network opportunities",
+        "Budget support"];
 
+    /*Style Constant*/
+    const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
+    
+    /*handlers*/
     const handleLogin = async (e) => {
         e.preventDefault();
         const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
@@ -60,6 +59,16 @@ const LogIn = (props) => {
         }
         
     }
+
+    /*Array of components*/
+    const bullet_points = points.map(point => {
+        return (
+            <li key={point[0]} className="flex gap-1">
+                <span>●</span>
+                <p>{point}</p>
+            </li>
+        );
+    });
 
     return (
         <div className="relative bg-green-6 h-full w-full flex justify-center flex-col items-center text-white overflow-auto">

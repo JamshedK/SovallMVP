@@ -4,10 +4,12 @@ const ForgotPassword = () => {
 	const [validEmail, setValidEmail] = useState(false);
 	const [canSubmit, setCanSubmit] = useState(false);
 
+	/*Utility function*/
 	function isValidEmail(email) {
 		return /\S+@\S+\.\S+/.test(email);
 	}
 
+	/*Handlers*/
 	const handleEmail = (e) => {
 		const email = e.target.value;
 		const isValid = isValidEmail(email)
@@ -25,6 +27,7 @@ const ForgotPassword = () => {
 			setCanSubmit(false)
 		}
 	};
+
 	return (
 		<div className="relative bg-green-5 h-full sm:text-white flex justify-center pt-20">
 			<div className=" w-[20rem]  xl:w-[25rem] text-white flex flex-col items-center gap-8">

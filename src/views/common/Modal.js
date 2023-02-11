@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+/*Modal component*/
 import Backdrop from "./Backdrop";
 
 const Modal = props => {

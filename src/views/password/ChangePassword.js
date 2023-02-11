@@ -20,7 +20,7 @@ const ChangePassword = () => {
 
 	const authCtx = useContext(AuthContext);
 
-
+	/*Array of components*/
 	const requirements = data.map(req => {
 		const i = data.indexOf(req);
 		return (
@@ -31,7 +31,7 @@ const ChangePassword = () => {
 		);
 	});
 
-
+	/*Handlers*/
 	const handleEmail = (e) => {
 		setPassword(e.target.value)
 	}
@@ -39,42 +39,6 @@ const ChangePassword = () => {
 		setPasswordConfirmation(e.target.value)
 	}
 	
-
-	const checkRequirements = () => {
-		const update = [...reqs];
-		if (password.length >= 12) {
-			update[0] = true;
-		} else {
-			update[0] = false;
-		}
-
-		if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
-			update[1] = true;
-		} else {
-			update[1] = false;
-		}
-
-		if (/[0-9]/.test(password)) {
-			update[2] = true;
-		} else {
-			update[2] = false;
-		}
-
-		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
-			update[3] = true;
-		} else {
-			update[3] = false;
-		}
-		setReqs(update);
-		if (update.includes(false)) {
-			return false;
-		} else {
-			return true;
-		}
-
-		
-	}
-
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
@@ -108,7 +72,44 @@ const ChangePassword = () => {
 		// 	return;
         // }
 
-    }
+	}
+
+	/*Utility functions*/
+	const checkRequirements = () => {
+		const update = [...reqs];
+		if (password.length >= 12) {
+			update[0] = true;
+		} else {
+			update[0] = false;
+		}
+
+		if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
+			update[1] = true;
+		} else {
+			update[1] = false;
+		}
+
+		if (/[0-9]/.test(password)) {
+			update[2] = true;
+		} else {
+			update[2] = false;
+		}
+
+		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
+			update[3] = true;
+		} else {
+			update[3] = false;
+		}
+		setReqs(update);
+		if (update.includes(false)) {
+			return false;
+		} else {
+			return true;
+		}
+
+
+	}
+
 	return (
 		<div className="relative bg-green-5 h-full sm:text-white flex justify-center pt-20 overflow-auto pb-8">
 			<div className=" w-[20rem]  xl:w-[23rem] h-fit text-white flex flex-col items-center gap-8">
