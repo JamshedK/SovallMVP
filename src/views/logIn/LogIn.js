@@ -9,12 +9,12 @@ import AuthContext from "../../contexts/auth-context";
 const LogIn = (props) => {
     
     const authCtx = useContext(AuthContext);
-    const [email,setEmail] = useState("test@gmail.com");
-    const [password,setPassword] = useState("123456");
+    const [email,setEmail] = useState("");
+    const [password,setPassword] = useState("");
 
     const navigate = useNavigate();
 
-    /*hardtyped arrays*/
+    /*hardtyped arrays describing sovall*/
     const points = [
         "Educational resources",
         "Network opportunities",
@@ -23,7 +23,7 @@ const LogIn = (props) => {
     /*Style Constant*/
     const containerStyle = "md:w-[20rem] md:h-[20rem] lg:w-[25rem] lg:h-[25rem] xl:w-[30rem] xl:h-[30rem] 2xl:w-[35rem] 2xl:h-[35rem] flex-col ";
     
-    /*handlers*/
+    // Make an API request to firebase to login the user
     const handleLogin = async (e) => {
         e.preventDefault();
         const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
@@ -42,12 +42,12 @@ const LogIn = (props) => {
         try{
             const data = await response.json();
             if(response.ok){
+                // if login is successful, store the token in localStore using authContext hook
                 authCtx.login(data.idToken);
-                console.log(authCtx.token)
                 // redirect the user after login
                 navigate('/home')
             }else{
-                console.log(data);
+                // if login was unsuccessful, let the user know what went wrong
                 if(data?.error?.errors){ // if the returned data contains error
                     if(data.error.errors[0].reason === "invalid"){
                         alert('Incorrect password or login');
@@ -60,7 +60,7 @@ const LogIn = (props) => {
         
     }
 
-    /*Array of components*/
+    /*Array of components for the bullet points*/
     const bullet_points = points.map(point => {
         return (
             <li key={point[0]} className="flex gap-1">
@@ -73,7 +73,7 @@ const LogIn = (props) => {
     return (
         <div className="relative bg-green-6 h-full w-full flex justify-center flex-col items-center text-white overflow-auto">
             <div className="h-fit flex justify-center items-center p-1 gap-20">
-                {/*Left panel*/ }
+                {/*Left panel - ie login container*/ }
                 <div className={containerStyle +" rounded-xl bg-[#197474] flex justify-between md:py-8 items-center"}>
                     <div className="flex flex-col items-center">
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
@@ -87,7 +87,7 @@ const LogIn = (props) => {
                     <a href = '/forgotpassword' className="underline text-[8pt] lg:text-[10pt] xl:text-[12pt]">Forgot password?</a>
                 </div>
 
-                {/*Right Panel*/}
+                {/*Right Panel - quick info about sovall*/}
                 <div className={containerStyle + " flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
                     <img className="md:h-7 lg:h-8" src={logo} />
                     <p className="text-yellow-4 underline font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt]">Solve problems</p>
