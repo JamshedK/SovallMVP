@@ -43,7 +43,7 @@ const LogIn = (props) => {
             const data = await response.json();
             if(response.ok){
                 // if login is successful, store the token in localStore using authContext hook
-                authCtx.login(data.idToken);
+                authCtx.login(data.idToken, data.localId);
                 // redirect the user after login
                 navigate('/home')
             }else{

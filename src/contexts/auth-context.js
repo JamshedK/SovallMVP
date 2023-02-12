@@ -17,9 +17,11 @@ export  const AuthContextProvider = (props) => {
 
     const userIsLoggedIn = !!token // if token is empty, returns false
 
-    const loginHandler = (token) => {
+    const loginHandler = (token, userID) => {
         setToken(token);
         localStorage.setItem('token', token);
+        setUserID(userID);
+        localStorage.setItem('userID', userID);
     }
 
     const accountSetupHandler = (token, userID) => {
