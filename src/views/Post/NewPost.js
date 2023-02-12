@@ -4,26 +4,52 @@ import poll from '../../assets/home/poll.svg';
 import profile from '../../assets/common/profile.jpg';
 import AuthContext from '../../contexts/auth-context';
 import { useContext, useState, useRef } from 'react';
-import { db } from '../../firebase-config';
+import { db, storage } from '../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
-
+import {ref, uploadBytes} from 'firebase/storage'
 // The page for creating a new post
 const NewPost = () => {
     const authCtx = useContext(AuthContext);
     const postTextRef = useRef();       // useRef hook to get reference for the textArea and get it's content later on
+    const imageRef = useRef();
     const postCollectionRef = collection(db, 'posts')
+    
     // Save the user post post to Firebase
     const handlePost = async () => {
         console.log(postTextRef.current.value);
         const published_date = new Date();
-        //TODO: Save the post in firebase, and return a postID
+        var containsImage = false;
+        if(imageRef.current.files[0]){
+            containsImage = true;
+        }
+        // generate a random number to be added to the name of the image
+        const randomNum = Math.round(Math.random()*1000)
+        var imagePath = '';
+        if(containsImage){
+            // path for the image to be saved
+            imagePath = `posts/${imageRef.current.files[0].name + randomNum}`
+            // store the image in firebase
+            uploadFile(imageRef, imagePath);
+        }
+        //Save the post in firebase
         const docRef = await addDoc(postCollectionRef, {
             userID: authCtx.userID,
             text: postTextRef.current.value,
-			published_date: published_date
+			published_date: published_date,
+            imagePath:imagePath
 		})
-        console.log(docRef.id)
-        //TODO: Use the postID to store the image
+
+    }
+
+    // Uploads the image to firebase storage
+    const uploadFile = async (imageRef, imagePath) => {
+        const image = imageRef.current.files[0];
+        const filesFolderRef = ref(storage,imagePath)
+        try{
+            await uploadBytes(filesFolderRef, image)
+        } catch(e){
+            console.log(e);
+        }
     }
 
     return(
@@ -49,7 +75,7 @@ const NewPost = () => {
                 {/* upload options */}
                 <div className="flex gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
-                    <input type="file" accept="image/png, image/jpeg"/>
+                    <input type="file" accept="image/png, image/jpeg" ref={imageRef}/>
                     {/* TODO: Can add the poll here later */}
                 </div>
                 {/* post */}
