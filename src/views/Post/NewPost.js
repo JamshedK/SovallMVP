@@ -17,12 +17,12 @@ const NewPost = () => {
         console.log(postTextRef.current.value);
         const published_date = new Date();
         //TODO: Save the post in firebase, and return a postID
-        await addDoc(postCollectionRef, {
+        const docRef = await addDoc(postCollectionRef, {
             userID: authCtx.userID,
             text: postTextRef.current.value,
 			published_date: published_date
 		})
-        alert('Posted')
+        console.log(docRef.id)
         //TODO: Use the postID to store the image
     }
 
