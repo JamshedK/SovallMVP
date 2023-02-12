@@ -48,6 +48,7 @@ const LogIn = (props) => {
                 navigate('/home')
             }else{
                 // if login was unsuccessful, let the user know what went wrong
+                console.log(data);
                 if(data?.error?.errors){ // if the returned data contains error
                     if(data.error.errors[0].reason === "invalid"){
                         alert('Incorrect password or login');

@@ -4,7 +4,7 @@ import photo from '../../../assets/home/photo.svg';
 import doc from '../../../assets/home/doc.svg';
 import poll from '../../../assets/home/poll.svg';
 
-const images = [photo, doc];
+const images = [photo, doc, poll];
 const buttons = images.map((image,i) => {
     return (
         <button key={"new-post-image-"+i}>
