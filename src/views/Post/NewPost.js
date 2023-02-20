@@ -10,6 +10,8 @@ import {ref, uploadBytes} from 'firebase/storage'
 
 // The page for creating a new post
 const NewPost = () => {
+    const [containsImage, setContainsImage] = useState(false);
+    const [imagePath, setImagePath] = useState(null);
     const authCtx = useContext(AuthContext);
     const postTextRef = useRef();       // useRef hook to get reference for the textArea and get it's content later on
     const imageRef = useRef();
@@ -20,9 +22,8 @@ const NewPost = () => {
     const handlePost = async () => {
         console.log(postTextRef.current.value);
         const published_date = new Date();
-        var containsImage = false;
         if(imageRef.current.files[0]){
-            containsImage = true;
+            setContainsImage(true)
         }
 
         var imagePath = '';
@@ -56,6 +57,12 @@ const NewPost = () => {
         }
     }
 
+    // Show preview of an image when it's selected
+    const handleImageSelected = () => {
+        setContainsImage(true);
+        setImagePath(URL.createObjectURL(imageRef.current.files[0]))
+    }
+
     return(
         <div className="h-full w-full flex justify-center items-center" style={{backgroundColor: "#3C9A9A"}}>
             {/* container for the post */}
@@ -81,13 +88,13 @@ const NewPost = () => {
                 <div className='flex flex-col gap-5'>
                     <label>Write</label>
                     <textarea ref={postTextRef}>
-
                     </textarea>
+                    {containsImage && <img src = {imagePath}></img>}
                 </div>
                 {/* upload options */}
                 <div className="flex gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
-                    <input type="file" accept="image/png, image/jpeg" ref={imageRef}/>
+                    <input type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
                     {/* TODO: Can add the poll here later */}
                 </div>
                 {/* post button */}
