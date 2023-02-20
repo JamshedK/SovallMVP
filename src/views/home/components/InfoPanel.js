@@ -20,7 +20,7 @@ const QuickAccess = (props) => {
 }
 const Label = (props) => {
     const bg = props.bg;
-    return <label className={"text-white rounded-tl-xl rounded-br-xl px-2 py-1 text-[8pt] " + bg} >{props.value}</label>
+    return <label className={"text-white rounded-xl px-2 py-1 text-[8pt] " + bg} >{props.value}</label>
 }
 const InfoBlock = (props) => {
     return (
@@ -65,7 +65,6 @@ const InfoPanel = (props) => {
         setShowDetails(prev => !prev);
     }
     useEffect(()=>{
-        console.log("useEffect called here")
         setIsLoading(true);
         const getUserInfo = async () =>{
             const response = await getDoc(doc(db, "users", authCtx.userID))
