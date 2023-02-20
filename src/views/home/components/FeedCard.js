@@ -16,6 +16,9 @@ const Button = props => {
 const FeedCard= (props) => {
     const data = props.data;
     const interactorsData = data.interactors;
+    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const date = new Date(data.published_date.toDate());
+    const date_str = `${months[date.getMonth()]}, ${date.getDay()}, ${date.getFullYear()}`
     const interactors = interactorsData.map((interactor,i) => {
         return <Interactor key={"-interactor-"+i} data={interactor} />
     });
@@ -28,7 +31,7 @@ const FeedCard= (props) => {
                     <img className="rounded-full h-full" src={data.pic} />
                     <div className="flex flex-col px-1">
                         <label className="font-bold text-[11pt]">{data.username}</label>
-                        <label className="text-[9pt]">{data.ts}</label>
+                        <label className="text-[9pt]">{date_str}</label>
                     </div>
                 </div>
                 <div className="flex gap-3">
