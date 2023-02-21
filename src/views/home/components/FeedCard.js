@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
+import CommentArea from './CommentArea';
+/* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
 import arrowDown from '../../../assets/home/arrow_down.svg';
@@ -8,21 +10,42 @@ import arrowForth from '../../../assets/home/arrow_forth.svg';
 import share from '../../../assets/home/share.svg';
 import save from '../../../assets/home/saved.svg';
 import pdf from '../../../assets/home/pdf.svg';
+import upvote from '../../../assets/home/upvote.svg';
+import upvote_selected from '../../../assets/home/upvote_selected.svg';
+
 
 const Button = props => {
-    return <button href={props.href} className="flex items-center gap-2 h-5">{props.children}</button>
+    return <button href={props.href} className="flex items-center gap-2 h-5" onClick={props.onClick}>{props.children}</button>
 }
 
 const FeedCard= (props) => {
+    // For controlling which upvoted icon to display
+    const [isPostUpvoted, setIsPostUpvoted] = useState(false);
+    const [extendCommentArea, setExtendCommentArea] = useState(false);
     const data = props.data;
     const interactorsData = data.interactors;
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     const date = new Date(data.published_date.toDate());
     const date_str = `${months[date.getMonth()]}, ${date.getDay()}, ${date.getFullYear()}`
+
     const interactors = interactorsData.map((interactor,i) => {
         return <Interactor key={"-interactor-"+i} data={interactor} />
     });
+
     const px = "px-8";
+    // Whenever the upvote button is clicked
+    /* TODO: 
+        - save the upvote in firestore
+        - when the post loads, determine if the user had liked it or not
+    */
+    const handleUpvoteClicked = () => {
+        setIsPostUpvoted(!isPostUpvoted);
+    }
+
+    const handleCommentButtonClicked = () => {
+        setExtendCommentArea(!extendCommentArea);
+    }
+
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
@@ -69,16 +92,24 @@ const FeedCard= (props) => {
             {/*buttons*/}
             <div className={"flex justify-between w-full h-9 py-1 px-14"}>
                 <Button>
-                    <img className="h-full" src={comments} />
+                    <img className="h-full" src={save} />
                 </Button>
                 <Button>
                     <img className="h-full" src={share} />
+                    <label>100</label>
                 </Button>
-                <Button>
-                    <img className="h-full" src={save} />
+                <Button onClick={handleCommentButtonClicked}>
+                    <img className="h-full" src={comments} />
+                    <label>420</label>
+                </Button>
+                <Button className="border border-red-2" onClick = {handleUpvoteClicked}>
+                    {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
+                    {!isPostUpvoted && <img className="h-full" src={upvote} />}
+                    <label>100</label>
                 </Button>
             </div>
-
+            {/*Comment area*/}
+            {extendCommentArea && <CommentArea/>}
             {/*division line*/ }
             <hr className="w-full"></hr>
 
