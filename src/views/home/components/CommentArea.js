@@ -147,6 +147,7 @@ const CommentArea = (props) => {
     }
     return (
         <div className="w-full px-8">
+            <NewCommentBox/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
         </div>
     )
