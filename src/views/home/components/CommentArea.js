@@ -8,7 +8,7 @@ import {db} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
 
-const NewCommentBox = () => {
+const NewCommentBox = (props) => {
     const textAreaRef = useRef();  
     const [showCommentButton, setShowCommentButton] = useState(false);  // control whether to show comment button or not
     const commentsCollectionRef = collection(db, 'comments')    // reference to comments collection in firestore
@@ -25,10 +25,16 @@ const NewCommentBox = () => {
     }
 
     const commentButtonHandler = async () => {
+        const newCommentData = {
+            post_id: props.post_id,
+            text: textAreaRef.current.value,
+            ts: Date(),
+            user_id: authCtx.userID
+        }
         // Store the new comment in firebase
-        const docRef = await addDoc(commentsCollectionRef, {
-
-        })
+        const docRef = await addDoc(commentsCollectionRef, newCommentData)
+        // call the update state function in parent class
+        props.displayNewComment({...newCommentData, "comment_id": docRef.id});
         // set the value of textarea to an emtpy string
         textAreaRef.current.value = ''
         setShowCommentButton(false)
@@ -138,6 +144,11 @@ const CommentArea = (props) => {
         }
         getComments();
     }, [])
+
+    const displayNewComment = (newComment) =>{
+        setCommentsArray([newComment, ...commentsArray]);
+    }
+
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
@@ -147,7 +158,7 @@ const CommentArea = (props) => {
     }
     return (
         <div className="w-full px-8">
-            <NewCommentBox/>
+            <NewCommentBox post_id = {props.post_id} displayNewComment = {displayNewComment}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
         </div>
     )
