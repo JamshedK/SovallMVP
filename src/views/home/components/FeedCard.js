@@ -20,8 +20,8 @@ const Button = props => {
 
 const FeedCard= (props) => {
     // For controlling which upvoted icon to display
-    const [isPostUpvoted, setIsPostUpvoted] = useState(false);
-    const [extendCommentArea, setExtendCommentArea] = useState(false);
+    const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
+    const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     const data = props.data;
     const interactorsData = data.interactors;
     const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -109,7 +109,8 @@ const FeedCard= (props) => {
                 </Button>
             </div>
             {/*Comment area*/}
-            {extendCommentArea && <CommentArea/>}
+            {extendCommentArea && <CommentArea post_id = {data.post_id}/>}
+
             {/*division line*/ }
             <hr className="w-full"></hr>
 

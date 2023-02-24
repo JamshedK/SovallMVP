@@ -1405,7 +1405,7 @@ const Home = (props) => {
             const q = query(postsRef, where("userID", "==",authCtx.userID));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
-                postDt.push({...doc.data(), "pic": profile, "username": "Jamshed", interactors})
+                postDt.push({...doc.data(), "post_id": doc.id, "pic": profile, "username": "Jamshed", interactors})
             });
             setpostsData(postDt);
         }
