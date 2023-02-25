@@ -3,11 +3,14 @@ import camera from '../../../assets/home/camera.svg';
 import file_upload from '../../../assets/home/doc.svg';
 
 /*API stuff*/
-import {collection, query, where, getDocs, addDoc } from "firebase/firestore";
+import {collection, query, where, getDocs, addDoc, orderBy, Query } from "firebase/firestore";
 import {db} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
+import moment from 'moment'   // library for formatting dates
 
+// Component for writing a new comment
+// TODO: image and file input
 const NewCommentBox = (props) => {
     const textAreaRef = useRef();  
     const [showCommentButton, setShowCommentButton] = useState(false);  // control whether to show comment button or not
@@ -33,7 +36,7 @@ const NewCommentBox = (props) => {
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
-        // call the update state function in parent class
+        // 
         props.displayNewComment({...newCommentData, "comment_id": docRef.id});
         // set the value of textarea to an emtpy string
         textAreaRef.current.value = ''
@@ -64,6 +67,7 @@ const NewCommentBox = (props) => {
     )
 };
 
+// Component for replies to comments
 const CommentReplies = (props) => {
     return (
         <div className='flex flex-row space-x-4'>
@@ -82,14 +86,22 @@ const CommentReplies = (props) => {
 };
 
 const SingleComment = (props) => {
-    //TODO: add replies for each comment if present
+    //FIXME: fix this
     let replyItems = []
     if(props.comment_data?.replies){
-        replyItems = replyItems.map((reply, i) => {
+        replyItems = props.comment_data.replies.map((reply, i) => {
             // Having key for each Comment is required per React docs
             return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
         })
     }
+    const getTimeForComment = () => {
+        var tsForDisplay = '';
+        const ts = new Date(Date.parse(props.comment_data.ts))
+        tsForDisplay =  moment(ts).fromNow();
+        return tsForDisplay;
+    }
+    const timeForComment = getTimeForComment();
+
     return (
         <div className='pt-2'>
             {/*Member comments*/}
@@ -103,7 +115,7 @@ const SingleComment = (props) => {
                         <label>{props.comment_data.text}</label>
                         <div className='flex flex-row space-x-10'>
                             <button> Reply </button>
-                            <label> 2 min </label>
+                            <label> {timeForComment} </label>
                         </div>
                     </div>
                     {/*Replies to member comment if present*/}
@@ -116,6 +128,7 @@ const SingleComment = (props) => {
 )
 }
 
+// Main parent component
 const CommentArea = (props) => {
     const [commentsArray, setCommentsArray] = useState([]);
     let commentItems = [null];
@@ -124,7 +137,7 @@ const CommentArea = (props) => {
         var comments = []
         const getComments = async () =>{
             const postsRef = collection(db, "comments");
-            const q = query(postsRef, where("post_id", "==", props.post_id));
+            const q = query(postsRef, where("post_id", "==", props.post_id), orderBy("ts", 'desc'));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 comments.push({...doc.data(), "comment_id": doc.id})
@@ -133,7 +146,7 @@ const CommentArea = (props) => {
             comments.forEach(async(comment) =>{
                 var replies = []
                 const docRef = collection(db, "comment_replies");
-                const q = query(docRef, where("comment_id", "==", comment.comment_id));
+                const q = query(docRef, where("comment_id", "==", comment.comment_id), orderBy('ts', 'desc'));
                 const querySnapshot = await getDocs(q);
                 querySnapshot.forEach((doc) => {
                     replies.push(doc.data())
@@ -145,6 +158,7 @@ const CommentArea = (props) => {
         getComments();
     }, [])
 
+    // Update the contents of commentsArray state to display a new comment
     const displayNewComment = (newComment) =>{
         setCommentsArray([newComment, ...commentsArray]);
     }
@@ -158,6 +172,7 @@ const CommentArea = (props) => {
     }
     return (
         <div className="w-full px-8">
+            {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
             <NewCommentBox post_id = {props.post_id} displayNewComment = {displayNewComment}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
         </div>
