@@ -1,5 +1,6 @@
 import React, { Component, useState } from 'react';
 import CommentArea from './CommentArea';
+import moment from 'moment'
 /* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
@@ -24,9 +25,16 @@ const FeedCard= (props) => {
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     const data = props.data;
     const interactorsData = data.interactors;
-    const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    const date = new Date(data.published_date.toDate());
-    const date_str = `${months[date.getMonth()]}, ${date.getDay()}, ${date.getFullYear()}`
+    // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    // const date = new Date(data.published_date.toDate());
+    // const date_str = `${months[date.getMonth()]}, ${date.getDay()}, ${date.getFullYear()}`
+    const getTimeForComment = () => {
+        var tsForDisplay = '';
+        const ts = new Date(Date.parse(data.published_date))
+        tsForDisplay =  moment().format('MMMM, D, YYYY')
+        return tsForDisplay;
+    }
+    const timeForPost = getTimeForComment();
 
     const interactors = interactorsData.map((interactor,i) => {
         return <Interactor key={"-interactor-"+i} data={interactor} />
@@ -54,7 +62,7 @@ const FeedCard= (props) => {
                     <img className="rounded-full h-full" src={data.pic} />
                     <div className="flex flex-col px-1">
                         <label className="font-bold text-[11pt]">{data.username}</label>
-                        <label className="text-[9pt]">{date_str}</label>
+                        <label className="text-[9pt]">{timeForPost}</label>
                     </div>
                 </div>
                 <div className="flex gap-3">
