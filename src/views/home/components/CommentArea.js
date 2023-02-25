@@ -94,11 +94,10 @@ const SingleComment = (props) => {
             return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
         })
     }
+    // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
     const getTimeForComment = () => {
-        var tsForDisplay = '';
         const ts = new Date(Date.parse(props.comment_data.ts))
-        tsForDisplay =  moment(ts).fromNow();
-        return tsForDisplay;
+        return(moment(ts).fromNow());
     }
     const timeForComment = getTimeForComment();
 
@@ -166,7 +165,7 @@ const CommentArea = (props) => {
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
-            // Having key for each Comment is required per React docs
+            // Having key for each Comment is required per React docs  
             return <SingleComment key={"comment-card-" + i} comment_data={comment}/>
         })
     }

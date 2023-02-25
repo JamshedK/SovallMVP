@@ -25,7 +25,7 @@ const FeedCard= (props) => {
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     const data = props.data;
     const interactorsData = data.interactors;
-    //format the date using moment library
+    // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
     const getTimeForComment = () => {
         const ts = new Date(Date.parse(data.published_date))
         return(moment().format('MMMM, D, YYYY'))
