@@ -25,14 +25,10 @@ const FeedCard= (props) => {
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     const data = props.data;
     const interactorsData = data.interactors;
-    // const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    // const date = new Date(data.published_date.toDate());
-    // const date_str = `${months[date.getMonth()]}, ${date.getDay()}, ${date.getFullYear()}`
+    //format the date using moment library
     const getTimeForComment = () => {
-        var tsForDisplay = '';
         const ts = new Date(Date.parse(data.published_date))
-        tsForDisplay =  moment().format('MMMM, D, YYYY')
-        return tsForDisplay;
+        return(moment().format('MMMM, D, YYYY'))
     }
     const timeForPost = getTimeForComment();
 
