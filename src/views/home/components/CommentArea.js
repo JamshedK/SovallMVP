@@ -3,7 +3,7 @@ import camera from '../../../assets/home/camera.svg';
 import file_upload from '../../../assets/home/doc.svg';
 
 /*API stuff*/
-import {collection, query, where, getDocs, addDoc, orderBy, Query } from "firebase/firestore";
+import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion } from "firebase/firestore";
 import {db} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
@@ -67,12 +67,73 @@ const NewCommentBox = (props) => {
     )
 };
 
+const NewReplyBox = (props) => {
+    const textAreaRef = useRef();  
+    const commentRef = doc(db, 'comments', props.comment_id)    // reference to comments collection in firestore
+    const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
+    const authCtx = useContext(AuthContext);
+
+    // Display reply button only when the user types something
+    const onTextAreaChange = () => {
+        if(textAreaRef.current.value != ''){
+            setShowReplyButton(true)
+        }
+        else{
+            setShowReplyButton(false)
+        }
+    }
+
+    const replyButtonHandler = async () => {
+        const newReplyData = {
+            text: textAreaRef.current.value,
+            ts: Date(),
+            user_id: authCtx.userID
+        }
+        // call the function in parent component to update the state of replyArray to display the reply
+        props.updateRepliesArray(newReplyData)
+        // hide newRepltBox
+        props.setShowNewReplyBox(false);
+        // Store the new reply in firestore
+        await updateDoc(commentRef,{
+            replies: arrayUnion(newReplyData)
+        })
+        // props.displayNewComment({...newCommentData, "comment_id": docRef.id});
+        textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
+        setShowReplyButton(false)
+    }
+
+    return (
+            <div className='w-full flex flex-col items-center'>
+                {/* New comment box */}
+                <div className='w-full flex flex-row'>
+                    <img className="h-10 rounded-full h-full" src = {profile}></img>
+                    <div className='w-full flex flex-row rounded-2xl space-x-3'>
+                        {/* {The styling for textarea is to remove the default stylings} */}
+                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
+                                     focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
+                             ref={textAreaRef}
+                             onChange={onTextAreaChange}
+                             ></textarea>
+                        <button>
+                            <img className='h-6 w-6' src={camera}></img>
+                        </button>
+                        <button>
+                            <img className='h-6 w-6' src={file_upload}></img>
+                        </button>
+                    </div>
+                </div>
+                {showReplyButton && 
+                    <button onClick={replyButtonHandler} className="bg-green-800 text-white rounded-full w-fit px-4">Reply</button>}
+            </div>      
+    )
+};
+
 // Component for replies to comments
 const CommentReplies = (props) => {
     const ts = new Date(Date.parse(props.reply_data.ts))
     const tsForDisplay = moment(ts).fromNow();
     return (
-        <div className='flex flex-row space-x-4'>
+        <div className='w-full flex flex-row'>
                 <div className='h-10 v-10'>
                     <img className="rounded-full h-full" src = {profile}></img>
                 </div>
@@ -89,7 +150,8 @@ const CommentReplies = (props) => {
 
 // Component for each comment and replies to that commment
 const SingleComment = (props) => {
-    //FIXME: fix this
+    const [showNewReplyBox, setShowNewReplyBox] = useState(false);
+    // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
@@ -102,6 +164,19 @@ const SingleComment = (props) => {
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
     
+    const updateRepliesArray = (reply_data) => {
+        if(props.comment_data?.replies){
+            props.comment_data.replies.unshift(reply_data);
+        }
+        else{
+            // create a new temp array
+            var tempRepliesArray = []
+            tempRepliesArray.push(reply_data)
+            props.comment_data['replies']= tempRepliesArray
+        }
+        props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
+    }
+    
     return (
         <div className='pt-2'>
             {/*Member comments*/}
@@ -109,15 +184,22 @@ const SingleComment = (props) => {
                 <div className='h-10 v-10'>
                     <img className="rounded-full h-full" src = {profile}></img>
                 </div>
-                <div className='flex flex-col space-y-5'>
+                <div className='flex flex-col space-y-5 w-full'>
                     <div className='flex flex-col'>
                         <label>Jamshed</label>
                         <label>{props.comment_data.text}</label>
                         <div className='flex flex-row space-x-10'>
-                            <button> Reply </button>
+                            <button onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
                         </div>
                     </div>
+                    {/* Display newReplyBox if the reply button is clicked */}
+                    {showNewReplyBox && 
+                        <NewReplyBox 
+                            comment_id = {props.comment_data.comment_id}
+                            updateRepliesArray = {updateRepliesArray}
+                            setShowNewReplyBox = {setShowNewReplyBox}
+                            />}
                     {/*Replies to member comment if present*/}
                     <div>
                         {replyItems}
@@ -145,25 +227,34 @@ const CommentArea = (props) => {
             setCommentsArray(comments);
         }
         getComments();
-
     }, [])
 
     // Update the contents of commentsArray state to display a new comment
     const displayNewComment = (newComment) =>{
         setCommentsArray([newComment, ...commentsArray]);
     }
-
+    
+    const displayNewReply = (i, repliesArray) => {
+        var temp = commentsArray;
+        temp[i]['replies'] = repliesArray;
+        setCommentsArray(temp)
+    }
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
             // Having key for each Comment is required per React docs  
-            return <SingleComment key={"comment-card-" + i} comment_data={comment}/>
+            return <SingleComment key={"comment-card-" + i} 
+                        comment_data={comment}
+                        displayNewReply = {displayNewReply}
+                        positionInCommentsArray = {i}/>
         })
     }
     return (
         <div className="w-full px-8">
             {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
-            <NewCommentBox post_id = {props.post_id} displayNewComment = {displayNewComment}/>
+            <NewCommentBox 
+                post_id = {props.post_id}
+                displayNewComment = {displayNewComment}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
         </div>
     )
