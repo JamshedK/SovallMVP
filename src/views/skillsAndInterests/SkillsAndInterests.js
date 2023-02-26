@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from './components/Card';
-import skills_file from "./skills.txt";
+// import skills_file from "./skills.txt";
 import AuthContext from "../../contexts/auth-context";
 import {doc, updateDoc} from "firebase/firestore"
 import {db} from '../../firebase-config'
