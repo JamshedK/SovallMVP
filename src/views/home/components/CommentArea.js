@@ -36,10 +36,9 @@ const NewCommentBox = (props) => {
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
-        // 
+        // call the function in parent component to update the state of commentsArray to display the new comment
         props.displayNewComment({...newCommentData, "comment_id": docRef.id});
-        // set the value of textarea to an emtpy string
-        textAreaRef.current.value = ''
+        textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
         setShowCommentButton(false)
     }
 
@@ -50,7 +49,8 @@ const NewCommentBox = (props) => {
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         {/* {The styling for textarea is to remove the default stylings} */}
-                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Add a comment...'
+                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
+                                    focus:outline-none focus:ring-0" placeholder='Add a comment...'
                              ref={textAreaRef}
                              onChange={onTextAreaChange}
                              ></textarea>
@@ -69,6 +69,8 @@ const NewCommentBox = (props) => {
 
 // Component for replies to comments
 const CommentReplies = (props) => {
+    const ts = new Date(Date.parse(props.reply_data.ts))
+    const tsForDisplay = moment(ts).fromNow();
     return (
         <div className='flex flex-row space-x-4'>
                 <div className='h-10 v-10'>
@@ -78,32 +80,28 @@ const CommentReplies = (props) => {
                     <label>Wahid</label>
                     <label>{props.reply_data.text}</label>
                     <div className='flex flex-row space-x-10'>
-                        <label> 2 min </label>
+                        <label>{tsForDisplay}</label>
                     </div>
                 </div>
         </div>
     )
 };
 
+// Component for each comment and replies to that commment
 const SingleComment = (props) => {
     //FIXME: fix this
     let replyItems = []
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
-        console.log('Here')
-        console.log(replies)
-        replyItems = props.comment_data.replies.map((reply, i) => {
+        replyItems = replies.map((reply, i) => {
             // Having key for each Comment is required per React docs
             return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
         })
     }
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
-    const getTimeForComment = () => {
-        const ts = new Date(Date.parse(props.comment_data.ts))
-        return(moment(ts).fromNow());
-    }
-    const timeForComment = getTimeForComment();
-
+    const ts = new Date(Date.parse(props.comment_data.ts))
+    const timeForComment = moment(ts).fromNow();
+    
     return (
         <div className='pt-2'>
             {/*Member comments*/}
