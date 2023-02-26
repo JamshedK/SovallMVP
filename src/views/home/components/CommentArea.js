@@ -76,7 +76,7 @@ const CommentReplies = (props) => {
                 </div>
                 <div className='flex flex-col'>
                     <label>Wahid</label>
-                    <label>This is a reply</label>
+                    <label>{props.reply_data.text}</label>
                     <div className='flex flex-row space-x-10'>
                         <label> 2 min </label>
                     </div>
@@ -89,6 +89,9 @@ const SingleComment = (props) => {
     //FIXME: fix this
     let replyItems = []
     if(props.comment_data?.replies){
+        var replies = props.comment_data.replies;
+        console.log('Here')
+        console.log(replies)
         replyItems = props.comment_data.replies.map((reply, i) => {
             // Having key for each Comment is required per React docs
             return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
@@ -141,20 +144,10 @@ const CommentArea = (props) => {
             querySnapshot.forEach((doc) => {
                 comments.push({...doc.data(), "comment_id": doc.id})
             });
-            // for getting replies to the comments
-            comments.forEach(async(comment) =>{
-                var replies = []
-                const docRef = collection(db, "comment_replies");
-                const q = query(docRef, where("comment_id", "==", comment.comment_id), orderBy('ts', 'desc'));
-                const querySnapshot = await getDocs(q);
-                querySnapshot.forEach((doc) => {
-                    replies.push(doc.data())
-                    comment["replies"] = replies;
-                })
-            })
             setCommentsArray(comments);
         }
         getComments();
+
     }, [])
 
     // Update the contents of commentsArray state to display a new comment
