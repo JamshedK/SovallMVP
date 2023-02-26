@@ -91,7 +91,7 @@ const NewReplyBox = (props) => {
         }
         // call the function in parent component to update the state of replyArray to display the reply
         props.updateRepliesArray(newReplyData)
-        // hide newRepltBox
+        // hide newReplyBox
         props.setShowNewReplyBox(false);
         // Store the new reply in firestore
         await updateDoc(commentRef,{
@@ -133,11 +133,11 @@ const CommentReplies = (props) => {
     const ts = new Date(Date.parse(props.reply_data.ts))
     const tsForDisplay = moment(ts).fromNow();
     return (
-        <div className='w-full flex flex-row'>
+        <div className='w-full flex flex-row space-x-4 space-y-2'>
                 <div className='h-10 v-10'>
                     <img className="rounded-full h-full" src = {profile}></img>
                 </div>
-                <div className='flex flex-col'>
+                <div className='flex flex-col space-y-1'>
                     <label>Wahid</label>
                     <label>{props.reply_data.text}</label>
                     <div className='flex flex-row space-x-10'>
@@ -164,6 +164,7 @@ const SingleComment = (props) => {
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
     
+    // update repliesArray to show the new reply
     const updateRepliesArray = (reply_data) => {
         if(props.comment_data?.replies){
             props.comment_data.replies.unshift(reply_data);
@@ -174,6 +175,7 @@ const SingleComment = (props) => {
             tempRepliesArray.push(reply_data)
             props.comment_data['replies']= tempRepliesArray
         }
+        // call the main parent component function to update the state
         props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
     }
     

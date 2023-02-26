@@ -62,7 +62,7 @@ const FeedCard= (props) => {
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-tl-xl rounded-br-xl">Resources</label>
+                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl rounded-xl">Resources</label>
                     <img src={dotsMenu} />
                 </div>
             </div>
