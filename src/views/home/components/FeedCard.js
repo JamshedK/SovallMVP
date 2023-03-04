@@ -1,7 +1,7 @@
-import React, { Component, useState, useContext} from 'react';
+import React, { Component, useEffect, useState, useContext} from 'react';
 import CommentArea from './CommentArea';
 import moment from 'moment'
-import { doc, updateDoc, increment, collection, addDoc } from "firebase/firestore";
+import { doc, updateDoc, increment, collection, addDoc, query, where,getDocs, select } from "firebase/firestore";
 import {db} from '../../../firebase-config'
 import AuthContext from '../../../contexts/auth-context';
 
@@ -28,6 +28,7 @@ const FeedCard= (props) => {
     // For controlling which upvoted icon to display
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
+    const [postStats, setPostStats] = useState({})
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -39,10 +40,35 @@ const FeedCard= (props) => {
     const timeForPost = moment().format('MMMM, D, YYYY');
 
     const px = "px-8";
-    /* TODO: 
-        - when the post loads, determine if the user had liked it or not
-    */
-    const handleUpvoteClicked = async () => {
+    
+    // When the post loads, determine if the user had liked it or not
+    useEffect(() => {
+        // check if the user has already upvoted the post
+        const checkAlreadyUpvoted = async () => {
+            const q = query(intereactionColRef, 
+                where("user_id", "==", authCtx.userID),
+                where("post_id", "==", data.post_id),
+                where("type", "==", "upvote"));
+            const querySnapshot = await getDocs(q);
+            if(querySnapshot.size > 0){
+                setIsPostUpvoted(true);
+            }
+        }
+        checkAlreadyUpvoted();
+        // make a request to get only the counts from the post and store it here to make it easier to update
+        const getPostStats = async () => {
+            const postsColRef = collection(db, 'posts');
+            const q = query(postsColRef,
+                where("post_id", "==", data.post_id),
+                select('upvoted_count', 'comments_count', 'shared_count'));
+            const querySnapshot = await getDocs(q);  
+            querySnapshot.forEach((doc) => {
+                setPostStats(doc.data())
+                console.log(doc.data());
+            })  
+        }
+    }, []);
+    const onUpvote = async () => {
         // Update the state
         setIsPostUpvoted(!isPostUpvoted);
         // Increment or decrement upvote_count in posts collection
@@ -58,6 +84,7 @@ const FeedCard= (props) => {
         // Add or remove the upvote button from interactions collection
         await addDoc(intereactionColRef, {
             user_id: authCtx.userID,
+            post_id: data.post_id,
             ts: new Date(),
             type: "upvote"
         })
@@ -127,7 +154,7 @@ const FeedCard= (props) => {
                     <img className="h-full" src={comments} />
                     {data?.comment_count && <label>{data.comment_count}</label>}
                 </Button>
-                <Button className="border border-red-2" onClick = {handleUpvoteClicked}>
+                <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
                     {!isPostUpvoted && <img className="h-full" src={upvote} />}
                     {data?.upvoted_count && <label>{data.upvoted_count}</label>}
