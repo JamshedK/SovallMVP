@@ -63,19 +63,24 @@ const NewPost = () => {
         setImagePath(URL.createObjectURL(imageRef.current.files[0]))
     }
 
+    const placeholder = 'Venture towards excellence: \n   ● Identify a problem\n   ● Offer a solution\n   ● Share resources\n\
+   ● Find a team member\n   ● Launch a poll and collect data'
+
     return(
         <div className="relative h-full w-full flex justify-center items-center" style={{backgroundColor: "#3C9A9A"}}>
             {/* container for the post */}
-            <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-20 rounded-lg">
+            <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-14 rounded-lg w-[538px] h-[463px]">
                 {/*profile and selecting category for the post*/ }
                 <div className='flex flex-row items-start '>
-                    <img className="w-8 h-8 rounded-full" src={profile} />
-                    <div className='font-bold text-xs'>
-                        <p>Wesley</p>
+                    <img className="w-9 h-9 rounded-full" src={profile} />
+                    <div className='text-[13px] px-1'>
+                        <p className='font-bold'> Wesley</p>
                         <p>Sep 29, 2022</p>
                     </div>
 
-                    <select className="absolute w-2 h-5 top-82 right-2 rounded-lg" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                
+
+                    <select className="absolute w-38 h-8 align-text-top text-left text-sm top-6 right-2 rounded-lg" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
                         <option value="DEFAULT" disabled>No tab selected</option>
                         <option value='Problems'>Problems</option>
                         <option value='Solutions'>Solutions</option>
@@ -88,8 +93,9 @@ const NewPost = () => {
 
                 {/* text area */}
                 <div className='flex flex-col gap-5'>
-                    <label>Write</label>
-                    <textarea ref={postTextRef}>
+                    <label className='relative left-2'>Write...</label>
+                    <textarea placeholder={placeholder} className='rounded-lg w-[490px] h-[200px] placeholder:p-4 placeholder:px-[111px]'
+                     ref={postTextRef}>
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
                 </div>
