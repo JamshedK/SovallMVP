@@ -1,5 +1,4 @@
 /*components*/
-import { useState } from 'react';
 import FeedCard from './components/FeedCard';
 import NewPost from './components/NewPost';
 import NotificationsToggle from './components/NotificationsToggle';
@@ -13,304 +12,310 @@ import profile from '../../assets/common/profile.jpg';
 import company from '../../assets/home/company.png';
 import InfoPanel from './components/InfoPanel';
 
+/*API stuff*/
+import {collection, query, where, getDocs } from "firebase/firestore";
+import {db} from '../../firebase-config'
+import AuthContext from "../../contexts/auth-context";
+import { useEffect, useState, useContext } from 'react';
+
 
 //dummy data
-const postsData = [
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            }
-        ]
+// const postsData = [
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             }
+//         ]
 
-    },
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-        ]
+//     },
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//         ]
 
-    },
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-        ]
+//     },
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//         ]
 
-    },
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-        ]
+//     },
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//         ]
 
-    },
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-        ]
+//     },
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//         ]
 
-    },
-    {
-        pic: profile,
-        username: "salazar_rich",
-        ts: "July, 6, 2022",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
-        interactors: [
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-            {
-                pic: profile,
-                username: "maybees12",
-                field: ["Marketing", "Branding"]
-            },
-        ]
+//     },
+//     {
+//         pic: profile,
+//         username: "salazar_rich",
+//         published_date: "July, 6, 2022",
+//         text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa lorem. Duis posuere id erat vitae euismod. Nullam bibendum, massa a fermentum pulvinar, nunc felis suscipit sem, sed auctor purus diam ac lectus. Fusce justo magna, dapibus at ligula.",
+//         interactors: [
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//             {
+//                 pic: profile,
+//                 username: "maybees12",
+//                 field: ["Marketing", "Branding"]
+//             },
+//         ]
 
-    }
-];
+//     }
+// ];
 
 const chats_data = [
     {
@@ -319,47 +324,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -369,47 +374,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -419,47 +424,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -469,47 +474,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -519,47 +524,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -569,47 +574,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -619,47 +624,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -669,47 +674,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -719,47 +724,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -769,47 +774,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -819,47 +824,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -869,47 +874,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -919,47 +924,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -969,47 +974,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -1019,47 +1024,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -1069,47 +1074,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -1119,47 +1124,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     },
@@ -1169,47 +1174,47 @@ const chats_data = [
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "own",
                 text: "Hi how are you doing?",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
             {
                 type: "",
                 text: "Hi how are you doing? hahhaha hahhaha hahhaha hahahah  ahahha hshshhs ",
-                ts: "2022-05-21",
+                published_date: "2022-05-21",
             },
         ]
     }
@@ -1348,15 +1353,18 @@ const chat_history = [
 ]
 
 
-//TODO: adjust dotted border for NewPost
-//Fix the scroll for the "members who interacted with this post"
+// TODO: adjust dotted border for NewPost
+// Fix the scroll for the "members who interacted with this post"
 const Home = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
     const width = "w-[28rem] xl:w-[32rem]";
-    console.log(chatQueue);
+    
+    const [postsData, setpostsData] = useState({});
+    const authCtx = useContext(AuthContext);
+
 
     /*Handlers*/
     const handleChatClose = (id) => {
@@ -1376,11 +1384,41 @@ const Home = (props) => {
 
     }
 
-    /*Arrays of components*/
-    const posts = postsData.map((post, i) => {
-        return <FeedCard key={"feed-card-" + i} data={post} />
+    // Get the user posts data
+    // TODO: get the image
+    useEffect(() => {
+        // temporary variable
+        var interactors = [
+            {
+                pic: profile,
+                username: "maybees12",
+                field: ["Marketing", "Branding"]
+            },
+            {
+                pic: profile,
+                username: "maybees12",
+                field: ["Marketing", "Branding"]
+            }]
+        const getPosts = async () =>{
+            var postDt = []
+            const postsRef = collection(db, "posts");
+            const q = query(postsRef, where("userID", "==",authCtx.userID));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                postDt.push({...doc.data(), "post_id": doc.id, "pic": profile, "username": "Jamshed", interactors})
+            });
+            setpostsData(postDt);
+        }
+        getPosts();
+    },[])
 
-    });
+    let postItems = null;
+    if(Object.keys(postsData).length > 0){
+        /*Arrays of components*/
+        postItems = postsData.map((post, i) => {
+            return <FeedCard key={"feed-card-" + i} data={post} />
+        });
+    }
 
     const chats = chatQueue.map(id => {
         return <Chat key={"chat-" + id} onClose={handleChatClose} data={chats_data[id]} />
@@ -1396,7 +1434,7 @@ const Home = (props) => {
                     <InfoPanel width={width} own={true}/>
                     <NewPost width={width} />
                     <div className={"flex flex-col gap-4 " + width }>
-                        {posts}
+                        {postItems}
                     </div>
                 </div>
 

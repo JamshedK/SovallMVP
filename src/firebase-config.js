@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
-import {getFirestore} from '@firebase/firestore'
+import { initializeApp} from "firebase/app";
+import {getFirestore} from '@firebase/firestore';
+import {getStorage} from 'firebase/storage';
 
 
 
@@ -15,7 +16,8 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-console.log(process.env.REACT_APP_FIREBASE_API_KEY)
 
 // Initialize db
 export const db = getFirestore();
+// Initialize storage
+export const storage = getStorage(app);
