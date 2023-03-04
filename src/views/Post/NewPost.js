@@ -8,6 +8,16 @@ import { db, storage } from '../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
 import {ref, uploadBytes} from 'firebase/storage'
 
+
+const images = [photo, doc, poll];
+const buttons = images.map((image,i) => {
+    return (
+        <button key={"new-post-image-"+i}>
+            <img className="h-full" src={image} />
+        </button>
+        );
+});
+
 // The page for creating a new post
 const NewPost = () => {
     const [containsImage, setContainsImage] = useState(false);
@@ -99,15 +109,27 @@ const NewPost = () => {
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
                 </div>
+
+                {/* post button */}
+                <button onClick={handlePost} className='relative left-[200px] top-4 rounded-[14.5px] w-20 h-7 text-[14px] place-items-center bg-[#025B5B] text-white'>Post</button>
                 
                 {/* upload options */}
-                <div className="flex gap-6 w-fit h-full">
+                <div className="gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
-                    <input type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
+                    
+                    <label for='file-input' className='relative flex flex-row gap-6 pointer-events-auto left-[380px]'>
+                        {buttons}
+                        <input id='file-input' className='invisible' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
+
+                    </label>
+
+
+
+                    
+
                     {/* TODO: Can add the poll here later */}
                 </div>
-                {/* post button */}
-                <button onClick={handlePost} className='bg-[#025B5B] text-white'>Post</button>
+                
             </div>
         </div>
     )
