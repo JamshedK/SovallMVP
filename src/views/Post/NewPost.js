@@ -117,16 +117,15 @@ const NewPost = () => {
                 <div className="gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
                     
-                    <label for='file-input' className='relative flex flex-row gap-6 pointer-events-auto left-[380px]'>
-                        {buttons}
+                    <label for='file-input' className='relative flex flex-row gap-6 pointer-events-auto left-[450px]'>
+                        <img src={doc}></img>
                         <input id='file-input' className='invisible' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
 
                     </label>
 
 
 
-                    
-
+        
                     {/* TODO: Can add the poll here later */}
                 </div>
                 
