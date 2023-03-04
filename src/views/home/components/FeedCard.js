@@ -1,6 +1,6 @@
 import React, { Component, useState } from 'react';
 import CommentArea from './CommentArea';
-import moment from 'moment'
+import moment from 'moment';
 /* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';

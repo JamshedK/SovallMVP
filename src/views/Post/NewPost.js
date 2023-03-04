@@ -64,18 +64,19 @@ const NewPost = () => {
     }
 
     return(
-        <div className="h-full w-full flex justify-center items-center" style={{backgroundColor: "#3C9A9A"}}>
+        <div className="relative h-full w-full flex justify-center items-center" style={{backgroundColor: "#3C9A9A"}}>
             {/* container for the post */}
-            <div className="flex flex-col p-2 gap-5 bg-white w-64 h-50">
+            <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-20 rounded-lg">
                 {/*profile and selecting category for the post*/ }
                 <div className='flex flex-row items-start '>
                     <img className="w-8 h-8 rounded-full" src={profile} />
-                    <div className='text-xs'>
-                        <p>Name</p>
-                        <p>Date</p>
+                    <div className='font-bold text-xs'>
+                        <p>Wesley</p>
+                        <p>Sep 29, 2022</p>
                     </div>
-                    <select ref = {selectCategoryRef} defaultValue={'DEFAULT'}>
-                        <option value="DEFAULT" disabled>No category selected</option>
+
+                    <select className="absolute w-2 h-5 top-82 right-2 rounded-lg" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                        <option value="DEFAULT" disabled>No tab selected</option>
                         <option value='Problems'>Problems</option>
                         <option value='Solutions'>Solutions</option>
                         <option value='Resources'>Resources</option>
@@ -84,6 +85,7 @@ const NewPost = () => {
                         <option value='Other'>Other</option>
                     </select>
                 </div>
+
                 {/* text area */}
                 <div className='flex flex-col gap-5'>
                     <label>Write</label>
@@ -91,6 +93,7 @@ const NewPost = () => {
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
                 </div>
+                
                 {/* upload options */}
                 <div className="flex gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
