@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState, useContext} from 'react';
 import CommentArea from './CommentArea';
 import moment from 'moment'
-import { doc, updateDoc, increment, collection, addDoc, query, where,getDocs, select } from "firebase/firestore";
+import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc } from "@firebase/firestore";
 import {db} from '../../../firebase-config'
 import AuthContext from '../../../contexts/auth-context';
 
@@ -28,7 +28,7 @@ const FeedCard= (props) => {
     // For controlling which upvoted icon to display
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
-    const [postStats, setPostStats] = useState({})
+    const [postsInfoCopy, setPostsInfoCopy] = useState({})
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -57,16 +57,13 @@ const FeedCard= (props) => {
         checkAlreadyUpvoted();
         // make a request to get only the counts from the post and store it here to make it easier to update
         const getPostStats = async () => {
-            const postsColRef = collection(db, 'posts');
-            const q = query(postsColRef,
-                where("post_id", "==", data.post_id),
-                select('upvoted_count', 'comments_count', 'shared_count'));
-            const querySnapshot = await getDocs(q);  
-            querySnapshot.forEach((doc) => {
-                setPostStats(doc.data())
-                console.log(doc.data());
-            })  
+            const docRef = doc(db, 'posts', data.post_id );
+            const docSnap = await getDoc(docRef)
+            if(docSnap.exists()){
+                setPostsInfoCopy(doc.data())
+            }
         }
+        getPostStats();
     }, []);
     const onUpvote = async () => {
         // Update the state
@@ -152,7 +149,7 @@ const FeedCard= (props) => {
                 </Button>
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
-                    {data?.comment_count && <label>{data.comment_count}</label>}
+                    {postsInfoCopy?.comment_count && <label>{postsInfoCopy.comment_count}</label>}
                 </Button>
                 <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
