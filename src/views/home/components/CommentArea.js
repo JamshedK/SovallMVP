@@ -1,10 +1,13 @@
 import profile from '../../../assets/common/profile.jpg';
 import camera from '../../../assets/home/camera.svg';
 import file_upload from '../../../assets/home/doc.svg';
+import delete_image from '../../../assets/feedcard/close.svg';
+
 
 /*API stuff*/
 import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
-import {db} from '../../../firebase-config'
+import {ref, uploadBytes} from 'firebase/storage'
+import {db, storage} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
 import moment from 'moment';   // library for formatting dates
@@ -14,12 +17,16 @@ import moment from 'moment';   // library for formatting dates
 const NewCommentBox = (props) => {
     const textAreaRef = useRef();  
     const [showCommentButton, setShowCommentButton] = useState(false);  // control whether to show comment button or not
+    const [containsImage, setContainsImage] = useState(false);
+    const [imageSource, setImageSource] = useState();
+    const [selectedImage, setSelectedImage] = useState(null);
     const commentsCollectionRef = collection(db, 'comments')    // reference to comments collection in firestore
     const postsDocRef = doc(db, "posts", props.post_id);
     const authCtx = useContext(AuthContext);
 
     // Display comment button only when the user types something
-    const onTextAreaChange = () => {
+    const onTextAreaChange = (event) => {
+        event.preventDefault();
         if(textAreaRef.current.value != ''){
             setShowCommentButton(true)
         }
@@ -28,12 +35,49 @@ const NewCommentBox = (props) => {
         }
     }
 
+    const handleImageUpload = (e) => {
+        e.preventDefault();
+        if(e.target.files[0] != null){
+            setContainsImage(true);
+            setImageSource(URL.createObjectURL(e.target.files[0]));
+            setSelectedImage(e.target.files[0]);
+        }
+        else{
+            setContainsImage(false);
+        }
+    }
+
+    const handleRemoveImage = () => {
+        setContainsImage(false);
+        setImageSource(null);
+    }
+
     const commentButtonHandler = async () => {
+        var imagePath = '';
+        if(containsImage){
+            // generate a random number to be added to the name of the image
+            const randomNum = Math.round(Math.random()*1000)
+            // path for the image to be saved
+            imagePath = `comments/${selectedImage.name + randomNum}`
+              // Uploads the image to firebase storage
+            const uploadFile = async (selectedImage, imagePath) => {
+                const filesFolderRef = ref(storage,imagePath)
+                try{
+                    await uploadBytes(filesFolderRef, selectedImage)
+                } catch(e){
+                    console.log(e);
+                }
+                // remove the image
+                handleRemoveImage();
+            }
+            uploadFile(selectedImage, imagePath);
+        }
         const newCommentData = {
             post_id: props.post_id,
             text: textAreaRef.current.value,
             ts: Date(),
-            user_id: authCtx.userID
+            user_id: authCtx.userID,
+            image_path: imagePath
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
@@ -64,17 +108,26 @@ const NewCommentBox = (props) => {
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         {/* {The styling for textarea is to remove the default stylings} */}
-                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
-                                    focus:outline-none focus:ring-0" placeholder='Add a comment...'
-                             ref={textAreaRef}
-                             onChange={onTextAreaChange}
-                             ></textarea>
-                        <button>
-                            <img className='h-6 w-6' src={camera}></img>
-                        </button>
-                        <button>
-                            <img className='h-6 w-6' src={file_upload}></img>
-                        </button>
+                        <div className='w-full flex flex-col'>
+                            <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
+                                        focus:outline-none focus:ring-0" placeholder='Add a comment...'
+                                ref={textAreaRef}
+                                onChange={onTextAreaChange}
+                                ></textarea>
+                            {/* Displaying the image if it was selected */}
+                            {containsImage && 
+                                <div className='flex flex-row'>
+                                    <img className='px-5' src={imageSource}></img>
+                                    <button className='w-5 h-5' onClick={handleRemoveImage}>
+                                        <label>X</label>
+                                    </button>
+                                </div>}
+                        </div>
+                        {!containsImage && <label className="flex items-center cursor-pointer">
+                            <input type="file" className="opacity-0 absolute h-0 w-0 overflow-hidden" accept="image/*" onChange={handleImageUpload} />
+                            <img className="h-6 w-6" src={camera} alt="Camera icon" />
+                        </label>}
+                       {/* TODO: add file upload and polls */}
                     </div>
                 </div>
                 {showCommentButton && <button onClick={commentButtonHandler} className="bg-green-800 text-white rounded-full w-fit px-4">Comment</button>}
