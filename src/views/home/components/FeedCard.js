@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState, useContext} from 'react';
 import CommentArea from './CommentArea';
 import moment from 'moment'
-import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc } from "@firebase/firestore";
+import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc, deleteDoc } from "@firebase/firestore";
 import {db} from '../../../firebase-config'
 import AuthContext from '../../../contexts/auth-context';
 
@@ -18,6 +18,7 @@ import save from '../../../assets/home/saved.svg';
 import pdf from '../../../assets/home/pdf.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
+import { async } from 'q';
 
 
 const Button = props => {
@@ -28,7 +29,8 @@ const FeedCard= (props) => {
     // For controlling which upvoted icon to display
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
-    const [postsInfoCopy, setPostsInfoCopy] = useState({})
+    // TODO: Consider adding a callback function to update the post info in parent component
+    const [postsInfoCopy, setPostsInfoCopy] = useState({})  
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -60,31 +62,45 @@ const FeedCard= (props) => {
             const docRef = doc(db, 'posts', data.post_id );
             const docSnap = await getDoc(docRef)
             if(docSnap.exists()){
-                setPostsInfoCopy(doc.data())
+                setPostsInfoCopy(docSnap.data())
             }
         }
         getPostStats();
     }, []);
+
     const onUpvote = async () => {
-        // Update the state
-        setIsPostUpvoted(!isPostUpvoted);
         // Increment or decrement upvote_count in posts collection
         if(!isPostUpvoted){
-            await updateDoc(docRef, {
-                upvoted_count: increment(1)
-            });
+            await updateDoc(docRef, {upvoted_count: increment(1)});
+            // Add to intereactions collection
+            await addDoc(intereactionColRef, {
+                user_id: authCtx.userID,
+                post_id: data.post_id,
+                ts: new Date(),
+                type: "upvote"
+            })
+              // update the postsInfoCopy state
+              postsInfoCopy.upvoted_count = postsInfoCopy.upvoted_count + 1;
+              setPostsInfoCopy(postsInfoCopy);
         }else{
-            await updateDoc(docRef, {
-                upvoted_count: increment(-1)
-            });
+            // decrement the count
+            await updateDoc(docRef, {upvoted_count: increment(-1)});
+            // remove from interactions collection
+            const q = query(intereactionColRef, 
+                where("post_id", "==", data.post_id),
+                where("user_id", "==", authCtx.userID),
+                where("type", "==", "upvote"));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (document) =>{
+                const intereactionDocRef = doc(db, "interactions", document.id)
+                await deleteDoc(intereactionDocRef)
+            })
+            // update the postsInfoCopy state
+            postsInfoCopy.upvoted_count = postsInfoCopy.upvoted_count - 1;
+            setPostsInfoCopy(postsInfoCopy);
         }
-        // Add or remove the upvote button from interactions collection
-        await addDoc(intereactionColRef, {
-            user_id: authCtx.userID,
-            post_id: data.post_id,
-            ts: new Date(),
-            type: "upvote"
-        })
+        // update the state
+        setIsPostUpvoted(!isPostUpvoted);
     }
 
     const handleCommentButtonClicked = () => {
@@ -144,17 +160,17 @@ const FeedCard= (props) => {
                 </Button>
                 <Button>
                     <img className="h-full" src={share} />
-                    {/* Display the counts only when the data has shared_count  */}
-                    {data?.shared_count && <label>100</label>}
+                    {/* Display the counts only when postsInfoCopy has shared_count and it's not zero */}
+                    {postsInfoCopy?.shared_count > 0 && <label>postsInfoCopy.shared_count   </label>}
                 </Button>
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
-                    {postsInfoCopy?.comment_count && <label>{postsInfoCopy.comment_count}</label>}
+                    {postsInfoCopy?.comment_count > 0 && <label>{postsInfoCopy.comment_count}</label>}
                 </Button>
                 <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
                     {!isPostUpvoted && <img className="h-full" src={upvote} />}
-                    {data?.upvoted_count && <label>{data.upvoted_count}</label>}
+                    {postsInfoCopy?.upvoted_count > 0 && <label>{postsInfoCopy.upvoted_count}</label>}
                 </Button>
             </div>
             {/*Comment area*/}
