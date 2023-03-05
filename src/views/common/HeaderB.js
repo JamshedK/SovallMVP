@@ -24,6 +24,7 @@ function HeaderB(props) {
   const filterOptionsData = [
     ["All", "/"],
     ["Problem", "/"],
+    ["Solutions", "/"],
     ["Resources", "/"],
     ["Opportunities", "/"],
     ["Other", "/"],
