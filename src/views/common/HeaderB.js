@@ -80,7 +80,7 @@ function HeaderB(props) {
             placeholderColor="text-white"
             style="text-white border border-white"
             w="full"
-			h="full"
+			h="5"
           />
         </div>
       </div>
