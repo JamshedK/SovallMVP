@@ -28,6 +28,7 @@ const NewPost = (props) => {
                     <li>Find a team...</li>
                 </ul>
             </div>
+            
             <div className="flex w-full h-1/6 justify-end items-center ">
                 <div className="flex gap-6 w-fit h-full">
                     {buttons}

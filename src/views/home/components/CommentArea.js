@@ -7,7 +7,7 @@ import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arra
 import {db} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
-import moment from 'moment'   // library for formatting dates
+import moment from 'moment';   // library for formatting dates
 
 // Component for writing a new comment
 // TODO: image and file input
