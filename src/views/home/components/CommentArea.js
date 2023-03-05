@@ -12,6 +12,147 @@ import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
 import moment from 'moment';   // library for formatting dates
 
+// Main parent component
+const CommentArea = (props) => {
+    const [commentsArray, setCommentsArray] = useState([]);
+    let commentItems = [null];
+    // Get the comments from firestore and store them in an array
+    useEffect(() => {
+        var comments = []
+        const getComments = async () =>{
+            const postsRef = collection(db, "comments");
+            const q = query(postsRef, where("post_id", "==", props.post_id), orderBy("ts", 'desc'));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+                comments.push({...doc.data(), "comment_id": doc.id})
+            });
+            setCommentsArray(comments);
+        }
+        getComments();
+    }, [])
+
+    // Update the contents of commentsArray state to display a new comment
+    const displayNewComment = (newComment) =>{
+        setCommentsArray([newComment, ...commentsArray]);
+    }
+    
+    const displayNewReply = (i, repliesArray) => {
+        var temp = commentsArray;
+        temp[i]['replies'] = repliesArray;
+        setCommentsArray(temp)
+    }
+    // Create comments component for every comment
+    if(commentsArray.length > 0){
+        commentItems = commentsArray.map((comment, i) => {
+            // Having key for each Comment is required per React docs  
+            return <SingleComment key={"comment-card-" + i} 
+                        comment_data={comment}
+                        displayNewReply = {displayNewReply}
+                        positionInCommentsArray = {i}
+                        commentCount = {props.commentCount}
+                        setCommentCount = {props.setCommentCount}
+                    />
+        })
+    }
+    return (
+        <div className="w-full px-8">
+            {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
+            <NewCommentBox 
+                post_id = {props.post_id}
+                displayNewComment = {displayNewComment}
+                commentCount = {props.commentCount}
+                setCommentCount = {props.setCommentCount}/>
+            {commentItems.length != 0 && <div>{commentItems}</div>}
+        </div>
+    )
+}
+
+// Component for each comment and replies to that commment
+const SingleComment = (props) => {
+    const [showNewReplyBox, setShowNewReplyBox] = useState(false);
+    // Create an array of CommentReplies components to be displayed under the comment
+    let replyItems = []
+    if(props.comment_data?.replies){
+        var replies = props.comment_data.replies;
+        replyItems = replies.map((reply, i) => {
+            // Having key for each Comment is required per React docs
+            return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
+        })
+    }
+    // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
+    const ts = new Date(Date.parse(props.comment_data.ts))
+    const timeForComment = moment(ts).fromNow();
+    
+    // update repliesArray to show the new reply
+    const updateRepliesArray = (reply_data) => {
+        if(props.comment_data?.replies){
+            props.comment_data.replies.unshift(reply_data);
+        }
+        else{
+            // create a new temp array
+            var tempRepliesArray = []
+            tempRepliesArray.push(reply_data)
+            props.comment_data['replies']= tempRepliesArray
+        }
+        // call the main parent component function to update the state
+        props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
+    }
+    
+    return (
+        <div className='pt-2'>
+            {/*Member comments*/}
+            <div className='flex flex-row space-x-4'>
+                <div className='h-10 v-10'>
+                    <img className="rounded-full h-full" src = {profile}></img>
+                </div>
+                <div className='flex flex-col space-y-5 w-full'>
+                    <div className='flex flex-col'>
+                        <label>Jamshed</label>
+                        <label>{props.comment_data.text}</label>
+                        <div className='flex flex-row space-x-10'>
+                            <button onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
+                            <label> {timeForComment} </label>
+                        </div>
+                    </div>
+                    {/* Display newReplyBox if the reply button is clicked */}
+                    {showNewReplyBox && 
+                        <NewReplyBox 
+                            comment_id = {props.comment_data.comment_id}
+                            post_id = {props.comment_data.post_id}
+                            updateRepliesArray = {updateRepliesArray}
+                            setShowNewReplyBox = {setShowNewReplyBox}
+                            commentCount = {props.commentCount}
+                            setCommentCount = {props.setCommentCount}
+                        />}
+                    {/*Replies to member comment if present*/}
+                    <div>
+                        {replyItems}
+                    </div>
+                </div>
+            </div>
+        </div>
+)
+}
+
+// Component for replies to comments
+const CommentReplies = (props) => {
+    const ts = new Date(Date.parse(props.reply_data.ts))
+    const tsForDisplay = moment(ts).fromNow();
+    return (
+        <div className='w-full flex flex-row space-x-4 space-y-2'>
+                <div className='h-10 v-10'>
+                    <img className="rounded-full h-full" src = {profile}></img>
+                </div>
+                <div className='flex flex-col space-y-1'>
+                    <label>Wahid</label>
+                    <label>{props.reply_data.text}</label>
+                    <div className='flex flex-row space-x-10'>
+                        <label>{tsForDisplay}</label>
+                    </div>
+                </div>
+        </div>
+    )
+};
 // Component for writing a new comment
 // TODO: image and file input
 const NewCommentBox = (props) => {
@@ -207,147 +348,5 @@ const NewReplyBox = (props) => {
             </div>      
     )
 };
-
-// Component for replies to comments
-const CommentReplies = (props) => {
-    const ts = new Date(Date.parse(props.reply_data.ts))
-    const tsForDisplay = moment(ts).fromNow();
-    return (
-        <div className='w-full flex flex-row space-x-4 space-y-2'>
-                <div className='h-10 v-10'>
-                    <img className="rounded-full h-full" src = {profile}></img>
-                </div>
-                <div className='flex flex-col space-y-1'>
-                    <label>Wahid</label>
-                    <label>{props.reply_data.text}</label>
-                    <div className='flex flex-row space-x-10'>
-                        <label>{tsForDisplay}</label>
-                    </div>
-                </div>
-        </div>
-    )
-};
-
-// Component for each comment and replies to that commment
-const SingleComment = (props) => {
-    const [showNewReplyBox, setShowNewReplyBox] = useState(false);
-    // Create an array of CommentReplies components to be displayed under the comment
-    let replyItems = []
-    if(props.comment_data?.replies){
-        var replies = props.comment_data.replies;
-        replyItems = replies.map((reply, i) => {
-            // Having key for each Comment is required per React docs
-            return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
-        })
-    }
-    // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
-    const ts = new Date(Date.parse(props.comment_data.ts))
-    const timeForComment = moment(ts).fromNow();
-    
-    // update repliesArray to show the new reply
-    const updateRepliesArray = (reply_data) => {
-        if(props.comment_data?.replies){
-            props.comment_data.replies.unshift(reply_data);
-        }
-        else{
-            // create a new temp array
-            var tempRepliesArray = []
-            tempRepliesArray.push(reply_data)
-            props.comment_data['replies']= tempRepliesArray
-        }
-        // call the main parent component function to update the state
-        props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
-    }
-    
-    return (
-        <div className='pt-2'>
-            {/*Member comments*/}
-            <div className='flex flex-row space-x-4'>
-                <div className='h-10 v-10'>
-                    <img className="rounded-full h-full" src = {profile}></img>
-                </div>
-                <div className='flex flex-col space-y-5 w-full'>
-                    <div className='flex flex-col'>
-                        <label>Jamshed</label>
-                        <label>{props.comment_data.text}</label>
-                        <div className='flex flex-row space-x-10'>
-                            <button onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
-                            <label> {timeForComment} </label>
-                        </div>
-                    </div>
-                    {/* Display newReplyBox if the reply button is clicked */}
-                    {showNewReplyBox && 
-                        <NewReplyBox 
-                            comment_id = {props.comment_data.comment_id}
-                            post_id = {props.comment_data.post_id}
-                            updateRepliesArray = {updateRepliesArray}
-                            setShowNewReplyBox = {setShowNewReplyBox}
-                            commentCount = {props.commentCount}
-                            setCommentCount = {props.setCommentCount}
-                        />}
-                    {/*Replies to member comment if present*/}
-                    <div>
-                        {replyItems}
-                    </div>
-                </div>
-            </div>
-        </div>
-)
-}
-
-// Main parent component
-const CommentArea = (props) => {
-    const [commentsArray, setCommentsArray] = useState([]);
-    let commentItems = [null];
-    // Get the comments from firestore and store them in an array
-    useEffect(() => {
-        var comments = []
-        const getComments = async () =>{
-            const postsRef = collection(db, "comments");
-            const q = query(postsRef, where("post_id", "==", props.post_id), orderBy("ts", 'desc'));
-            const querySnapshot = await getDocs(q);
-            querySnapshot.forEach((doc) => {
-                comments.push({...doc.data(), "comment_id": doc.id})
-            });
-            setCommentsArray(comments);
-        }
-        getComments();
-    }, [])
-
-    // Update the contents of commentsArray state to display a new comment
-    const displayNewComment = (newComment) =>{
-        setCommentsArray([newComment, ...commentsArray]);
-    }
-    
-    const displayNewReply = (i, repliesArray) => {
-        var temp = commentsArray;
-        temp[i]['replies'] = repliesArray;
-        setCommentsArray(temp)
-    }
-    // Create comments component for every comment
-    if(commentsArray.length > 0){
-        commentItems = commentsArray.map((comment, i) => {
-            // Having key for each Comment is required per React docs  
-            return <SingleComment key={"comment-card-" + i} 
-                        comment_data={comment}
-                        displayNewReply = {displayNewReply}
-                        positionInCommentsArray = {i}
-                        commentCount = {props.commentCount}
-                        setCommentCount = {props.setCommentCount}
-                    />
-        })
-    }
-    return (
-        <div className="w-full px-8">
-            {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
-            <NewCommentBox 
-                post_id = {props.post_id}
-                displayNewComment = {displayNewComment}
-                commentCount = {props.commentCount}
-                setCommentCount = {props.setCommentCount}/>
-            {commentItems.length != 0 && <div>{commentItems}</div>}
-        </div>
-    )
-}
 
 export default CommentArea;
