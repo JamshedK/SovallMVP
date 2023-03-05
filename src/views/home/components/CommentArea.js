@@ -42,6 +42,7 @@ const NewCommentBox = (props) => {
         textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
         // update the state of commentCount
         props.setCommentCount(props.commentCount + 1)
+        console.log(props.commentCount);
         // update comment_count for posts
         await updateDoc(postsDocRef, {comment_count: increment(1)});
         // add in interactions collections

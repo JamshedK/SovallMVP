@@ -32,6 +32,7 @@ const FeedCard= (props) => {
     // TODO: Consider adding a callback function to update the post info in parent component
     const [postsInfoCopy, setPostsInfoCopy] = useState({})  
     const [commentCount, setCommentCount] = useState(0);
+    const [sharedCount, setSharedCount] = useState(0);
     const [upvotedCount, setUpvotedCount] = useState(0);
     const data = props.data;
     const interactorsData = data.interactors;
@@ -64,8 +65,8 @@ const FeedCard= (props) => {
             const docRef = doc(db, 'posts', data.post_id );
             const docSnap = await getDoc(docRef)
             if(docSnap.exists()){
-                setCommentCount(docSnap.data()?.comment_count)
-                setUpvotedCount(docSnap.data()?.upvoted_count)
+                setCommentCount(docSnap.data()?.comment_count ?? 0)
+                setUpvotedCount(docSnap.data()?.upvoted_count ?? 0)
             }
         }
         getPostStats();
@@ -160,7 +161,7 @@ const FeedCard= (props) => {
                 <Button>
                     <img className="h-full" src={share} />
                     {/* Display the counts only when postsInfoCopy has shared_count and it's not zero */}
-                    {postsInfoCopy?.shared_count > 0 && <label>postsInfoCopy.shared_count   </label>}
+                    {sharedCount > 0 && <label>{sharedCount}</label>}
                 </Button>
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
