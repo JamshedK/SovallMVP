@@ -173,8 +173,11 @@ const FeedCard= (props) => {
                 </Button>
             </div>
             {/*Comment area*/}
-            {extendCommentArea && <CommentArea post_id = {data.post_id}/>}
-
+            {extendCommentArea && 
+                <CommentArea 
+                    commentCount = {commentCount} 
+                    setCommentCount = {setCommentCount}
+                    post_id = {data.post_id}/>}
             {/*division line*/ }
             <hr className="w-full"></hr>
 

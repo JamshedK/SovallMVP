@@ -3,7 +3,7 @@ import camera from '../../../assets/home/camera.svg';
 import file_upload from '../../../assets/home/doc.svg';
 
 /*API stuff*/
-import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion } from "firebase/firestore";
+import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import {db} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
@@ -15,6 +15,7 @@ const NewCommentBox = (props) => {
     const textAreaRef = useRef();  
     const [showCommentButton, setShowCommentButton] = useState(false);  // control whether to show comment button or not
     const commentsCollectionRef = collection(db, 'comments')    // reference to comments collection in firestore
+    const postsDocRef = doc(db, "posts", props.post_id);
     const authCtx = useContext(AuthContext);
 
     // Display comment button only when the user types something
@@ -39,6 +40,19 @@ const NewCommentBox = (props) => {
         // call the function in parent component to update the state of commentsArray to display the new comment
         props.displayNewComment({...newCommentData, "comment_id": docRef.id});
         textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
+        // update the state of commentCount
+        props.setCommentCount(props.commentCount + 1)
+        // update comment_count for posts
+        await updateDoc(postsDocRef, {comment_count: increment(1)});
+        // add in interactions collections
+        const interactionsColRef = collection(db, 'interactions')
+        await addDoc(interactionsColRef, {
+            user_id: authCtx.userID,
+            post_id: props.post_id,
+            comment_id: docRef.id,
+            ts: new Date(),
+            type: "comment"
+        })
         setShowCommentButton(false)
     }
 
@@ -70,6 +84,8 @@ const NewCommentBox = (props) => {
 const NewReplyBox = (props) => {
     const textAreaRef = useRef();  
     const commentRef = doc(db, 'comments', props.comment_id)    // reference to comments collection in firestore
+    const postsDocRef = doc(db, "posts", props.post_id);
+
     const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
     const authCtx = useContext(AuthContext);
 
@@ -94,11 +110,21 @@ const NewReplyBox = (props) => {
         // hide newReplyBox
         props.setShowNewReplyBox(false);
         // Store the new reply in firestore
-        await updateDoc(commentRef,{
-            replies: arrayUnion(newReplyData)
+        const docRef = await updateDoc(commentRef,{replies: arrayUnion(newReplyData)})
+        // update the state of commentCount
+        props.setCommentCount(props.commentCount + 1)
+        // update comment_count for posts
+        await updateDoc(postsDocRef, {comment_count: increment(1)});
+        // add in interactions collections
+        const interactionsColRef = collection(db, 'interactions')
+        await addDoc(interactionsColRef, {
+            user_id: authCtx.userID,
+            post_id: props.post_id,
+            comment_id: props.comment_id,
+            ts: new Date(),
+            type: "comment",
+            sub_type: "reply"
         })
-        // props.displayNewComment({...newCommentData, "comment_id": docRef.id});
-        textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
         setShowReplyButton(false)
     }
 
@@ -199,9 +225,12 @@ const SingleComment = (props) => {
                     {showNewReplyBox && 
                         <NewReplyBox 
                             comment_id = {props.comment_data.comment_id}
+                            post_id = {props.comment_data.post_id}
                             updateRepliesArray = {updateRepliesArray}
                             setShowNewReplyBox = {setShowNewReplyBox}
-                            />}
+                            commentCount = {props.commentCount}
+                            setCommentCount = {props.setCommentCount}
+                        />}
                     {/*Replies to member comment if present*/}
                     <div>
                         {replyItems}
@@ -248,7 +277,10 @@ const CommentArea = (props) => {
             return <SingleComment key={"comment-card-" + i} 
                         comment_data={comment}
                         displayNewReply = {displayNewReply}
-                        positionInCommentsArray = {i}/>
+                        positionInCommentsArray = {i}
+                        commentCount = {props.commentCount}
+                        setCommentCount = {props.setCommentCount}
+                    />
         })
     }
     return (
@@ -256,7 +288,9 @@ const CommentArea = (props) => {
             {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
             <NewCommentBox 
                 post_id = {props.post_id}
-                displayNewComment = {displayNewComment}/>
+                displayNewComment = {displayNewComment}
+                commentCount = {props.commentCount}
+                setCommentCount = {props.setCommentCount}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
         </div>
     )
