@@ -31,6 +31,8 @@ const FeedCard= (props) => {
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     // TODO: Consider adding a callback function to update the post info in parent component
     const [postsInfoCopy, setPostsInfoCopy] = useState({})  
+    const [commentCount, setCommentCount] = useState(0);
+    const [upvotedCount, setUpvotedCount] = useState(0);
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -62,7 +64,8 @@ const FeedCard= (props) => {
             const docRef = doc(db, 'posts', data.post_id );
             const docSnap = await getDoc(docRef)
             if(docSnap.exists()){
-                setPostsInfoCopy(docSnap.data())
+                setCommentCount(docSnap.data()?.comment_count)
+                setUpvotedCount(docSnap.data()?.upvoted_count)
             }
         }
         getPostStats();
@@ -79,9 +82,7 @@ const FeedCard= (props) => {
                 ts: new Date(),
                 type: "upvote"
             })
-              // update the postsInfoCopy state
-              postsInfoCopy.upvoted_count = postsInfoCopy.upvoted_count + 1;
-              setPostsInfoCopy(postsInfoCopy);
+              setUpvotedCount(upvotedCount+1)
         }else{
             // decrement the count
             await updateDoc(docRef, {upvoted_count: increment(-1)});
@@ -95,9 +96,7 @@ const FeedCard= (props) => {
                 const intereactionDocRef = doc(db, "interactions", document.id)
                 await deleteDoc(intereactionDocRef)
             })
-            // update the postsInfoCopy state
-            postsInfoCopy.upvoted_count = postsInfoCopy.upvoted_count - 1;
-            setPostsInfoCopy(postsInfoCopy);
+            setUpvotedCount(upvotedCount-1)
         }
         // update the state
         setIsPostUpvoted(!isPostUpvoted);
@@ -165,12 +164,12 @@ const FeedCard= (props) => {
                 </Button>
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
-                    {postsInfoCopy?.comment_count > 0 && <label>{postsInfoCopy.comment_count}</label>}
+                    {commentCount > 0 && <label>{commentCount}</label>}
                 </Button>
                 <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
                     {!isPostUpvoted && <img className="h-full" src={upvote} />}
-                    {postsInfoCopy?.upvoted_count > 0 && <label>{postsInfoCopy.upvoted_count}</label>}
+                    {upvotedCount > 0 && <label>{upvotedCount}</label>}
                 </Button>
             </div>
             {/*Comment area*/}
