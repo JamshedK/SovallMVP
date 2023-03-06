@@ -79,7 +79,7 @@ const NewPost = () => {
     return(
         <div className="relative h-full w-full flex justify-center items-center" style={{backgroundColor: "#3C9A9A"}}>
             {/* container for the post */}
-            <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-14 rounded-lg w-[538px] h-[463px]">
+            <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-14 rounded-[14.5px] w-[538px] h-[463px]">
                 {/*profile and selecting category for the post*/ }
                 <div className='flex flex-row items-start '>
                     <img className="w-9 h-9 rounded-full" src={profile} />
@@ -90,7 +90,7 @@ const NewPost = () => {
 
                 
 
-                    <select className="absolute w-38 h-8 align-text-top text-left text-sm top-6 right-2 rounded-lg" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                    <select className="absolute w-38 h-8 align-text-top text-left text-sm top-6 right-2 rounded-[20px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
                         <option value="DEFAULT" disabled>No tab selected</option>
                         <option value='Problems'>Problems</option>
                         <option value='Solutions'>Solutions</option>
@@ -101,31 +101,29 @@ const NewPost = () => {
                     </select>
                 </div>
 
-                {/* text area */}
+                {/* text area 
+                Text box automatic resizing with minimum of two lines.*/}
                 <div className='flex flex-col gap-5'>
-                    <label className='relative left-2'>Write...</label>
-                    <textarea placeholder={placeholder} className='rounded-lg w-[490px] h-[200px] placeholder:p-4 placeholder:px-[111px]'
+                    <textarea placeholder={placeholder} className='relative border-hidden rounded-[14.5px] w-[490px] h-[200px] top-8 placeholder:p-4 placeholder:px-[111px]'
                      ref={postTextRef}>
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
                 </div>
 
                 {/* post button */}
-                <button onClick={handlePost} className='relative left-[200px] top-4 rounded-[14.5px] w-20 h-7 text-[14px] place-items-center bg-[#025B5B] text-white'>Post</button>
+                <button onClick={handlePost} className='relative left-[200px] top-10 rounded-[14.5px] w-20 h-7 text-[14px] place-items-center bg-[#025B5B] text-white'>Post</button>
                 
                 {/* upload options */}
                 <div className="gap-6 w-fit h-full">
                     {/* TODO: Correct the styles */}
                     
-                    <label for='file-input' className='relative flex flex-row gap-6 pointer-events-auto left-[450px]'>
+                    <label for='file-input' className='relative top-10 flex flex-row gap-6 pointer-events-auto left-[450px]'>
                         <img src={doc}></img>
                         <input id='file-input' className='invisible' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
 
                     </label>
 
 
-
-        
                     {/* TODO: Can add the poll here later */}
                 </div>
                 

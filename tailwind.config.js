@@ -7,6 +7,7 @@ module.exports = {
         mode: 'jit',
         extend: {
             colors: {
+                'brown-1': '#525252',
                 'green-2': '#0A7D7D',
                 'green-3': '#025B5B',
                 'green-4': '#044A54',

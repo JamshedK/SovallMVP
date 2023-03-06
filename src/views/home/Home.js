@@ -6,6 +6,9 @@ import Notifications from './components/Notifications';
 import MessagesToggle from './components/MessagesToggle';
 import Chat from './components/Chat';
 import ChatHistory from './components/ChatHistory';
+import ComingSoonMessages from './components/ComingSoonMessages';
+import ComingSoonNotifications from './components/ComingSoonNotifications';
+
 
 /*assests*/
 import profile from '../../assets/common/profile.jpg';
@@ -1441,13 +1444,16 @@ const Home = (props) => {
                 {/*left panel*/}
                 <div className={"flex flex-col w-fit absolute left-0 top-0 " + (notification ? "h-full" : "h-fit")}>
                     <NotificationsToggle value={notification} setValue={setNotification} />
-                    <Notifications value={notification} setValue={setNotification} />
+                    {/* <Notifications value={notification} setValue={setNotification} /> */}
+                    <ComingSoonNotifications value={notification} setValue={setNotification} />
                 </div>
+
 
                 {/*right panel*/}
                 <div className={"flex flex-col w-fit items-end absolute right-0 top-0 " + (messages ? "h-full" : "h-fit")} >
                     <MessagesToggle value={messages} setValue={setMessages} />
-                    <ChatHistory value={messages} setValue={setMessages} onClick={handleChatOpen} data={chat_history} />
+                    {/* <ChatHistory value={messages} setValue={setMessages} onClick={handleChatOpen} data={chat_history} /> */}
+                    <ComingSoonMessages value={messages} setValue={setMessages} />
                 </div>
 
 
