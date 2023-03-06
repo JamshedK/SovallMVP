@@ -6,11 +6,12 @@ import delete_image from '../../../assets/feedcard/close.svg';
 
 /*API stuff*/
 import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
-import {ref, uploadBytes} from 'firebase/storage'
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {db, storage} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
 import moment from 'moment';   // library for formatting dates
+import { async } from 'q';
 
 // Main parent component
 const CommentArea = (props) => {
@@ -70,8 +71,30 @@ const CommentArea = (props) => {
 // Component for each comment and replies to that commment
 const SingleComment = (props) => {
     const [showNewReplyBox, setShowNewReplyBox] = useState(false);
+    const [imageURL, setImageURL] = useState('');
+    const [containsImage, setContainsImage] = useState(false);
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
+    
+    useEffect(() => {
+        const getImage = async () => {
+        if(props.comment_data?.image_path){
+            var imagePath = props.comment_data.image_path;
+            if(imagePath !== ''){
+                // Get the picture attached to the comment
+                const imageRef = ref(storage, imagePath)
+                try{
+                    const downloadURL = await getDownloadURL(imageRef)
+                    setImageURL(downloadURL);
+                    setContainsImage(true);
+                } catch(e){
+                    console.log(e);
+                }
+            }
+        }
+        }
+        getImage();
+    },[]);
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
         replyItems = replies.map((reply, i) => {
@@ -109,6 +132,7 @@ const SingleComment = (props) => {
                     <div className='flex flex-col'>
                         <label>Jamshed</label>
                         <label>{props.comment_data.text}</label>
+                        {containsImage && <img src={imageURL}></img>}
                         <div className='flex flex-row space-x-10'>
                             <button onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
