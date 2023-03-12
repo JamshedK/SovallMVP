@@ -1,6 +1,11 @@
-import React, { Component, useState } from 'react';
+import React, { Component, useEffect, useState, useContext} from 'react';
 import CommentArea from './CommentArea';
-import moment from 'moment';
+import moment from 'moment'
+import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc, deleteDoc } from "@firebase/firestore";
+import {db} from '../../../firebase-config'
+import AuthContext from '../../../contexts/auth-context';
+
+
 /* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
@@ -13,6 +18,7 @@ import save from '../../../assets/home/saved.svg';
 import pdf from '../../../assets/home/pdf.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
+import { async } from 'q';
 
 
 const Button = props => {
@@ -23,32 +29,86 @@ const FeedCard= (props) => {
     // For controlling which upvoted icon to display
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
+    // TODO: Consider adding a callback function to update the post info in parent component
+    const [postsInfoCopy, setPostsInfoCopy] = useState({})  
+    const [commentCount, setCommentCount] = useState(0);
+    const [sharedCount, setSharedCount] = useState(0);
+    const [upvotedCount, setUpvotedCount] = useState(0);
     const data = props.data;
     const interactorsData = data.interactors;
-    // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
-    const getTimeForComment = () => {
-        const ts = new Date(Date.parse(data.published_date))
-        return(moment().format('MMMM, D, YYYY'))
-    }
-    const timeForPost = getTimeForComment();
+    const docRef = doc(db, "posts", data.post_id);
+    const intereactionColRef = collection(db, 'interactions')
+    const authCtx = useContext(AuthContext);
 
-    const interactors = interactorsData.map((interactor,i) => {
-        return <Interactor key={"-interactor-"+i} data={interactor} />
-    });
+    // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
+    const ts = new Date(Date.parse(data.published_date))
+    const timeForPost = moment().format('MMMM, D, YYYY');
 
     const px = "px-8";
-    // Whenever the upvote button is clicked
-    /* TODO: 
-        - save the upvote in firestore
-        - when the post loads, determine if the user had liked it or not
-    */
-    const handleUpvoteClicked = () => {
+    
+    // When the post loads, determine if the user had liked it or not
+    useEffect(() => {
+        // check if the user has already upvoted the post
+        const checkAlreadyUpvoted = async () => {
+            const q = query(intereactionColRef, 
+                where("user_id", "==", authCtx.userID),
+                where("post_id", "==", data.post_id),
+                where("type", "==", "upvote"));
+            const querySnapshot = await getDocs(q);
+            if(querySnapshot.size > 0){
+                setIsPostUpvoted(true);
+            }
+        }
+        checkAlreadyUpvoted();
+        // make a request to get only the counts from the post and store it here to make it easier to update
+        const getPostStats = async () => {
+            const docRef = doc(db, 'posts', data.post_id );
+            const docSnap = await getDoc(docRef)
+            if(docSnap.exists()){
+                setCommentCount(docSnap.data()?.comment_count ?? 0)
+                setUpvotedCount(docSnap.data()?.upvoted_count ?? 0)
+            }
+        }
+        getPostStats();
+    }, []);
+
+    const onUpvote = async () => {
+        // Increment or decrement upvote_count in posts collection
+        if(!isPostUpvoted){
+            await updateDoc(docRef, {upvoted_count: increment(1)});
+            // Add to intereactions collection
+            await addDoc(intereactionColRef, {
+                user_id: authCtx.userID,
+                post_id: data.post_id,
+                ts: new Date(),
+                type: "upvote"
+            })
+              setUpvotedCount(upvotedCount+1)
+        }else{
+            // decrement the count
+            await updateDoc(docRef, {upvoted_count: increment(-1)});
+            // remove from interactions collection
+            const q = query(intereactionColRef, 
+                where("post_id", "==", data.post_id),
+                where("user_id", "==", authCtx.userID),
+                where("type", "==", "upvote"));
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach(async (document) =>{
+                const intereactionDocRef = doc(db, "interactions", document.id)
+                await deleteDoc(intereactionDocRef)
+            })
+            setUpvotedCount(upvotedCount-1)
+        }
+        // update the state
         setIsPostUpvoted(!isPostUpvoted);
     }
 
     const handleCommentButtonClicked = () => {
         setExtendCommentArea(!extendCommentArea);
     }
+    const interactors = interactorsData.map((interactor,i) => {
+        return <Interactor key={"-interactor-"+i} data={interactor} />
+    });
 
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
@@ -100,21 +160,25 @@ const FeedCard= (props) => {
                 </Button>
                 <Button>
                     <img className="h-full" src={share} />
-                    <label>100</label>
+                    {/* Display the counts only when postsInfoCopy has shared_count and it's not zero */}
+                    {sharedCount > 0 && <label>{sharedCount}</label>}
                 </Button>
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
-                    <label>420</label>
+                    {commentCount > 0 && <label>{commentCount}</label>}
                 </Button>
-                <Button className="border border-red-2" onClick = {handleUpvoteClicked}>
+                <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
                     {!isPostUpvoted && <img className="h-full" src={upvote} />}
-                    <label>100</label>
+                    {upvotedCount > 0 && <label>{upvotedCount}</label>}
                 </Button>
             </div>
             {/*Comment area*/}
-            {extendCommentArea && <CommentArea post_id = {data.post_id}/>}
-
+            {extendCommentArea && 
+                <CommentArea 
+                    commentCount = {commentCount} 
+                    setCommentCount = {setCommentCount}
+                    post_id = {data.post_id}/>}
             {/*division line*/ }
             <hr className="w-full"></hr>
 
