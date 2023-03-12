@@ -232,7 +232,7 @@ const NewCommentBox = (props) => {
                 } catch(e){
                     console.log(e);
                 }
-                // remove the image
+                // remove the image after the image was uploaded
                 handleRemoveImage();
             }
             uploadFile(selectedImage, imagePath);

@@ -2,7 +2,8 @@ import React, { Component, useEffect, useState, useContext} from 'react';
 import CommentArea from './CommentArea';
 import moment from 'moment'
 import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc, deleteDoc } from "@firebase/firestore";
-import {db} from '../../../firebase-config'
+import {db, storage} from '../../../firebase-config'
+import {getDownloadURL, ref} from 'firebase/storage'
 import AuthContext from '../../../contexts/auth-context';
 
 
@@ -15,7 +16,6 @@ import dotsMenu from '../../../assets/home/dots_menu.svg';
 import arrowForth from '../../../assets/home/arrow_forth.svg';
 import share from '../../../assets/home/share.svg';
 import save from '../../../assets/home/saved.svg';
-import pdf from '../../../assets/home/pdf.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
 import { async } from 'q';
@@ -30,10 +30,11 @@ const FeedCard= (props) => {
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
     // TODO: Consider adding a callback function to update the post info in parent component
-    const [postsInfoCopy, setPostsInfoCopy] = useState({})  
     const [commentCount, setCommentCount] = useState(0);
     const [sharedCount, setSharedCount] = useState(0);
     const [upvotedCount, setUpvotedCount] = useState(0);
+    const [imageURL, setImageURL] = useState('');
+    const [containsImage, setContainsImage] = useState(false);
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -70,6 +71,24 @@ const FeedCard= (props) => {
             }
         }
         getPostStats();
+        // make a request to get the image if it exists
+        const getImage = async () => {
+            if(props.data?.imagePath){
+                var imagePath = props.data.imagePath;
+                if(imagePath !== ''){
+                    // Get the picture attached to the comment
+                    const imageRef = ref(storage, imagePath)
+                    try{
+                        const downloadURL = await getDownloadURL(imageRef)
+                        setImageURL(downloadURL);
+                        setContainsImage(true);
+                    } catch(e){
+                        console.log(e);
+                    }
+                }
+            }
+            }
+            getImage();
     }, []);
 
     const onUpvote = async () => {
@@ -133,23 +152,13 @@ const FeedCard= (props) => {
                 <div className="w-full px-4">
                     {/*attachment details*/ }
                     <div className="h-fit w-full rounded-xl bg-gray-200 flex gap-2">
-                        <img src={pdf} />
-                        <div className="h-full w-5/12 flex flex-col border">
-                            <label className="font-bold">Title</label>
-                            <p className="flex flex-wrap">
-                                <span>#thisIsAnAwesomeHashtag</span>
-                                <span>#this</span>
-                                <span>#IsAHashtag</span>
-                                <span>#thisIsAnA</span>
-                            </p>
-                        </div>
+                        {containsImage && <img src={imageURL}></img>}
                     </div>
                 </div>
 
                 {/*description subsection*/}
                 <p className="flex-wrap">
-                    {data.text.slice(0, 160)}
-                    <span className="font-bold text-lg"> more...</span>
+                    {data.text}
                 </p>
             </div>
 
