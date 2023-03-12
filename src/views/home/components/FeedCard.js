@@ -42,8 +42,7 @@ const FeedCard= (props) => {
     const authCtx = useContext(AuthContext);
 
     // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
-    const ts = new Date(Date.parse(data.published_date))
-    const timeForPost = moment().format('MMMM, D, YYYY');
+    const timeForPost = moment(data.published_date.toDate()).format('MMMM, D, YYYY');
 
     const px = "px-8";
     
@@ -141,7 +140,7 @@ const FeedCard= (props) => {
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl rounded-xl">Resources</label>
+                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl rounded-xl">{data.category}</label>
                     <img src={dotsMenu} />
                 </div>
             </div>
