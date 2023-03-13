@@ -33,11 +33,6 @@ const CommentArea = (props) => {
         getComments();
     }, [newCommentAdded])
   
-    const displayNewReply = (i, repliesArray) => {
-        var temp = commentsArray;
-        temp[i]['replies'] = repliesArray;
-        setCommentsArray(temp)
-    }
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
@@ -45,7 +40,6 @@ const CommentArea = (props) => {
             return <SingleComment key={"comment-card-" + i} 
                         comment_data={comment}
                         setNewCommentAdded = {setNewCommentAdded}
-                        displayNewReply = {displayNewReply}
                         positionInCommentsArray = {i}
                         commentCount = {props.commentCount}
                         setCommentCount = {props.setCommentCount}
@@ -101,22 +95,7 @@ const SingleComment = (props) => {
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
-    
-    // update repliesArray to show the new reply
-    const updateRepliesArray = (reply_data) => {
-        if(props.comment_data?.replies){
-            props.comment_data.replies.unshift(reply_data);
-        }
-        else{
-            // create a new temp array
-            var tempRepliesArray = []
-            tempRepliesArray.push(reply_data)
-            props.comment_data['replies']= tempRepliesArray
-        }
-        // call the main parent component function to update the state
-        props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
-    }
-    
+
     return (
         <div className='pt-2'>
             {/*Member comments*/}
@@ -140,7 +119,6 @@ const SingleComment = (props) => {
                             comment_id = {props.comment_data.comment_id}
                             setNewCommentAdded = {props.setNewCommentAdded}
                             post_id = {props.comment_data.post_id}
-                            updateRepliesArray = {updateRepliesArray}
                             setShowNewReplyBox = {setShowNewReplyBox}
                             commentCount = {props.commentCount}
                             setCommentCount = {props.setCommentCount}
@@ -321,8 +299,6 @@ const NewReplyBox = (props) => {
             ts: Date(),
             user_id: authCtx.userID
         }
-        // call the function in parent component to update the state of replyArray to display the reply
-        // props.updateRepliesArray(newReplyData)
         // hide newReplyBox
         props.setShowNewReplyBox(false);
         // Store the new reply in firestore
