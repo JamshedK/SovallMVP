@@ -247,8 +247,8 @@ const NewCommentBox = (props) => {
                 <div className='w-full flex flex-row'>
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
-                        {/* {The styling for textarea is to remove the default stylings} */}
                         <div className='w-full flex flex-col'>
+                            {/* {The styling for textarea is to remove the default stylings} */}
                             <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
                                         focus:outline-none focus:ring-0" placeholder='Add a comment...'
                                 ref={textAreaRef}
@@ -276,11 +276,16 @@ const NewCommentBox = (props) => {
 };
 
 const NewReplyBox = (props) => {
+    const [containsImage, setContainsImage] = useState(false);
+    const [imageSource, setImageSource] = useState();
+    const [selectedImage, setSelectedImage] = useState(null);   // reference to the image that was selected
+    const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
+
+
     const textAreaRef = useRef();  
     const commentRef = doc(db, 'comments', props.comment_id)    // reference to comments collection in firestore
     const postsDocRef = doc(db, "posts", props.post_id);
 
-    const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
     const authCtx = useContext(AuthContext);
 
     // Display reply button only when the user types something
@@ -292,7 +297,27 @@ const NewReplyBox = (props) => {
             setShowReplyButton(false)
         }
     }
+    // preview image when selected
+    const handleImageUpload = (e) => {
+        // TODO: Display the comment button when image is selected 
+        e.preventDefault();
+        if(e.target.files[0] != null){
+            setShowReplyButton(true)
+            setContainsImage(true);
+            setImageSource(URL.createObjectURL(e.target.files[0]));
+            setSelectedImage(e.target.files[0]);
+        }
+        else{
+            setContainsImage(false);
+            setShowReplyButton(false)
 
+        }
+    }
+    // remove image preview when X button is clicked
+    const handleRemoveImage = () => {
+        setContainsImage(false);
+        setImageSource(null);
+    }
     const replyButtonHandler = async () => {
         const newReplyData = {
             text: textAreaRef.current.value,
@@ -328,18 +353,28 @@ const NewReplyBox = (props) => {
                 <div className='w-full flex flex-row'>
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
-                        {/* {The styling for textarea is to remove the default stylings} */}
-                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
-                                     focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
-                             ref={textAreaRef}
-                             onChange={onTextAreaChange}
-                             ></textarea>
-                        <button>
-                            <img className='h-6 w-6' src={camera}></img>
-                        </button>
-                        <button>
-                            <img className='h-6 w-6' src={file_upload}></img>
-                        </button>
+                        <div className='w-full flex flex-col'>
+                            {/* {The styling for textarea is to remove the default stylings} */}
+                            <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
+                                        focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
+                                ref={textAreaRef}
+                                onChange={onTextAreaChange}
+                                ></textarea>
+                            {/* Displaying the image if it was selected */}
+                            {containsImage && 
+                                <div className='flex flex-row'>
+                                    <img className='px-5' src={imageSource}></img>
+                                    <button className='w-5 h-5' onClick={handleRemoveImage}>
+                                        <label>X</label>
+                                    </button>
+                                </div>}  
+                        </div>
+                        {!containsImage && 
+                            <label className="flex items-center cursor-pointer">
+                                <input type="file" className="opacity-0 absolute h-0 w-0 overflow-hidden" accept="image/*" onChange={handleImageUpload} />
+                                <img className="h-6 w-6" src={camera} alt="Camera icon" />
+                            </label>}
+                        {/* TODO: add file upload and polls */}
                     </div>
                 </div>
                 {showReplyButton && 
