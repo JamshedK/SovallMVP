@@ -73,13 +73,15 @@ const FeedCard= (props) => {
         // make a request to get the image if it exists
         const getImage = async () => {
             if(props.data?.imagePath){
+                  // get the image URL from Firebase Storage and add a unique identifier
+                const timestamp = new Date().getTime();
                 var imagePath = props.data.imagePath;
                 if(imagePath !== ''){
                     // Get the picture attached to the comment
                     const imageRef = ref(storage, imagePath)
                     try{
                         const downloadURL = await getDownloadURL(imageRef)
-                        setImageURL(downloadURL);
+                        setImageURL(`${downloadURL}?t=${timestamp}`);
                         setContainsImage(true);
                     } catch(e){
                         console.log(e);

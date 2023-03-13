@@ -16,6 +16,7 @@ import { async } from 'q';
 // Main parent component
 const CommentArea = (props) => {
     const [commentsArray, setCommentsArray] = useState([]);
+    const [newCommentAdded, setNewCommentAdded] = useState();
     let commentItems = [null];
     // Get the comments from firestore and store them in an array
     useEffect(() => {
@@ -30,13 +31,8 @@ const CommentArea = (props) => {
             setCommentsArray(comments);
         }
         getComments();
-    }, [])
-
-    // Update the contents of commentsArray state to display a new comment
-    const displayNewComment = (newComment) =>{
-        setCommentsArray([newComment, ...commentsArray]);
-    }
-    
+    }, [newCommentAdded])
+  
     const displayNewReply = (i, repliesArray) => {
         var temp = commentsArray;
         temp[i]['replies'] = repliesArray;
@@ -48,6 +44,7 @@ const CommentArea = (props) => {
             // Having key for each Comment is required per React docs  
             return <SingleComment key={"comment-card-" + i} 
                         comment_data={comment}
+                        setNewCommentAdded = {setNewCommentAdded}
                         displayNewReply = {displayNewReply}
                         positionInCommentsArray = {i}
                         commentCount = {props.commentCount}
@@ -57,10 +54,9 @@ const CommentArea = (props) => {
     }
     return (
         <div className="w-full px-8">
-            {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
             <NewCommentBox 
                 post_id = {props.post_id}
-                displayNewComment = {displayNewComment}
+                setNewCommentAdded = {setNewCommentAdded}
                 commentCount = {props.commentCount}
                 setCommentCount = {props.setCommentCount}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
@@ -78,23 +74,23 @@ const SingleComment = (props) => {
     
     useEffect(() => {
         const getImage = async () => {
-        if(props.comment_data?.image_path){
-            var imagePath = props.comment_data.image_path;
-            if(imagePath !== ''){
-                // Get the picture attached to the comment
-                const imageRef = ref(storage, imagePath)
-                try{
-                    const downloadURL = await getDownloadURL(imageRef)
-                    setImageURL(downloadURL);
-                    setContainsImage(true);
-                } catch(e){
-                    console.log(e);
+            if(props.comment_data?.image_path){
+                var imagePath = props.comment_data.image_path;
+                if(imagePath !== ''){
+                    // Get the picture attached to the comment
+                    const imageRef = ref(storage, imagePath)
+                    try{
+                        const downloadURL = await getDownloadURL(imageRef)
+                        setImageURL(downloadURL);
+                        setContainsImage(true);
+                    } catch(e){
+                        console.log(e);
+                    }
                 }
             }
         }
-        }
         getImage();
-    },[]);
+    },[props.comment_data]);
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
         replyItems = replies.map((reply, i) => {
@@ -142,6 +138,7 @@ const SingleComment = (props) => {
                     {showNewReplyBox && 
                         <NewReplyBox 
                             comment_id = {props.comment_data.comment_id}
+                            setNewCommentAdded = {props.setNewCommentAdded}
                             post_id = {props.comment_data.post_id}
                             updateRepliesArray = {updateRepliesArray}
                             setShowNewReplyBox = {setShowNewReplyBox}
@@ -246,8 +243,8 @@ const NewCommentBox = (props) => {
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
-        // call the function in parent component to update the state of commentsArray to display the new comment
-        props.displayNewComment({...newCommentData, "comment_id": docRef.id});
+        // update the state to rerender all the comments
+        props.setNewCommentAdded(Date.now())   // Date.now() is just a unique identified that force the component to rerender 
         textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
         // update the state of commentCount
         props.setCommentCount(props.commentCount + 1)
@@ -325,7 +322,7 @@ const NewReplyBox = (props) => {
             user_id: authCtx.userID
         }
         // call the function in parent component to update the state of replyArray to display the reply
-        props.updateRepliesArray(newReplyData)
+        // props.updateRepliesArray(newReplyData)
         // hide newReplyBox
         props.setShowNewReplyBox(false);
         // Store the new reply in firestore
@@ -344,6 +341,8 @@ const NewReplyBox = (props) => {
             type: "comment",
             sub_type: "reply"
         })
+        // update the state to rerender CommentArea to fetch the new comment
+        props.setNewCommentAdded(new Date());
         setShowReplyButton(false)
     }
 
