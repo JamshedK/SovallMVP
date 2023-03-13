@@ -65,7 +65,7 @@ const SingleComment = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
-    
+    // TODO: Repetetive code here and in CommentReplies. Make one function
     useEffect(() => {
         const getImage = async () => {
             if(props.comment_data?.image_path){
@@ -136,6 +136,29 @@ const SingleComment = (props) => {
 // Component for replies to comments
 const CommentReplies = (props) => {
     const ts = new Date(Date.parse(props.reply_data.ts))
+    const [imageURL, setImageURL] = useState('');
+    const [containsImage, setContainsImage] = useState(false);
+    // fetch the image if the reply contains one
+    useEffect(() => {
+        const getImage = async () => {
+            if(props.reply_data?.image_path){
+                var imagePath = props.reply_data.image_path;
+                if(imagePath !== ''){
+                    // Get the picture attached to the comment
+                    const imageRef = ref(storage, imagePath)
+                    try{
+                        const downloadURL = await getDownloadURL(imageRef)
+                        setImageURL(downloadURL);
+                        setContainsImage(true);
+                    } catch(e){
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        getImage();
+    },[]);
+
     const tsForDisplay = moment(ts).fromNow();
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
@@ -145,6 +168,7 @@ const CommentReplies = (props) => {
                 <div className='flex flex-col space-y-1'>
                     <label>Wahid</label>
                     <label>{props.reply_data.text}</label>
+                    {containsImage && <img src={imageURL}></img>}
                     <div className='flex flex-row space-x-10'>
                         <label>{tsForDisplay}</label>
                     </div>
@@ -319,10 +343,30 @@ const NewReplyBox = (props) => {
         setImageSource(null);
     }
     const replyButtonHandler = async () => {
+        var imagePath = '';
+        if(containsImage){
+            // generate a random number to be added to the name of the image to avoid name duplication
+            const randomNum = Math.round(Math.random()*1000)
+            // path for the image to be saved
+            imagePath = `comments/${selectedImage.name + randomNum}`
+              // Uploads the image to firebase storage
+            const uploadFile = async (selectedImage, imagePath) => {
+                const filesFolderRef = ref(storage,imagePath)
+                try{
+                    await uploadBytes(filesFolderRef, selectedImage)
+                } catch(e){
+                    console.log(e);
+                }
+                // remove the image after the image was uploaded
+                handleRemoveImage();
+            }
+            uploadFile(selectedImage, imagePath);
+        }
         const newReplyData = {
             text: textAreaRef.current.value,
             ts: Date(),
-            user_id: authCtx.userID
+            user_id: authCtx.userID,
+            image_path: imagePath
         }
         // hide newReplyBox
         props.setShowNewReplyBox(false);
