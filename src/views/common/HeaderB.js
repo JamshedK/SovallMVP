@@ -10,16 +10,19 @@ import profile from "../../assets/common/profile.jpg";
 import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
+import { useNavigate } from "react-router-dom";
+
 
 function HeaderB(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
+  const navigate = useNavigate();
 
   /*Hardtyped arrays*/
   const quickAccessData = [
     [quick_1, "/"],
     [quick_2, "/"],
     [quick_3, "/"],
-    [quick_4, "/"],
+    [quick_4, "/mainfeed"],
   ];
   const filterOptionsData = [
     ["All", "/"],
