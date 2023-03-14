@@ -8,6 +8,7 @@ import AccountSetUp from "./views/accountSetUp/AccountSetUp";
 import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
+import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
 import HeaderB from "./views/common/HeaderB";
@@ -42,6 +43,7 @@ export default function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
+                    <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 </div>
