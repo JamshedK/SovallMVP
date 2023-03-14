@@ -16,6 +16,7 @@ import { async } from 'q';
 // Main parent component
 const CommentArea = (props) => {
     const [commentsArray, setCommentsArray] = useState([]);
+    const [newCommentAdded, setNewCommentAdded] = useState();
     let commentItems = [null];
     // Get the comments from firestore and store them in an array
     useEffect(() => {
@@ -30,25 +31,15 @@ const CommentArea = (props) => {
             setCommentsArray(comments);
         }
         getComments();
-    }, [])
-
-    // Update the contents of commentsArray state to display a new comment
-    const displayNewComment = (newComment) =>{
-        setCommentsArray([newComment, ...commentsArray]);
-    }
-    
-    const displayNewReply = (i, repliesArray) => {
-        var temp = commentsArray;
-        temp[i]['replies'] = repliesArray;
-        setCommentsArray(temp)
-    }
+    }, [newCommentAdded])
+  
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
             // Having key for each Comment is required per React docs  
             return <SingleComment key={"comment-card-" + i} 
                         comment_data={comment}
-                        displayNewReply = {displayNewReply}
+                        setNewCommentAdded = {setNewCommentAdded}
                         positionInCommentsArray = {i}
                         commentCount = {props.commentCount}
                         setCommentCount = {props.setCommentCount}
@@ -57,10 +48,9 @@ const CommentArea = (props) => {
     }
     return (
         <div className="w-full px-8">
-            {/* Pass the displayNewComment function to the child component to update the commentArray state*/}
             <NewCommentBox 
                 post_id = {props.post_id}
-                displayNewComment = {displayNewComment}
+                setNewCommentAdded = {setNewCommentAdded}
                 commentCount = {props.commentCount}
                 setCommentCount = {props.setCommentCount}/>
             {commentItems.length != 0 && <div>{commentItems}</div>}
@@ -75,26 +65,26 @@ const SingleComment = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
-    
+    // TODO: Repetetive code here and in CommentReplies. Make one function
     useEffect(() => {
         const getImage = async () => {
-        if(props.comment_data?.image_path){
-            var imagePath = props.comment_data.image_path;
-            if(imagePath !== ''){
-                // Get the picture attached to the comment
-                const imageRef = ref(storage, imagePath)
-                try{
-                    const downloadURL = await getDownloadURL(imageRef)
-                    setImageURL(downloadURL);
-                    setContainsImage(true);
-                } catch(e){
-                    console.log(e);
+            if(props.comment_data?.image_path){
+                var imagePath = props.comment_data.image_path;
+                if(imagePath !== ''){
+                    // Get the picture attached to the comment
+                    const imageRef = ref(storage, imagePath)
+                    try{
+                        const downloadURL = await getDownloadURL(imageRef)
+                        setImageURL(downloadURL);
+                        setContainsImage(true);
+                    } catch(e){
+                        console.log(e);
+                    }
                 }
             }
         }
-        }
         getImage();
-    },[]);
+    },[props.comment_data]);
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
         replyItems = replies.map((reply, i) => {
@@ -105,22 +95,7 @@ const SingleComment = (props) => {
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
-    
-    // update repliesArray to show the new reply
-    const updateRepliesArray = (reply_data) => {
-        if(props.comment_data?.replies){
-            props.comment_data.replies.unshift(reply_data);
-        }
-        else{
-            // create a new temp array
-            var tempRepliesArray = []
-            tempRepliesArray.push(reply_data)
-            props.comment_data['replies']= tempRepliesArray
-        }
-        // call the main parent component function to update the state
-        props.displayNewReply(props.positionInCommentsArray, props.comment_data.replies)
-    }
-    
+
     return (
         <div className='pt-2'>
             {/*Member comments*/}
@@ -142,8 +117,8 @@ const SingleComment = (props) => {
                     {showNewReplyBox && 
                         <NewReplyBox 
                             comment_id = {props.comment_data.comment_id}
+                            setNewCommentAdded = {props.setNewCommentAdded}
                             post_id = {props.comment_data.post_id}
-                            updateRepliesArray = {updateRepliesArray}
                             setShowNewReplyBox = {setShowNewReplyBox}
                             commentCount = {props.commentCount}
                             setCommentCount = {props.setCommentCount}
@@ -161,6 +136,29 @@ const SingleComment = (props) => {
 // Component for replies to comments
 const CommentReplies = (props) => {
     const ts = new Date(Date.parse(props.reply_data.ts))
+    const [imageURL, setImageURL] = useState('');
+    const [containsImage, setContainsImage] = useState(false);
+    // fetch the image if the reply contains one
+    useEffect(() => {
+        const getImage = async () => {
+            if(props.reply_data?.image_path){
+                var imagePath = props.reply_data.image_path;
+                if(imagePath !== ''){
+                    // Get the picture attached to the comment
+                    const imageRef = ref(storage, imagePath)
+                    try{
+                        const downloadURL = await getDownloadURL(imageRef)
+                        setImageURL(downloadURL);
+                        setContainsImage(true);
+                    } catch(e){
+                        console.log(e);
+                    }
+                }
+            }
+        }
+        getImage();
+    },[]);
+
     const tsForDisplay = moment(ts).fromNow();
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
@@ -170,6 +168,7 @@ const CommentReplies = (props) => {
                 <div className='flex flex-col space-y-1'>
                     <label>Wahid</label>
                     <label>{props.reply_data.text}</label>
+                    {containsImage && <img src={imageURL}></img>}
                     <div className='flex flex-row space-x-10'>
                         <label>{tsForDisplay}</label>
                     </div>
@@ -246,8 +245,8 @@ const NewCommentBox = (props) => {
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
-        // call the function in parent component to update the state of commentsArray to display the new comment
-        props.displayNewComment({...newCommentData, "comment_id": docRef.id});
+        // update the state to rerender all the comments
+        props.setNewCommentAdded(Date.now())   // Date.now() is just a unique identified that force the component to rerender 
         textAreaRef.current.value = ''  // set the value of textarea to an emtpy string
         // update the state of commentCount
         props.setCommentCount(props.commentCount + 1)
@@ -272,8 +271,8 @@ const NewCommentBox = (props) => {
                 <div className='w-full flex flex-row'>
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
-                        {/* {The styling for textarea is to remove the default stylings} */}
                         <div className='w-full flex flex-col'>
+                            {/* {The styling for textarea is to remove the default stylings} */}
                             <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
                                         focus:outline-none focus:ring-0" placeholder='Add a comment...'
                                 ref={textAreaRef}
@@ -301,11 +300,16 @@ const NewCommentBox = (props) => {
 };
 
 const NewReplyBox = (props) => {
+    const [containsImage, setContainsImage] = useState(false);
+    const [imageSource, setImageSource] = useState();
+    const [selectedImage, setSelectedImage] = useState(null);   // reference to the image that was selected
+    const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
+
+
     const textAreaRef = useRef();  
     const commentRef = doc(db, 'comments', props.comment_id)    // reference to comments collection in firestore
     const postsDocRef = doc(db, "posts", props.post_id);
 
-    const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
     const authCtx = useContext(AuthContext);
 
     // Display reply button only when the user types something
@@ -317,15 +321,53 @@ const NewReplyBox = (props) => {
             setShowReplyButton(false)
         }
     }
+    // preview image when selected
+    const handleImageUpload = (e) => {
+        // TODO: Display the comment button when image is selected 
+        e.preventDefault();
+        if(e.target.files[0] != null){
+            setShowReplyButton(true)
+            setContainsImage(true);
+            setImageSource(URL.createObjectURL(e.target.files[0]));
+            setSelectedImage(e.target.files[0]);
+        }
+        else{
+            setContainsImage(false);
+            setShowReplyButton(false)
 
+        }
+    }
+    // remove image preview when X button is clicked
+    const handleRemoveImage = () => {
+        setContainsImage(false);
+        setImageSource(null);
+    }
     const replyButtonHandler = async () => {
+        var imagePath = '';
+        if(containsImage){
+            // generate a random number to be added to the name of the image to avoid name duplication
+            const randomNum = Math.round(Math.random()*1000)
+            // path for the image to be saved
+            imagePath = `comments/${selectedImage.name + randomNum}`
+              // Uploads the image to firebase storage
+            const uploadFile = async (selectedImage, imagePath) => {
+                const filesFolderRef = ref(storage,imagePath)
+                try{
+                    await uploadBytes(filesFolderRef, selectedImage)
+                } catch(e){
+                    console.log(e);
+                }
+                // remove the image after the image was uploaded
+                handleRemoveImage();
+            }
+            uploadFile(selectedImage, imagePath);
+        }
         const newReplyData = {
             text: textAreaRef.current.value,
             ts: Date(),
-            user_id: authCtx.userID
+            user_id: authCtx.userID,
+            image_path: imagePath
         }
-        // call the function in parent component to update the state of replyArray to display the reply
-        props.updateRepliesArray(newReplyData)
         // hide newReplyBox
         props.setShowNewReplyBox(false);
         // Store the new reply in firestore
@@ -344,6 +386,8 @@ const NewReplyBox = (props) => {
             type: "comment",
             sub_type: "reply"
         })
+        // update the state to rerender CommentArea to fetch the new comment
+        props.setNewCommentAdded(new Date());
         setShowReplyButton(false)
     }
 
@@ -353,18 +397,28 @@ const NewReplyBox = (props) => {
                 <div className='w-full flex flex-row'>
                     <img className="h-10 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
-                        {/* {The styling for textarea is to remove the default stylings} */}
-                        <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
-                                     focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
-                             ref={textAreaRef}
-                             onChange={onTextAreaChange}
-                             ></textarea>
-                        <button>
-                            <img className='h-6 w-6' src={camera}></img>
-                        </button>
-                        <button>
-                            <img className='h-6 w-6' src={file_upload}></img>
-                        </button>
+                        <div className='w-full flex flex-col'>
+                            {/* {The styling for textarea is to remove the default stylings} */}
+                            <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
+                                        focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
+                                ref={textAreaRef}
+                                onChange={onTextAreaChange}
+                                ></textarea>
+                            {/* Displaying the image if it was selected */}
+                            {containsImage && 
+                                <div className='flex flex-row'>
+                                    <img className='px-5' src={imageSource}></img>
+                                    <button className='w-5 h-5' onClick={handleRemoveImage}>
+                                        <label>X</label>
+                                    </button>
+                                </div>}  
+                        </div>
+                        {!containsImage && 
+                            <label className="flex items-center cursor-pointer">
+                                <input type="file" className="opacity-0 absolute h-0 w-0 overflow-hidden" accept="image/*" onChange={handleImageUpload} />
+                                <img className="h-6 w-6" src={camera} alt="Camera icon" />
+                            </label>}
+                        {/* TODO: add file upload and polls */}
                     </div>
                 </div>
                 {showReplyButton && 

@@ -1388,7 +1388,6 @@ const Home = (props) => {
     }
 
     // Get the user posts data
-    // TODO: get the image
     useEffect(() => {
         // temporary variable
         var interactors = [
