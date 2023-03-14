@@ -43,7 +43,7 @@ export default function App() {
                     <Route path="/about" element={<About />} />
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
-                    <Route path='/mainfeed' element={MainFeed}></Route>
+                    <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 </div>
