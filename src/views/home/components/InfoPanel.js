@@ -70,7 +70,7 @@ const InfoPanel = (props) => {
             const response = await getDoc(doc(db, "users", props.user_id))
             const data = response.data(); 
             setUserInfo(response.data())
-            setFullName(data.firstname + ' ' + data.lastName);
+            setFullName(data.firstname + ' ' + data.lastname);
             setEmail(data.email);
         } 
         getUserInfo();
