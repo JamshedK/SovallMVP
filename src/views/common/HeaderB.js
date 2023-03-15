@@ -30,6 +30,7 @@ function HeaderB(props) {
     ["Solutions", "/"],
     ["Resources", "/"],
     ["Opportunities", "/"],
+    ["People", "/"],
     ["Other", "/"],
   ];
 
