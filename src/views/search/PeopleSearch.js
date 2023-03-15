@@ -16,17 +16,47 @@ const PeopleSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
     const width = "w-[28rem] xl:w-[32rem]";
+    const [people, setPeople] = useState([]);
     
-    const [postsData, setpostsData] = useState({});
     const authCtx = useContext(AuthContext);
+
+   useEffect(() => {
+    const getPosts = async () =>{
+        var temList = []
+        const usersRef = collection(db, "users");
+        const q = query(usersRef);
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            temList.push({...doc.data(), "id": doc.id})
+        });
+        var searchQuery = "Jam";
+        const filteredPeople = temList.filter((user) => {
+            var username = (user.firstname + ' ' + user.lastname).toLowerCase();
+            if(username.includes(searchQuery.toLowerCase())){
+                return user;
+            }
+        })
+        setPeople(filteredPeople);
+    }
+    getPosts();
+   },[]);
+   // create a list of user cards
+   let userCards = null;
+   if(people.length > 0){
+    console.log('here')
+        console.log(people)
+        userCards = people.map((user, i) => {
+            return  <InfoPanel key={"info-panel-" + i} width={width} own={true} user_id = {user.id}/>
+        });
+   }
+
 
     return (
         <div className="relative h-full w-full flex flex-col items-center bg-[#3C9A9A]">
             <div className="w-full flex flex-col h-full items-center">     
                 {/*central panel*/ }       
                 <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center mt-2">
-                    <InfoPanel width={width} own={true}/>
-                    <InfoPanel width={width} own={false}/>
+                    {userCards}                    
                 </div>
                 {/*left panel*/}
                 <div className={"flex flex-col w-fit absolute left-0 top-0 " + (notification ? "h-full" : "h-fit")}>
