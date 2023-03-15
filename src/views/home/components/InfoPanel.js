@@ -67,7 +67,7 @@ const InfoPanel = (props) => {
     useEffect(()=>{
         setIsLoading(true);
         const getUserInfo = async () =>{
-            const response = await getDoc(doc(db, "users", authCtx.userID))
+            const response = await getDoc(doc(db, "users", props.user_id))
             const data = response.data(); 
             setUserInfo(response.data())
             setFullName(data.firstname + ' ' + data.lastName);
