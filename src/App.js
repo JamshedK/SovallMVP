@@ -15,6 +15,7 @@ import HeaderA from "./views/common/HeaderA";
 import HeaderB from "./views/common/HeaderB";
 import NewPost from "./views/Post/NewPost";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
+import { SearchContextProvider } from "./contexts/search-context";
 
 
 export default function App() {
@@ -26,8 +27,8 @@ export default function App() {
         <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
-                {!authCtx.isLoggedIn && <HeaderA />}
-                {authCtx.isLoggedIn && <HeaderB />} 
+                    {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
+                    {authCtx.isLoggedIn && <HeaderB/>} 
             </header>
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
                 <Routes>

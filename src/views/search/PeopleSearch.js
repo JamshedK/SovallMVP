@@ -4,24 +4,27 @@ import ComingSoonNotifications from '../home/components/ComingSoonNotifications'
 import NotificationsToggle from '../home/components/NotificationsToggle';
 import MessagesToggle from '../home/components/MessagesToggle';
 
-
 /*API stuff*/
 import {collection, query, where, getDocs } from "firebase/firestore";
 import {db} from '../../firebase-config'
 import AuthContext from "../../contexts/auth-context";
 import { useEffect, useState, useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+
+import SearchContext from '../../contexts/search-context';
 
 
 const PeopleSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const width = "w-[28rem] xl:w-[32rem]";
-    const [people, setPeople] = useState([]);
-    
-    const authCtx = useContext(AuthContext);
+    const [people, setPeople] = useState({});
+    const searchCtx = useContext(SearchContext);
+
 
    useEffect(() => {
-    const getPosts = async () =>{
+    const getPeopleList = async () =>{
         var temList = []
         const usersRef = collection(db, "users");
         const q = query(usersRef);
@@ -29,27 +32,27 @@ const PeopleSearch = (props) => {
         querySnapshot.forEach((doc) => {
             temList.push({...doc.data(), "id": doc.id})
         });
-        var searchQuery = "Jam";
         const filteredPeople = temList.filter((user) => {
             var username = (user.firstname + ' ' + user.lastname).toLowerCase();
-            if(username.includes(searchQuery.toLowerCase())){
+            if(username.includes(searchCtx.query.toLowerCase())){
+                console.log(searchCtx.query + ' exists')
                 return user;
             }
         })
+        console.log('useeffect done')
         setPeople(filteredPeople);
     }
-    getPosts();
-   },[]);
-   // create a list of user cards
+    getPeopleList();
+   },[searchCtx.enterPressed]);
+  
    let userCards = null;
-   if(people.length > 0){
-    console.log('here')
-        console.log(people)
+    if(Object.keys(people).length > 0){
+        /*Arrays of components*/
+        console.log('here')
         userCards = people.map((user, i) => {
-            return  <InfoPanel key={"info-panel-" + i} width={width} own={true} user_id = {user.id}/>
+            return <InfoPanel key={user.id} width={width} own={true} user_id={user.id} />;
         });
-   }
-
+    }
 
     return (
         <div className="relative h-full w-full flex flex-col items-center bg-[#3C9A9A]">
