@@ -3,6 +3,7 @@ import ComingSoonMessages from '../home/components/ComingSoonMessages';
 import ComingSoonNotifications from '../home/components/ComingSoonNotifications';
 import NotificationsToggle from '../home/components/NotificationsToggle';
 import MessagesToggle from '../home/components/MessagesToggle';
+import NoResults from './NoResults';
 
 /*API stuff*/
 import {collection, query, where, getDocs } from "firebase/firestore";
@@ -17,7 +18,6 @@ import SearchContext from '../../contexts/search-context';
 const PeopleSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const width = "w-[28rem] xl:w-[32rem]";
     const [people, setPeople] = useState({});
     const searchCtx = useContext(SearchContext);
@@ -39,7 +39,6 @@ const PeopleSearch = (props) => {
                 return user;
             }
         })
-        console.log('useeffect done')
         setPeople(filteredPeople);
     }
     getPeopleList();
@@ -59,6 +58,7 @@ const PeopleSearch = (props) => {
             <div className="w-full flex flex-col h-full items-center">     
                 {/*central panel*/ }       
                 <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center mt-2">
+                    {Object.keys(people).length === 0 && <NoResults/>}
                     {userCards}                    
                 </div>
                 {/*left panel*/}
