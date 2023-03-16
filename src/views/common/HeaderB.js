@@ -1,5 +1,5 @@
 /* Header for after LogIn */
-import react, { useState } from "react";
+import { useState, useEffect, useContext } from "react";
 import arrowPrev from "../../assets/common/arrow_prev.svg";
 import quick_1 from "../../assets/common/header_icon_1.svg";
 import quick_2 from "../../assets/common/header_icon_2.svg";
@@ -10,11 +10,14 @@ import profile from "../../assets/common/profile.jpg";
 import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
-import { useNavigate } from "react-router-dom";
+import SearchContext from "../../contexts/search-context";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function HeaderB(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
+  const [enterPressed, setEnterPressed] = useState();
+  const searchCtx = useContext(SearchContext);
   const navigate = useNavigate();
 
   /*Hardtyped arrays*/
@@ -30,6 +33,7 @@ function HeaderB(props) {
     ["Solutions", "/"],
     ["Resources", "/"],
     ["Opportunities", "/"],
+    ["People", "/"],
     ["Other", "/"],
   ];
 
@@ -66,6 +70,16 @@ function HeaderB(props) {
     );
   });
 
+  const onEnterButtonClicked = (e) => {
+    if (e.key === 'Enter') {
+      searchCtx.updateEnterPressed();
+      if(currentFilter === 5){
+        console.log(searchCtx.query);
+        navigate('/search/people')
+      }
+    }
+  }
+
   return (
     <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
       <div className="flex flex-1 items-center justify-left gap-6">
@@ -79,6 +93,7 @@ function HeaderB(props) {
         </div>
         <div className="flex">
           <Search
+            onEnterButtonClicked = {onEnterButtonClicked}
             icon={searchIcon}
             placeholder="Search"
             placeholderColor="text-white"
