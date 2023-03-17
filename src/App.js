@@ -7,6 +7,7 @@ import ChangePassword from "./views/password/ChangePassword";
 import AccountSetUp from "./views/accountSetUp/AccountSetUp";
 import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 import PeopleSearch from "./views/search/PeopleSearch";
+import PostSearch from "./views/search/PostSearch";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
 import MainFeed from "./views/mainFeed/MainFeed";
@@ -47,6 +48,7 @@ export default function App() {
                     <Route path="/newpost" element={<NewPost/>}/>
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
+                    <Route path="/search/posts" element={<PostSearch/>}/>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 </div>

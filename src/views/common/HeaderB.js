@@ -77,6 +77,10 @@ function HeaderB(props) {
         console.log(searchCtx.query);
         navigate('/search/people')
       }
+      else{
+        console.log(searchCtx.query);
+        navigate('/search/posts')
+      }
     }
   }
 
