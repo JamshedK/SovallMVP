@@ -6,18 +6,18 @@ import quick_2 from "../../assets/common/header_icon_2.svg";
 import quick_3 from "../../assets/common/header_icon_3.svg";
 import quick_4 from "../../assets/common/header_icon_4.svg";
 import sovall from "../../assets/common/sovall_2.svg";
-import profile from "../../assets/common/profile.jpg";
 import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
 import SearchContext from "../../contexts/search-context";
-import { useLocation, useNavigate } from "react-router-dom";
+import UserContext from "../../contexts/user";
+import {useNavigate } from "react-router-dom";
 
 
-function HeaderB(props) {
+function HeaderLoggedIn(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
-  const [enterPressed, setEnterPressed] = useState();
   const searchCtx = useContext(SearchContext);
+  const userCtx = useContext(UserContext);
   const navigate = useNavigate();
 
   /*Hardtyped arrays*/
@@ -77,6 +77,10 @@ function HeaderB(props) {
         console.log(searchCtx.query);
         navigate('/search/people')
       }
+      else{
+        console.log(searchCtx.query);
+        navigate('/search/posts')
+      }
     }
   }
 
@@ -108,8 +112,8 @@ function HeaderB(props) {
           {quickAccess}
           <a href="/">
             <img
-              className="w-8 rounded-full bg-yellow-2 p-[0.05rem]"
-              src={profile}
+              className="w-8 rounded-full p-[0.05rem]"
+              src={userCtx.profilePicPath}
             />
           </a>
           <a className="h-full flex items-center" href="/">
@@ -120,4 +124,4 @@ function HeaderB(props) {
   );
 }
 
-export default HeaderB;
+export default HeaderLoggedIn;
