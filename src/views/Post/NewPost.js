@@ -6,7 +6,7 @@ import AuthContext from '../../contexts/auth-context';
 import { useContext, useState, useRef } from 'react';
 import { db, storage } from '../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
-import {ref, uploadBytes} from 'firebase/storage'
+import {ref, uploadBytes} from 'firebase/storage';
 
 
 const images = [photo, doc, poll];
