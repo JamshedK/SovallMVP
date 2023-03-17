@@ -11,16 +11,17 @@ import ChangePassword from "./views/password/ChangePassword";
 import AccountSetUp from './views/accountSetUp/AccountSetUp';
 import { AuthContextProvider } from './contexts/auth-context';
 import { SearchContextProvider } from './contexts/search-context';
+import { UserContextProvider } from './contexts/user';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthContextProvider>
         <SearchContextProvider>
-        {/* <React.StrictMode> */}
-        <BrowserRouter>
-            {<App/>}
-        </BrowserRouter>
-  {/* </React.StrictMode> */}
+            <UserContextProvider>
+                <BrowserRouter>
+                    {<App/>}
+                </BrowserRouter>
+            </UserContextProvider>
         </SearchContextProvider>
     </AuthContextProvider> 
 
