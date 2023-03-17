@@ -11,6 +11,7 @@ import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
 import SearchContext from "../../contexts/search-context";
+import UserContext from "../../contexts/user";
 import { useLocation, useNavigate } from "react-router-dom";
 
 
@@ -18,6 +19,7 @@ function HeaderB(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
   const [enterPressed, setEnterPressed] = useState();
   const searchCtx = useContext(SearchContext);
+  const userCtx = useContext(UserContext);
   const navigate = useNavigate();
 
   /*Hardtyped arrays*/
@@ -112,8 +114,8 @@ function HeaderB(props) {
           {quickAccess}
           <a href="/">
             <img
-              className="w-8 rounded-full bg-yellow-2 p-[0.05rem]"
-              src={profile}
+              className="w-8 rounded-full p-[0.05rem]"
+              src={userCtx.profilePicPath}
             />
           </a>
           <a className="h-full flex items-center" href="/">

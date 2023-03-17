@@ -8,7 +8,7 @@ import {getDownloadURL, ref} from 'firebase/storage'
 
 const UserContext = createContext({
     username: '',
-    image_path: ''
+    profilePicPath: ''
 })
 
 export const UserContextProvider = (props) => {
@@ -38,7 +38,7 @@ export const UserContextProvider = (props) => {
 
     const contextValue = {
         username: username,
-        imagePath: profilePicPath
+        profilePicPath: profilePicPath
     }
     return <UserContext.Provider value={contextValue}>{props.children}</UserContext.Provider>
 }
