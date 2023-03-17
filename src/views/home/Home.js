@@ -1390,7 +1390,6 @@ const Home = (props) => {
     }
 
     // Get the user posts data
-    // TODO: get the image
     useEffect(() => {
         // temporary variable
         var interactors = [
@@ -1436,7 +1435,7 @@ const Home = (props) => {
 
                 {/*central panel*/ }
                 <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center">
-                    <InfoPanel width={width} own={true}/>
+                    <InfoPanel width={width} own={true} user_id = {authCtx.userID}/>
                     <NewPost width={width} />
                     <div className={"flex flex-col gap-4 " + width }>
                         {postItems}

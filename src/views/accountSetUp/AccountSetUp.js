@@ -89,7 +89,7 @@ const AccountSetUp = () => {
 		console.log(localId);
 		await setDoc(doc(db, 'users', localId), {
 			firstname:name, 
-			lastName: lastName,
+			lastname: lastName,
 			email:email
 		})
 	}
