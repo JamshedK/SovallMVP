@@ -8,10 +8,7 @@ import NoResults from './NoResults';
 /*API stuff*/
 import {collection, query, where, getDocs } from "firebase/firestore";
 import {db} from '../../firebase-config'
-import AuthContext from "../../contexts/auth-context";
 import { useEffect, useState, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
-
 import SearchContext from '../../contexts/search-context';
 
 
