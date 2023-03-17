@@ -13,7 +13,7 @@ import Home from "./views/home/Home";
 import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
-import HeaderB from "./views/common/HeaderB";
+import HeaderLoggedIn from "./views/common/HeaderLoggedIn";
 import NewPost from "./views/Post/NewPost";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
@@ -29,7 +29,7 @@ export default function App() {
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
                     {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
-                    {authCtx.isLoggedIn && <HeaderB/>} 
+                    {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
             </header>
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
                 <Routes>

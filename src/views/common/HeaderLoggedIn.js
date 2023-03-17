@@ -6,18 +6,16 @@ import quick_2 from "../../assets/common/header_icon_2.svg";
 import quick_3 from "../../assets/common/header_icon_3.svg";
 import quick_4 from "../../assets/common/header_icon_4.svg";
 import sovall from "../../assets/common/sovall_2.svg";
-import profile from "../../assets/common/profile.jpg";
 import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
 import SearchContext from "../../contexts/search-context";
 import UserContext from "../../contexts/user";
-import { useLocation, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 
 
-function HeaderB(props) {
+function HeaderLoggedIn(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
-  const [enterPressed, setEnterPressed] = useState();
   const searchCtx = useContext(SearchContext);
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
@@ -126,4 +124,4 @@ function HeaderB(props) {
   );
 }
 
-export default HeaderB;
+export default HeaderLoggedIn;
