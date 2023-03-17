@@ -10,6 +10,7 @@ import PeopleSearch from "./views/search/PeopleSearch";
 import PostSearch from "./views/search/PostSearch";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
+import EditProfile from "./views/home/components/EditProfile";
 import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
@@ -43,6 +44,7 @@ export default function App() {
                     <Route path="/accountsetup" element={isLoggedIn ? <Home /> : <AccountSetUp />} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/home" element={<Home />} />
+                    <Route path="/edit-profile" element={<EditProfile/>}/>
                     <Route path="/about" element={<About />} />
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
