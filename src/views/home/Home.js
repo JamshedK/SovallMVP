@@ -8,6 +8,7 @@ import Chat from './components/Chat';
 import ChatHistory from './components/ChatHistory';
 import ComingSoonMessages from './components/ComingSoonMessages';
 import ComingSoonNotifications from './components/ComingSoonNotifications';
+import LearnMore from './components/LearnMore';
 
 
 /*assests*/
@@ -1363,6 +1364,7 @@ const Home = (props) => {
     const [messages, setMessages] = useState(false);
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
+    const [learnMore, setLearnMore] = useState(false);
     const width = "w-[28rem] xl:w-[32rem]";
     
     const [postsData, setpostsData] = useState({});
@@ -1460,6 +1462,11 @@ const Home = (props) => {
                 {/*chat panel*/}
                 <div className="absolute bottom-0 right-0 h-[20rem] w-fit flex gap-3 ">
                     {chats}
+                </div>
+
+                {/* Learn More */}
+                <div className=''>
+                    <LearnMore value={learnMore} setValue = {setLearnMore} />
                 </div>
 
         </div>
