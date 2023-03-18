@@ -10,15 +10,11 @@ import AuthContext from '../../../contexts/auth-context';
 /* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
-import arrowDown from '../../../assets/home/arrow_down.svg';
-import arrowBack from '../../../assets/home/arrow_back.svg';
 import dotsMenu from '../../../assets/home/dots_menu.svg';
-import arrowForth from '../../../assets/home/arrow_forth.svg';
 import share from '../../../assets/home/share.svg';
 import save from '../../../assets/home/saved.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
-import { async } from 'q';
 
 
 const Button = props => {
@@ -35,6 +31,8 @@ const FeedCard= (props) => {
     const [upvotedCount, setUpvotedCount] = useState(0);
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
+    const [username, setUserName] = useState('');
+    const [profilePicPath, setProfilePicPath] = useState('');    
     const data = props.data;
     const interactorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
@@ -70,7 +68,7 @@ const FeedCard= (props) => {
             }
         }
         getPostStats();
-        // make a request to get the image if it exists
+        // make a request to get the image for the post if it exists
         const getImage = async () => {
             if(props.data?.imagePath){
                   // get the image URL from Firebase Storage and add a unique identifier
@@ -90,6 +88,22 @@ const FeedCard= (props) => {
             }
             }
             getImage();
+            // get username and profile pic
+            const getUserInfo = async () => {
+                const response = await getDoc(doc(db, "users", authCtx.userID))
+                const data = response.data(); 
+                const timestamp = new Date().getTime();
+                setUserName(data.firstname + ' ' + data.lastname);
+                // Get the download url for the profile pic
+                const imageRef = ref(storage, data.image_path)
+                try{
+                    const downloadURL = await getDownloadURL(imageRef)
+                    setProfilePicPath(`${downloadURL}?t=${timestamp}`);
+                } catch(e){
+                    console.log(e);
+                }
+            }
+            getUserInfo();
     }, []);
 
     const onUpvote = async () => {
@@ -135,9 +149,9 @@ const FeedCard= (props) => {
             {/*Post header*/}
             <div className={"flex justify-between items-center w-full " + px}>
                 <div className="flex items-center h-10">
-                    <img className="rounded-full h-full" src={data.pic} />
+                    <img className="rounded-full h-full" src={profilePicPath} />
                     <div className="flex flex-col px-1">
-                        <label className="font-bold text-[11pt]">{data.username}</label>
+                        <label className="font-bold text-[11pt]">{username}</label>
                         <label className="text-[9pt]">{timeForPost}</label>
                     </div>
                 </div>
