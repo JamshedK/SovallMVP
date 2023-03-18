@@ -24,3 +24,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# firebase config stuff
+.firebase/
+.firebaserc
+firebase.json
