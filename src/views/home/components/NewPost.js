@@ -133,7 +133,7 @@ const NewPost = (props) => {
                     <div className="relative left-[170px] top-1 w-fit h-full">
                     {/* TODO: Correct the styles */}
                     
-                        <label for='file-input' className='w-fit h-fit pointer-events-auto'>
+                        <label for='file-input' className='w-fit h-fit cursor-pointer'>
                             <img src={doc}></img>
                             <input id='file-input' className='invisible w-4 h-4' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
 

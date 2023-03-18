@@ -15,9 +15,8 @@ const LearnMore = (props) => {
                 </div>
 
                 <div className={!props.value ? "hidden" : "flex flex-col absolute right-[133px] bottom-[133px] gap-2 bg-white rounded-[11px] w-[180px] h-[300px] items-center justify-center font-inter font-[13px]"}>
-                    <h1>Learn more</h1>
+                    <h1 className="relative top-2">Learn more</h1>
                     <ul>
-                        
                         <li href="../../about">Our purpose </li>
                         <li href="../../about">Our story</li>
                         <li href="../../about">Sovall founders </li>
