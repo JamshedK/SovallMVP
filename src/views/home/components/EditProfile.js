@@ -102,7 +102,14 @@ const EditProfile = (props) => {
 }
 
 const Card = (props) => {
-    const options = props.data.map(item => {
+    const [query, setQuery] = useState('');
+    console.log(query);
+    const filteredData = props.data.filter(item => {
+        if (item.value.includes(query)){
+            return item
+        }
+    })
+    const options = filteredData.map(item => {
         const id = props.data.indexOf(item);
         var tempIsSelected;
         if(props.selectedItems.includes(item.value)) tempIsSelected = true;
@@ -114,7 +121,8 @@ const Card = (props) => {
             <div>
                 <p className="pl-4">Select at least three</p>
                 <input className="w-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-                        type="text" placeholder="Search"/>
+                        type="text" placeholder="Search"
+                        onChange={e => setQuery(e.target.value)}/>
             </div>
             <div className="h-[9rem] flex flex-wrap gap-3 overflow-auto">
                 {options}
