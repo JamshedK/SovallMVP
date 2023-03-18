@@ -11,45 +11,46 @@ import { doc, getDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
 import UserContext from '../../../contexts/user';
 import {db} from '../../../firebase-config'
-import Toggle from "../../common/Toggle";
 
 const EditProfile = (props) => {
     const [userInfo, setUserInfo] = useState({});
-    const [skillsArray, setSkillsArray] = useState([])
-    const [interestsArray, setInterestsArray] = useState([])
+    const [isLoading, setIsLoading] = useState(true);
+    const [allSkills, setAllSkills] = useState([])
+    const [allInterests, setAllInterests] = useState([])
     const [skills, setSkills] = useState([]);
     const [interests, setInterests] = useState([]);
 
     const userCtx = useContext(UserContext);
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
-
     function readSkillsAndInterests(){
         fetch(skillsText).then(r => r.text()).then(text => {
             var temp = text.split('\r\n')
-            var skillsArray = [];
+            var allSkills = [];
             for(var i = 0; i < temp.length; i++){
-                skillsArray.push({"value": temp[i], "selected": false})
+                allSkills.push({"value": temp[i], "isSelected": false})
             }
-            setSkillsArray(skillsArray);
+            setAllSkills(allSkills);
         });
         fetch(interestsText).then(r => r.text()).then(text => {
             var temp = text.split('\r\n')
-            var interestsArray = [];
+            var allInterests = [];
             for(var i = 0; i < temp.length; i++){
-                interestsArray.push({"value": temp[i], "selected": false,})
+                allInterests.push({"value": temp[i], "isSelected": false,})
             }
-            setInterestsArray(interestsArray);
+            setAllInterests(allInterests);
         });
-        console.log(skillsArray)
     }
 
     useEffect(()=>{
         readSkillsAndInterests();
         const getUserInfo = async () =>{
             const response = await getDoc(doc(db, "users", authCtx.userID))
-            const data = response.data(); 
+            const data = response.data();
             setUserInfo(response.data())
+            setSkills(data.skills);
+            setInterests(data.interests);
+            setIsLoading(false);
         } 
         getUserInfo();
     }, [])
@@ -75,7 +76,7 @@ const EditProfile = (props) => {
                 <div className="flex gap-4 ">
                     <div className='flex flex-row justify-between items-end'>
                         <img className="w-16 h-16 rounded-full" src={userCtx.profilePicPath} />
-                        <label for='file-input' className='flex flex-row gap-6 pointer-events-auto left-[450px]'>
+                        <label className='flex flex-row gap-6 pointer-events-auto left-[450px]'>
                             <img className='w-5 h-5' src={add_profile_pic}></img>
                             <input id='file-input' className='invisible w-0 h-0' type="file" accept="image/png, image/jpeg"
                                 onClick={handleProfilePicSelected}/>
@@ -89,8 +90,8 @@ const EditProfile = (props) => {
                 </div>
                 </div>
                 <div className="flex flex-col">
-                    <Card title="Skills" data={skillsArray} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>
-                    <Card title="Interests" data={interestsArray} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />
+                    {!isLoading && <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>}
+                    {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />}
                     <button onClick={handleChangePassword}>Click here to change password</button>
                     <button onClick={handleSaveChanges}>Save changes</button>
                 </div>
@@ -103,7 +104,9 @@ const EditProfile = (props) => {
 const Card = (props) => {
     const options = props.data.map(item => {
         const id = props.data.indexOf(item);
-        return <Toggle key={id} value={item.value} selectedStyle={props.accentStyle} isSelected={item.isSelected} selectedItems={props.selectedItems} setSelectedItems={props.setSelectedItems} />
+        var tempIsSelected;
+        if(props.selectedItems.includes(item.value)) tempIsSelected = true;
+        return <Toggle key={id} value={item.value} selectedStyle={props.accentStyle} isSelected={tempIsSelected} selectedItems={props.selectedItems} setSelectedItems={props.setSelectedItems} />
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
@@ -119,21 +122,30 @@ const Card = (props) => {
         </div>
     );
 }
-const Label = (props) => {
-    const bg = props.bg;
-    return <label className={"text-white rounded-xl px-2 py-1 text-[8pt] " + bg} >{props.value}</label>
-}
-const InfoBlock = (props) => {
-    return (
-        <div className="w-full flex flex-col gap-2">
-            <h1 className="font-bold text-[11pt]">{props.title}</h1>
-            <input className="w-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-                type="text" placeholder="Search"/>
-                <div className="flex flex-wrap gap-1">
-                {props.children}
-            </div>
-        </div>
-    );
 
+const Toggle = (props) => {
+    const [checked, setChecked] = useState(props.isSelected);
+    const selectedStyle = props.selectedStyle;
+    const style = checked ? selectedStyle : "bg-gray-200";
+    const handleClick = () => {
+        let temp = props.selectedItems;
+
+        if (temp.includes(props.value)) {
+            const index = temp.indexOf(props.value);
+            temp.splice(index, 1);
+            
+        } else {
+            temp.push(props.value);
+        }
+
+        props.setSelectedItems(temp);
+        setChecked(prev => !prev);
+    }
+    return (
+        <button className={"h-fit w-fit px-2 py-1 rounded-full " + style} onClick={handleClick}>
+            {props.value}
+        </button>
+        );
 }
+
 export default EditProfile;
