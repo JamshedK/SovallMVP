@@ -24,6 +24,7 @@ const EditProfile = (props) => {
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
     function readSkillsAndInterests(){
+        // TODO: Sort by isSelected
         fetch(skillsText).then(r => r.text()).then(text => {
             var temp = text.split('\r\n')
             var allSkills = [];

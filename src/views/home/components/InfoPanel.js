@@ -37,9 +37,9 @@ const InfoBlock = (props) => {
 const Own = () => {
     return (
         <div className="flex gap-2 text-gray-500" >
-            <QuickAccess label="network" src={network} href="/home" />
-            <QuickAccess label="edit profile" src={edit} href="/home" />
-        </div >
+            <QuickAccess label="network" src={network} href="/search/people" />
+            <QuickAccess label="edit profile" src={edit} href="/edit-profile" />
+        </div>
     )
 }
 
