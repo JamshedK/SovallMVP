@@ -5,9 +5,10 @@ import messages from '../../../assets/home/messages.svg';
 import friends from '../../../assets/home/friends.svg';
 import arrow_up from '../../../assets/home/arrow_up.svg';
 import { useState, useEffect, useContext } from 'react';
+import {getDownloadURL, ref} from 'firebase/storage'
 import { doc, getDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
-import {db} from '../../../firebase-config'
+import {db, storage} from '../../../firebase-config'
 import Loader from '../../loader/Loader';
 
 const QuickAccess = (props) => {
@@ -56,9 +57,8 @@ const Other = () => {
 const InfoPanel = (props) => {
     const [showDetails, setShowDetails] = useState(true);
     const [userInfo, setUserInfo] = useState({});
-    const authCtx = useContext(AuthContext);
-    const [fullName, setFullName] = useState('')
-    const [email, setEmail] = useState('')
+    const [username, setUserName] = useState('');
+    const [profilePicPath, setProfilePicPath] = useState('');    
     const [isLoading, setIsLoading] = useState(true);
 
     const handleClick = () => {
@@ -70,8 +70,16 @@ const InfoPanel = (props) => {
             const response = await getDoc(doc(db, "users", props.user_id))
             const data = response.data(); 
             setUserInfo(response.data())
-            setFullName(data.firstname + ' ' + data.lastname);
-            setEmail(data.email);
+            const timestamp = new Date().getTime();
+            setUserName(data.firstname + ' ' + data.lastname);
+            // Get the download url for the profile pic
+            const imageRef = ref(storage, data.image_path)
+            try{
+                const downloadURL = await getDownloadURL(imageRef)
+                setProfilePicPath(`${downloadURL}?t=${timestamp}`);
+            } catch(e){
+                console.log(e);
+            }
         } 
         getUserInfo();
         setIsLoading(false);
@@ -96,10 +104,10 @@ const InfoPanel = (props) => {
                 <div className={"bg-white h-fit px-8 pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
                     <div className="flex justify-between ">
                         <div className="flex gap-4">
-                            <img className="w-16 h-16 rounded-full" src={profile} />
+                            <img className="w-16 h-16 rounded-full" src={profilePicPath} />
                             <div className="flex flex-col w-fit ">
-                                <a href="/home" className="font-bold">{fullName}</a>
-                                <a className="text-blue-500 text-[9pt]" href="/home">{email}</a>
+                                <a href="/home" className="font-bold">{username}</a>
+                                <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
                                 <p className="text-[9pt]">Let's have fun with creativity!</p>
                             </div>
 

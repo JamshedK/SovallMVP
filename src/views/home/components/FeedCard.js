@@ -90,7 +90,7 @@ const FeedCard= (props) => {
             getImage();
             // get username and profile pic
             const getUserInfo = async () => {
-                const response = await getDoc(doc(db, "users", authCtx.userID))
+                const response = await getDoc(doc(db, "users", data.userID))
                 const data = response.data(); 
                 const timestamp = new Date().getTime();
                 setUserName(data.firstname + ' ' + data.lastname);
