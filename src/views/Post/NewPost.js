@@ -3,10 +3,12 @@ import doc from '../../assets/home/doc.svg';
 import poll from '../../assets/home/poll.svg';
 import profile from '../../assets/common/profile.jpg';
 import AuthContext from '../../contexts/auth-context';
+import UserContext from '../../contexts/user';
 import { useContext, useState, useRef } from 'react';
 import { db, storage } from '../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
 import {ref, uploadBytes} from 'firebase/storage';
+import moment from 'moment';
 
 
 const images = [photo, doc, poll];
@@ -23,10 +25,13 @@ const NewPost = () => {
     const [containsImage, setContainsImage] = useState(false);
     const [imagePath, setImagePath] = useState(null);
     const authCtx = useContext(AuthContext);
+    const userCtx = useContext(UserContext);
     const postTextRef = useRef();       // useRef hook to get reference for the textArea and get it's content later on
     const imageRef = useRef();
     const selectCategoryRef = useRef();
     const postCollectionRef = collection(db, 'posts')
+    const timeForPost = moment(new Date()).format('MMMM, D, YYYY');
+
     
     // Save the user post post to Firebase
     const handlePost = async () => {
@@ -82,10 +87,10 @@ const NewPost = () => {
             <div className="absolute box-border flex flex-col p-6 gap-6 bg-white top-14 rounded-[14.5px] w-[538px] h-[463px]">
                 {/*profile and selecting category for the post*/ }
                 <div className='flex flex-row items-start '>
-                    <img className="w-9 h-9 rounded-full" src={profile} />
+                    <img className="w-9 h-9 rounded-full" src={userCtx.profilePicPath} />
                     <div className='text-[13px] px-1'>
-                        <p className='font-bold'> Wesley</p>
-                        <p>Sep 29, 2022</p>
+                        <p className='font-bold'> {userCtx.username}</p>
+                        <p>{timeForPost}</p>
                     </div>
 
                 
