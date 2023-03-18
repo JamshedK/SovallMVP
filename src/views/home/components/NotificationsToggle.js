@@ -12,6 +12,7 @@ const NotificationsToggle = (props) => {
             <button className="h-fit w-fit" onClick={handleToggle}>
                 <img className="h-2 w-fit" src={leftExpandArrow} />
             </button>
+            
             <button className="w-fit h-fit" onClick={handleToggle}>
                 <img className="h-4 w-fit" src={notification} />
             </button>

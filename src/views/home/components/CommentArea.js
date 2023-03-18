@@ -100,16 +100,19 @@ const SingleComment = (props) => {
         <div className='pt-2'>
             {/*Member comments*/}
             <div className='flex flex-row space-x-4'>
-                <div className='h-10 v-10'>
+                <div className='h-10 w-10'>
                     <img className="rounded-full h-full" src = {profile}></img>
                 </div>
+
                 <div className='flex flex-col space-y-5 w-full'>
                     <div className='flex flex-col'>
-                        <label>Jamshed</label>
+                        <label className='font-bold'>Jamshed</label>
                         <label>{props.comment_data.text}</label>
+
                         {containsImage && <img src={imageURL}></img>}
-                        <div className='flex flex-row space-x-10'>
-                            <button onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
+
+                        <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
+                            <button className='' onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
                         </div>
                     </div>
@@ -163,14 +166,14 @@ const CommentReplies = (props) => {
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
                 <div className='h-10 v-10'>
-                    <img className="rounded-full h-full" src = {profile}></img>
+                    <img className="rounded-full h-9" src = {profile}></img>
                 </div>
                 <div className='flex flex-col space-y-1'>
-                    <label>Wahid</label>
+                    <label className='font-bold'>Wahid</label>
                     <label>{props.reply_data.text}</label>
                     {containsImage && <img src={imageURL}></img>}
                     <div className='flex flex-row space-x-10'>
-                        <label>{tsForDisplay}</label>
+                        <label className='text-[#6C6C6C]'>{tsForDisplay}</label>
                     </div>
                 </div>
         </div>
@@ -269,16 +272,17 @@ const NewCommentBox = (props) => {
             <div className='w-full flex flex-col items-center'>
                 {/* New comment box */}
                 <div className='w-full flex flex-row'>
-                    <img className="h-10 rounded-full h-full" src = {profile}></img>
+                    <img className="h-9 rounded-full h-full" src = {profile}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         <div className='w-full flex flex-col'>
                             {/* {The styling for textarea is to remove the default stylings} */}
-                            <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6 focus:bg-transparent 
-                                        focus:outline-none focus:ring-0" placeholder='Add a comment...'
+                            <textarea className="relative flex left-2 w-full border-solid rounded-[19px] outline-none resize-none overflow-hidden h-[30px] focus:bg-transparent 
+                                        focus:outline-none focus:ring-0 placeholder:text-[14px] placeholder:items-center" placeholder='Add a comment...'
                                 ref={textAreaRef}
                                 onChange={onTextAreaChange}
                                 ></textarea>
                             {/* Displaying the image if it was selected */}
+
                             {containsImage && 
                                 <div className='flex flex-row'>
                                     <img className='px-5' src={imageSource}></img>
@@ -289,12 +293,12 @@ const NewCommentBox = (props) => {
                         </div>
                         {!containsImage && <label className="flex items-center cursor-pointer">
                             <input type="file" className="opacity-0 absolute h-0 w-0 overflow-hidden" accept="image/*" onChange={handleImageUpload} />
-                            <img className="h-6 w-6" src={camera} alt="Camera icon" />
+                            <img className="relative left-2 h-6 w-6" src={camera} alt="Camera icon" />
                         </label>}
                        {/* TODO: add file upload and polls */}
                     </div>
                 </div>
-                {showCommentButton && <button onClick={commentButtonHandler} className="bg-green-800 text-white rounded-full w-fit px-4">Comment</button>}
+                {showCommentButton && <button onClick={commentButtonHandler} className="relative top-2 bg-green-800 text-white rounded-full w-fit px-4">Comment</button>}
             </div>      
     )
 };
