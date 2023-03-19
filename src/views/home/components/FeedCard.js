@@ -149,7 +149,9 @@ const FeedCard= (props) => {
         } catch(e){
             console.log(e);
         }
-        userInfo.field = ["Marketing", "Branding"]
+        var field = []
+        field.push(temp?.skills[0])
+        userInfo.field = field;
         return userInfo;
     }
 
