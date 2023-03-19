@@ -90,7 +90,8 @@ const AccountSetUp = () => {
 		await setDoc(doc(db, 'users', localId), {
 			firstname:name, 
 			lastname: lastName,
-			email:email
+			email:email,
+			image_path: 'account/default_profile_pic.svg'
 		})
 	}
 	
