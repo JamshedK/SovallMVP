@@ -32,9 +32,10 @@ const FeedCard= (props) => {
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
     const [username, setUserName] = useState('');
-    const [profilePicPath, setProfilePicPath] = useState('');    
+    const [profilePicPath, setProfilePicPath] = useState(''); 
+    const [interactorsData, setInteractorsData] = useState([])   
     const data = props.data;
-    const interactorsData = data.interactors;
+    const tempInteractorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
     const intereactionColRef = collection(db, 'interactions')
     const authCtx = useContext(AuthContext);
@@ -104,7 +105,53 @@ const FeedCard= (props) => {
                 }
             }
             getUserInfo();
+            // get the people that have interacted with the post
+            const getInteractors = async () => {
+                var interactionsArray = []
+                var userIDs = []    // to store the userIDs of everyone that interacted, and remove the duplicates later
+                const interactionsRef = collection(db, 'interactions')
+                const q = query(interactionsRef, where("post_id", "==", data.post_id))
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // get the userID     
+                    var interactionData = doc.data() 
+                    userIDs.push(interactionData.user_id); 
+                });
+                // filter the user IDs to get the unique ones
+                userIDs = userIDs.filter((item,index) => userIDs.indexOf(item) === index);
+                // TODO: Add user skills or interests as well
+                // get the username, profile pic
+                if(userIDs.length > 0){
+                    for (var i in userIDs){
+                        var tempUserInfo = await getInteractorUserInfo(userIDs[i])
+                        if(tempUserInfo){
+                            interactionsArray.push(tempUserInfo); 
+                        }
+                    }
+                    setInteractorsData(interactionsArray)
+                }
+            }
+            getInteractors();
     }, []);
+
+    // get username and profile pic
+    const getInteractorUserInfo = async (userID) => {
+        const response = await getDoc(doc(db, "users", userID))
+        const temp = response.data(); 
+        const timestamp = new Date().getTime();
+        var userInfo = {}
+        userInfo.username = temp.firstname;
+        // Get the download url for the profile pic
+        const imageRef = ref(storage, temp.image_path)
+        try{
+            const downloadURL = await getDownloadURL(imageRef)
+            userInfo.pic = `${downloadURL}?t=${timestamp}`;
+        } catch(e){
+            console.log(e);
+        }
+        userInfo.field = ["Marketing", "Branding"]
+        return userInfo;
+    }
 
     const onUpvote = async () => {
         // Increment or decrement upvote_count in posts collection
@@ -140,9 +187,14 @@ const FeedCard= (props) => {
     const handleCommentButtonClicked = () => {
         setExtendCommentArea(!extendCommentArea);
     }
-    const interactors = interactorsData.map((interactor,i) => {
-        return <Interactor key={"-interactor-"+i} data={interactor} />
-    });
+
+    var interactors = null;
+    // each each that interacted
+    if (interactorsData.length > 0){
+        interactors = interactorsData.map((interactor,i) => {
+            return <Interactor key={"-interactor-"+i} data={interactor} />
+        });
+    }
 
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
