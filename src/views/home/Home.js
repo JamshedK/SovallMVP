@@ -89,9 +89,9 @@ const Home = (props) => {
         });
     }
 
-    const chats = chatQueue.map(id => {
-        return <Chat key={"chat-" + id} onClose={handleChatClose} data={chats_data[id]} />
-    })
+    // const chats = chatQueue.map(id => {
+    //     return <Chat key={"chat-" + id} onClose={handleChatClose} data={chats_data[id]} />
+    // })
 
 
     return (
@@ -123,10 +123,10 @@ const Home = (props) => {
                 </div>
 
 
-                {/*chat panel*/}
+                {/* chat panel
                 <div className="absolute bottom-0 right-0 h-[20rem] w-fit flex gap-3 ">
                     {chats}
-                </div>
+                </div> */}
 
                 {/* Learn More */}
                 <div className=''>
