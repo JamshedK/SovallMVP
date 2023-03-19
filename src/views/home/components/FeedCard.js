@@ -91,11 +91,11 @@ const FeedCard= (props) => {
             // get username and profile pic
             const getUserInfo = async () => {
                 const response = await getDoc(doc(db, "users", data.userID))
-                const data = response.data(); 
+                const temp = response.data(); 
                 const timestamp = new Date().getTime();
-                setUserName(data.firstname + ' ' + data.lastname);
+                setUserName(temp.firstname + ' ' + temp.lastname);
                 // Get the download url for the profile pic
-                const imageRef = ref(storage, data.image_path)
+                const imageRef = ref(storage, temp.image_path)
                 try{
                     const downloadURL = await getDownloadURL(imageRef)
                     setProfilePicPath(`${downloadURL}?t=${timestamp}`);
