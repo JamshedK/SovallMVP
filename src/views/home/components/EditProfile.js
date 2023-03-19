@@ -168,7 +168,7 @@ const EditProfile = (props) => {
 const Card = (props) => {
     const [query, setQuery] = useState('');
     const filteredData = props.data.filter(item => {
-        if (item.value.includes(query)){
+        if (item.value.toLowerCase().includes(query.toLowerCase())){
             return item
         }
     })
