@@ -7,7 +7,7 @@ import interestsText from '../../../data/interests.txt';
 
 import { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
 import UserContext from '../../../contexts/user';
 import {db} from '../../../firebase-config'
@@ -23,6 +23,18 @@ const EditProfile = (props) => {
     const userCtx = useContext(UserContext);
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
+
+    // new edited stuff
+    const [newProfilePic, setNewProfilePic] = useState();
+    const [newUserName, setNewUserName] = useState(userCtx.username);
+
+    var profilePicForDisplay = userCtx.profilePicPath;
+    // if a new profile pic is selected, temporarily show that as the profile pic
+    if(newProfilePic){
+        profilePicForDisplay = URL.createObjectURL(newProfilePic);
+    }
+
+    // Get the skills and intersts from the txt files
     function readSkillsAndInterests(){
         // TODO: Sort by isSelected
         fetch(skillsText).then(r => r.text()).then(text => {
@@ -57,12 +69,36 @@ const EditProfile = (props) => {
     }, [])
 
     const handleProfilePicSelected = (e) => {
-
+        setNewProfilePic(e.target.files[0]);
     }
 
-    const handleSaveChanges = () => {
+    const handleSaveChanges = async () => {
         if (window.confirm("Are you sure you want to save this changes?")) {
-            // TODO: Handle the new changes
+            // TODO: Add the new changes to firestore
+            var username = newUserName.trim().split(' ') // get the first and lastname
+            var firstname = ''
+            var lastname = ''
+            if(username.length >= 2){
+                firstname = username[0] 
+                lastname = username[1]
+            }
+
+            console.log(firstname)
+            var image_path = userInfo?.image_path;
+            // if a new profile pic was selected, save the new profile pic
+
+            // Make a request to update the data in Firestore
+            const userDocRef = doc(db, 'users', authCtx.userID)
+            await updateDoc(userDocRef, {
+                "firstname": firstname,
+                "lastname": lastname, 
+                "image_path": image_path,
+                "skills": skills, 
+                "interests": interests
+            })
+
+            // redirect the user to home page
+            // navigate('/home');
           }
     }
 
@@ -76,7 +112,7 @@ const EditProfile = (props) => {
                 <div className="flex justify-between ">
                 <div className="flex gap-4 ">
                     <div className='flex flex-row justify-between items-end'>
-                        <img className="w-16 h-16 rounded-full" src={userCtx.profilePicPath} />
+                        <img className="w-16 h-16 rounded-full" src={profilePicForDisplay} />
                         <label className='flex flex-row gap-6 pointer-events-auto left-[450px]'>
                             <img className='w-5 h-5' src={add_profile_pic}></img>
                             <input id='file-input' className='invisible w-0 h-0' type="file" accept="image/png, image/jpeg"
@@ -84,8 +120,8 @@ const EditProfile = (props) => {
                         </label>
                     </div>
                     <div className="flex flex-col w-fit ">
-                        <a href="/home" className="font-bold">{userCtx.username}</a>
-                        <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
+                        <p contentEditable="true" suppressContentEditableWarning={true} className="font-bold focus:border-red-500" 
+                            onInput={e => setNewUserName(e.target.innerHTML)}>{userCtx.username}</p>
                         <p className="text-[9pt]">Let's have fun with creativity!</p>
                     </div>
                 </div>
@@ -104,7 +140,6 @@ const EditProfile = (props) => {
 
 const Card = (props) => {
     const [query, setQuery] = useState('');
-    console.log(query);
     const filteredData = props.data.filter(item => {
         if (item.value.includes(query)){
             return item
