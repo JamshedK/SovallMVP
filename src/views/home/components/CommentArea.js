@@ -5,13 +5,32 @@ import delete_image from '../../../assets/feedcard/close.svg';
 
 
 /*API stuff*/
-import {collection, doc, query, where, getDocs, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
+import {collection, doc, query, where, getDocs, getDoc, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {db, storage} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
 import AuthContext from '../../../contexts/auth-context';
 import moment from 'moment';   // library for formatting dates
 import { async } from 'q';
+import UserContext from '../../../contexts/user';
+
+ // get username and profile pic
+ const getUserInfo = async (userID) => {
+    const response = await getDoc(doc(db, "users", userID))
+    const temp = response.data(); 
+    const timestamp = new Date().getTime();
+    var userInfo = {}
+    userInfo.username = temp.firstname + ' ' + temp.lastname;
+    // Get the download url for the profile pic
+    const imageRef = ref(storage, temp.image_path)
+    try{
+        const downloadURL = await getDownloadURL(imageRef)
+        userInfo.profilePicPath = `${downloadURL}?t=${timestamp}`;
+    } catch(e){
+        console.log(e);
+    }
+    return userInfo;
+}
 
 // Main parent component
 const CommentArea = (props) => {
@@ -63,10 +82,11 @@ const SingleComment = (props) => {
     const [showNewReplyBox, setShowNewReplyBox] = useState(false);
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
     // TODO: Repetetive code here and in CommentReplies. Make one function
-    useEffect(() => {
+    useEffect( () => {
         const getImage = async () => {
             if(props.comment_data?.image_path){
                 var imagePath = props.comment_data.image_path;
@@ -84,6 +104,14 @@ const SingleComment = (props) => {
             }
         }
         getImage();
+        const func = async () => {
+            var temp = await getUserInfo(props.comment_data.user_id)
+            if(temp){
+                setUserInfo(temp)
+            }
+        }
+        func();
+
     },[props.comment_data]);
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
@@ -101,12 +129,12 @@ const SingleComment = (props) => {
             {/*Member comments*/}
             <div className='flex flex-row space-x-4'>
                 <div className='h-10 w-10'>
-                    <img className="rounded-full h-full" src = {profile}></img>
+                    <img className="rounded-full h-full" src = {userInfo.profilePicPath}></img>
                 </div>
 
                 <div className='flex flex-col space-y-5 w-full'>
                     <div className='flex flex-col'>
-                        <label className='font-bold'>Jamshed</label>
+                        <label className='font-bold'>{userInfo.username}</label>
                         <label>{props.comment_data.text}</label>
 
                         {containsImage && <img src={imageURL}></img>}
@@ -141,6 +169,7 @@ const CommentReplies = (props) => {
     const ts = new Date(Date.parse(props.reply_data.ts))
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
     // fetch the image if the reply contains one
     useEffect(() => {
         const getImage = async () => {
@@ -160,16 +189,23 @@ const CommentReplies = (props) => {
             }
         }
         getImage();
+        const func = async () => {
+            var temp = await getUserInfo(props.reply_data.user_id)
+            if(temp){
+                setUserInfo(temp)
+            }
+        }
+        func();
     },[]);
 
     const tsForDisplay = moment(ts).fromNow();
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
                 <div className='h-10 v-10'>
-                    <img className="rounded-full h-9" src = {profile}></img>
+                    <img className="rounded-full h-full" src = {userInfo.profilePicPath}></img>
                 </div>
                 <div className='flex flex-col space-y-1'>
-                    <label className='font-bold'>Wahid</label>
+                    <label className='font-bold'>{userInfo.username}</label>
                     <label>{props.reply_data.text}</label>
                     {containsImage && <img src={imageURL}></img>}
                     <div className='flex flex-row space-x-10'>
@@ -190,6 +226,7 @@ const NewCommentBox = (props) => {
     const commentsCollectionRef = collection(db, 'comments')    // reference to comments collection in firestore
     const postsDocRef = doc(db, "posts", props.post_id);
     const authCtx = useContext(AuthContext);
+    const userCtx = useContext(UserContext)
 
     // Display comment button only when the user types something
     const onTextAreaChange = (event) => {
@@ -217,6 +254,7 @@ const NewCommentBox = (props) => {
     const handleRemoveImage = () => {
         setContainsImage(false);
         setImageSource(null);
+        setSelectedImage(null);
     }
 
     const commentButtonHandler = async () => {
@@ -272,7 +310,7 @@ const NewCommentBox = (props) => {
             <div className='w-full flex flex-col items-center'>
                 {/* New comment box */}
                 <div className='w-full flex flex-row'>
-                    <img className="h-9 rounded-full h-full" src = {profile}></img>
+                    <img className="h-9 rounded-full h-full" src = {userCtx.profilePicPath}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         <div className='w-full flex flex-col'>
                             {/* {The styling for textarea is to remove the default stylings} */}
@@ -315,6 +353,7 @@ const NewReplyBox = (props) => {
     const postsDocRef = doc(db, "posts", props.post_id);
 
     const authCtx = useContext(AuthContext);
+    const userCtx = useContext(UserContext)
 
     // Display reply button only when the user types something
     const onTextAreaChange = () => {
@@ -399,7 +438,7 @@ const NewReplyBox = (props) => {
             <div className='w-full flex flex-col items-center'>
                 {/* New comment box */}
                 <div className='w-full flex flex-row'>
-                    <img className="h-10 rounded-full h-full" src = {profile}></img>
+                    <img className="h-10 rounded-full h-full" src = {userCtx.profilePicPath}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         <div className='w-full flex flex-col'>
                             {/* {The styling for textarea is to remove the default stylings} */}
