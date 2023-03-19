@@ -16,7 +16,7 @@ import company from '../../assets/home/company.png';
 import InfoPanel from '../home/components/InfoPanel';
 
 /*API stuff*/
-import {collection, query, where, getDocs } from "firebase/firestore";
+import {collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import {db} from '../../firebase-config'
 import AuthContext from "../../contexts/auth-context";
 import { useEffect, useState, useContext } from 'react';
@@ -69,7 +69,7 @@ const MainFeed = (props) => {
         const getPosts = async () =>{
             var postDt = []
             const postsRef = collection(db, "posts");
-            const q = query(postsRef);
+            const q = query(postsRef, orderBy('published_date', "desc"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 postDt.push({...doc.data(), "post_id": doc.id, "pic": profile, "username": "Jamshed", interactors})
