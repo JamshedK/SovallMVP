@@ -87,22 +87,25 @@ const SingleComment = (props) => {
     let replyItems = []
     // TODO: Repetetive code here and in CommentReplies. Make one function
     useEffect( () => {
+        let mounted = true;
         const getImage = async () => {
-            if(props.comment_data?.image_path){
-                var imagePath = props.comment_data.image_path;
-                if(imagePath !== ''){
-                    // Get the picture attached to the comment
-                    const imageRef = ref(storage, imagePath)
-                    try{
-                        const downloadURL = await getDownloadURL(imageRef)
-                        setImageURL(downloadURL);
-                        setContainsImage(true);
-                    } catch(e){
-                        console.log(e);
-                    }
+            if (props.comment_data?.image_path) {
+            const imageRef = ref(storage, props.comment_data.image_path);
+            try {
+                const timestamp = new Date().getTime();
+                const downloadURL = await getDownloadURL(imageRef);
+                if (mounted) {
+                setImageURL(`${downloadURL}?t=${timestamp}`);
+                setContainsImage(true);
                 }
+            } catch(e) {
+                console.log(e);
             }
-        }
+            } else if (mounted) {
+            setImageURL('');
+            setContainsImage(false);
+            }
+        };
         getImage();
         const func = async () => {
             var temp = await getUserInfo(props.comment_data.user_id)
@@ -111,6 +114,9 @@ const SingleComment = (props) => {
             }
         }
         func();
+        return () => {
+            mounted = false;
+        };
 
     },[props.comment_data]);
     if(props.comment_data?.replies){
