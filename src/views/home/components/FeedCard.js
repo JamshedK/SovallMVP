@@ -202,6 +202,14 @@ const FeedCard= (props) => {
     const onThreeDotsClicked = () => {
         setShowDeleteBtn(!showDeleteBtn);
     }
+
+    const onDeleteBtnClicked = () => {
+        // delete the post from firestore
+
+        // delete the post from the PostsData in the main parent component
+        props.deletePost(props.data.post_id);
+    }
+
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
@@ -217,7 +225,8 @@ const FeedCard= (props) => {
                     {!showDeleteBtn && 
                     <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl">{data.category}</label>}
                     {showDeleteBtn && 
-                        <button type='button' className='border-2 font-thin align-middle text-black text-[10pt] px-3 h-fit py-1 rounded-xl'>Delete</button>}
+                        <button type='button' className='border-2 font-thin align-middle text-black text-[10pt] px-3 h-fit py-1
+                        rounded-xl'onClick={onDeleteBtnClicked}>Delete</button>}
                     <button>
                         <img src={dotsMenu} onClick={onThreeDotsClicked}/>
                     </button>
