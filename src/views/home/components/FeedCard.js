@@ -210,6 +210,7 @@ const FeedCard= (props) => {
             // delete the post from the PostsData in the main parent component
             props.deletePost(props.data.post_id);
             // delete the post from firestore
+            // TODO: Do not delete comment but set the deleted field for collection to true 
             await deleteDoc(doc(db, 'posts', data.post_id))
         }
     }
