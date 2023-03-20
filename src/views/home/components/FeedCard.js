@@ -200,14 +200,18 @@ const FeedCard= (props) => {
     }
 
     const onThreeDotsClicked = () => {
-        setShowDeleteBtn(!showDeleteBtn);
+        if (data.userID === authCtx.userID){
+            setShowDeleteBtn(!showDeleteBtn);
+        }
     }
 
-    const onDeleteBtnClicked = () => {
-        // delete the post from firestore
-
-        // delete the post from the PostsData in the main parent component
-        props.deletePost(props.data.post_id);
+    const onDeleteBtnClicked = async () => {
+        if (window.confirm("Are you sure you want to delete the post")) {
+            // delete the post from the PostsData in the main parent component
+            props.deletePost(props.data.post_id);
+            // delete the post from firestore
+            await deleteDoc(doc(db, 'posts', data.post_id))
+        }
     }
 
     return (
