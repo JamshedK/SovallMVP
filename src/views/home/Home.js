@@ -85,7 +85,7 @@ const Home = (props) => {
     if(Object.keys(postsData).length > 0){
         /*Arrays of components*/
         postItems = postsData.map((post, i) => {
-            return <FeedCard key={"feed-card-" + i} data={post} />
+            return <FeedCard key={"feed-card-" + i} data={post} postsData={postsData} setpostsData={setpostsData}/>
         });
     }
 

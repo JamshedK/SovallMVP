@@ -31,6 +31,7 @@ const FeedCard= (props) => {
     const [upvotedCount, setUpvotedCount] = useState(0);
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
+    const [showDeleteBtn, setShowDeleteBtn] = useState(false)
     const [username, setUserName] = useState('');
     const [profilePicPath, setProfilePicPath] = useState(''); 
     const [interactorsData, setInteractorsData] = useState([])   
@@ -198,6 +199,9 @@ const FeedCard= (props) => {
         });
     }
 
+    const onThreeDotsClicked = () => {
+        setShowDeleteBtn(!showDeleteBtn);
+    }
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
@@ -210,8 +214,13 @@ const FeedCard= (props) => {
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl rounded-xl">{data.category}</label>
-                    <img src={dotsMenu} />
+                    {!showDeleteBtn && 
+                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl">{data.category}</label>}
+                    {showDeleteBtn && 
+                        <button type='button' className='border-2 font-thin align-middle text-black text-[10pt] px-3 h-fit py-1 rounded-xl'>Delete</button>}
+                    <button>
+                        <img src={dotsMenu} onClick={onThreeDotsClicked}/>
+                    </button>
                 </div>
             </div>
 
