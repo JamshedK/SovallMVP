@@ -30,7 +30,7 @@ const MainFeed = (props) => {
     const [chatQueue, setChatQueue] = useState([]);
     const width = "w-[28rem] xl:w-[32rem]";
     
-    const [postsData, setpostsData] = useState({});
+    const [postsData, setpostsData] = useState([]);
     const authCtx = useContext(AuthContext);
 
 
@@ -79,11 +79,18 @@ const MainFeed = (props) => {
         getPosts();
     },[])
 
+    const deletePost = (post_id) => {
+        const postIndex = postsData.findIndex(x => x.post_id === post_id)
+        // remove the post from the PostsData array
+        const updatedPosts = [...postsData.slice(0, postIndex), ...postsData.slice(postIndex + 1)]
+        setpostsData(updatedPosts)
+    } 
+
     let postItems = null;
     if(Object.keys(postsData).length > 0){
         /*Arrays of components*/
         postItems = postsData.map((post, i) => {
-            return <FeedCard key={"feed-card-" + i} data={post} />
+            return <FeedCard key={"feed-card-" + i} data={post} deletePost={deletePost}/>
         });
     }
 
