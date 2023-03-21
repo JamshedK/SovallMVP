@@ -16,7 +16,7 @@ import company from '../../assets/home/company.png';
 import InfoPanel from '../home/components/InfoPanel';
 
 /*API stuff*/
-import {collection, query, where, getDocs } from "firebase/firestore";
+import {collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import {db} from '../../firebase-config'
 import AuthContext from "../../contexts/auth-context";
 import { useEffect, useState, useContext } from 'react';
@@ -30,7 +30,7 @@ const MainFeed = (props) => {
     const [chatQueue, setChatQueue] = useState([]);
     const width = "w-[28rem] xl:w-[32rem]";
     
-    const [postsData, setpostsData] = useState({});
+    const [postsData, setpostsData] = useState([]);
     const authCtx = useContext(AuthContext);
 
 
@@ -69,7 +69,7 @@ const MainFeed = (props) => {
         const getPosts = async () =>{
             var postDt = []
             const postsRef = collection(db, "posts");
-            const q = query(postsRef);
+            const q = query(postsRef, orderBy('published_date', "desc"));
             const querySnapshot = await getDocs(q);
             querySnapshot.forEach((doc) => {
                 postDt.push({...doc.data(), "post_id": doc.id, "pic": profile, "username": "Jamshed", interactors})
@@ -79,11 +79,18 @@ const MainFeed = (props) => {
         getPosts();
     },[])
 
+    const deletePost = (post_id) => {
+        const postIndex = postsData.findIndex(x => x.post_id === post_id)
+        // remove the post from the PostsData array
+        const updatedPosts = [...postsData.slice(0, postIndex), ...postsData.slice(postIndex + 1)]
+        setpostsData(updatedPosts)
+    } 
+
     let postItems = null;
     if(Object.keys(postsData).length > 0){
         /*Arrays of components*/
         postItems = postsData.map((post, i) => {
-            return <FeedCard key={"feed-card-" + i} data={post} />
+            return <FeedCard key={"feed-card-" + i} data={post} deletePost={deletePost}/>
         });
     }
 

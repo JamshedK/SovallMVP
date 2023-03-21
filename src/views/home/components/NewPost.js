@@ -6,9 +6,11 @@ import poll from '../../../assets/home/poll.svg';
 
 import profile from '../../../assets/common/profile.jpg';
 import AuthContext from '../../../contexts/auth-context';
+import UserContext from '../../../contexts/user';
 import { db, storage } from '../../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
 import {ref, uploadBytes} from 'firebase/storage';
+import moment from 'moment';
 
 
 
@@ -32,10 +34,12 @@ const NewPost = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     const [imagePath, setImagePath] = useState(null);
     const authCtx = useContext(AuthContext);
+    const userCtx = useContext(UserContext)
     const postTextRef = useRef();       // useRef hook to get reference for the textArea and get it's content later on
     const imageRef = useRef();
     const selectCategoryRef = useRef();
     const postCollectionRef = collection(db, 'posts')
+    const timeForPost = moment(new Date()).format('MMMM, D, YYYY');
 
         // Save the user post post to Firebase
     const handlePost = async () => {
@@ -96,10 +100,10 @@ const NewPost = (props) => {
                 </ul> */}
                 {/*profile and selecting category for the post*/ }
                 <div className='relative flex flex-row items-start'>
-                    <img className="w-10 h-10 rounded-full" src={profile} />
+                    <img className="w-10 h-10 rounded-full" src={userCtx.profilePicPath} />
                     <div className='px-1'>
-                        <p className='text-[14px] font-bold'> Wesley</p>
-                        <p className='text-[12px]'>Sep 29, 2022</p>
+                        <p className='text-[14px] font-bold'> {userCtx.username}</p>
+                        <p className='text-[12px]'>{timeForPost}</p>
                     </div>
 
                 
@@ -133,7 +137,7 @@ const NewPost = (props) => {
                     <div className="relative left-[170px] top-1 w-fit h-full">
                     {/* TODO: Correct the styles */}
                     
-                        <label for='file-input' className='w-fit h-fit cursor-pointer'>
+                        <label className='w-fit h-fit cursor-pointer'>
                             <img src={doc}></img>
                             <input id='file-input' className='invisible w-4 h-4' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
 

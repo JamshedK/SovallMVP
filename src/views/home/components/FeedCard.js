@@ -10,15 +10,11 @@ import AuthContext from '../../../contexts/auth-context';
 /* Assets */
 import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
-import arrowDown from '../../../assets/home/arrow_down.svg';
-import arrowBack from '../../../assets/home/arrow_back.svg';
 import dotsMenu from '../../../assets/home/dots_menu.svg';
-import arrowForth from '../../../assets/home/arrow_forth.svg';
 import share from '../../../assets/home/share.svg';
 import save from '../../../assets/home/saved.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
-import { async } from 'q';
 
 
 const Button = props => {
@@ -35,8 +31,12 @@ const FeedCard= (props) => {
     const [upvotedCount, setUpvotedCount] = useState(0);
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
+    const [showDeleteBtn, setShowDeleteBtn] = useState(false)
+    const [username, setUserName] = useState('');
+    const [profilePicPath, setProfilePicPath] = useState(''); 
+    const [interactorsData, setInteractorsData] = useState([])   
     const data = props.data;
-    const interactorsData = data.interactors;
+    const tempInteractorsData = data.interactors;
     const docRef = doc(db, "posts", data.post_id);
     const intereactionColRef = collection(db, 'interactions')
     const authCtx = useContext(AuthContext);
@@ -70,7 +70,7 @@ const FeedCard= (props) => {
             }
         }
         getPostStats();
-        // make a request to get the image if it exists
+        // make a request to get the image for the post if it exists
         const getImage = async () => {
             if(props.data?.imagePath){
                   // get the image URL from Firebase Storage and add a unique identifier
@@ -90,7 +90,71 @@ const FeedCard= (props) => {
             }
             }
             getImage();
+            // get username and profile pic
+            const getUserInfo = async () => {
+                const response = await getDoc(doc(db, "users", data.userID))
+                const temp = response.data(); 
+                const timestamp = new Date().getTime();
+                setUserName(temp.firstname + ' ' + temp.lastname);
+                // Get the download url for the profile pic
+                const imageRef = ref(storage, temp.image_path)
+                try{
+                    const downloadURL = await getDownloadURL(imageRef)
+                    setProfilePicPath(`${downloadURL}?t=${timestamp}`);
+                } catch(e){
+                    console.log(e);
+                }
+            }
+            getUserInfo();
+            // get the people that have interacted with the post
+            const getInteractors = async () => {
+                var interactionsArray = []
+                var userIDs = []    // to store the userIDs of everyone that interacted, and remove the duplicates later
+                const interactionsRef = collection(db, 'interactions')
+                const q = query(interactionsRef, where("post_id", "==", data.post_id))
+                const querySnapshot = await getDocs(q);
+                querySnapshot.forEach((doc) => {
+                    // get the userID     
+                    var interactionData = doc.data() 
+                    userIDs.push(interactionData.user_id); 
+                });
+                // filter the user IDs to get the unique ones
+                userIDs = userIDs.filter((item,index) => userIDs.indexOf(item) === index);
+                // TODO: Add user skills or interests as well
+                // get the username, profile pic
+                if(userIDs.length > 0){
+                    for (var i in userIDs){
+                        var tempUserInfo = await getInteractorUserInfo(userIDs[i])
+                        if(tempUserInfo){
+                            interactionsArray.push(tempUserInfo); 
+                        }
+                    }
+                    setInteractorsData(interactionsArray)
+                }
+            }
+            getInteractors();
     }, []);
+
+    // get username and profile pic
+    const getInteractorUserInfo = async (userID) => {
+        const response = await getDoc(doc(db, "users", userID))
+        const temp = response.data(); 
+        const timestamp = new Date().getTime();
+        var userInfo = {}
+        userInfo.username = temp.firstname;
+        // Get the download url for the profile pic
+        const imageRef = ref(storage, temp.image_path)
+        try{
+            const downloadURL = await getDownloadURL(imageRef)
+            userInfo.pic = `${downloadURL}?t=${timestamp}`;
+        } catch(e){
+            console.log(e);
+        }
+        var field = []
+        field.push(temp?.skills[0])
+        userInfo.field = field;
+        return userInfo;
+    }
 
     const onUpvote = async () => {
         // Increment or decrement upvote_count in posts collection
@@ -126,24 +190,52 @@ const FeedCard= (props) => {
     const handleCommentButtonClicked = () => {
         setExtendCommentArea(!extendCommentArea);
     }
-    const interactors = interactorsData.map((interactor,i) => {
-        return <Interactor key={"-interactor-"+i} data={interactor} />
-    });
+
+    var interactors = null;
+    // each each that interacted
+    if (interactorsData.length > 0){
+        interactors = interactorsData.map((interactor,i) => {
+            return <Interactor key={"-interactor-"+i} data={interactor} />
+        });
+    }
+
+    const onThreeDotsClicked = () => {
+        if (data.userID === authCtx.userID){
+            setShowDeleteBtn(!showDeleteBtn);
+        }
+    }
+
+    const onDeleteBtnClicked = async () => {
+        if (window.confirm("Are you sure you want to delete the post")) {
+            // delete the post from the PostsData in the main parent component
+            props.deletePost(props.data.post_id);
+            // delete the post from firestore
+            // TODO: Do not delete comment but set the deleted field for collection to true 
+            await deleteDoc(doc(db, 'posts', data.post_id))
+        }
+        setShowDeleteBtn(false);
+    }
 
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
             <div className={"flex justify-between items-center w-full " + px}>
                 <div className="flex items-center h-10">
-                    <img className="rounded-full h-full" src={data.pic} />
+                    <img className="rounded-full h-full" src={profilePicPath} />
                     <div className="flex flex-col px-1">
-                        <label className="font-bold text-[11pt]">{data.username}</label>
+                        <label className="font-bold text-[11pt]">{username}</label>
                         <label className="text-[9pt]">{timeForPost}</label>
                     </div>
                 </div>
                 <div className="flex gap-3">
-                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl rounded-xl">{data.category}</label>
-                    <img src={dotsMenu} />
+                    {!showDeleteBtn && 
+                    <label className="bg-green-4 font-thin align-middle text-white text-[8pt] px-3 h-fit py-1 rounded-xl">{data.category}</label>}
+                    {showDeleteBtn && 
+                        <button type='button' className='border-2 font-thin align-middle text-black text-[10pt] px-3 h-fit py-1
+                        rounded-xl'onClick={onDeleteBtnClicked}>Delete</button>}
+                    <button>
+                        <img src={dotsMenu} onClick={onThreeDotsClicked}/>
+                    </button>
                 </div>
             </div>
 
