@@ -8,13 +8,13 @@ const NotificationsToggle = (props) => {
         props.setValue(prev => !prev);
     }
     return (
-        <div className={!props.value ? "flex gap-2 h-5 mt-2 ml-4 items-center ": "hidden"}>
+        <div className={!props.value ? "flex gap-2 h-5 mt-[30px] ml-4 items-center ": "hidden"}>
             <button className="h-fit w-fit" onClick={handleToggle}>
-                <img className="h-2 w-fit" src={leftExpandArrow} />
+                <img className="h-3 w-3" src={leftExpandArrow} />
             </button>
-            
+        
             <button className="w-fit h-fit" onClick={handleToggle}>
-                <img className="h-4 w-fit" src={notification} />
+                <img className="h-5 w-5" src={notification} />
             </button>
 
         </div>

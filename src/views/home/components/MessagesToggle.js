@@ -8,13 +8,13 @@ const MessagesToggle = (props) => {
         props.setValue(prev => !prev);
     }
     return (
-        <div className={"flex items-center w-fit h-5 gap-2 mt-2 mr-4 "+ (props.value? "hidden" : "") }>
+        <div className={"flex items-center w-fit h-5 gap-3 mt-[30px] mr-4 "+ (props.value? "hidden" : "") }>
             <button className="h-fit w-fit" onClick={handleToggle}>
-                <img className="h-4 w-fit"  src={messages} />
+                <img className="h-5 w-5"  src={messages} />
             </button>
             
             <button className="w-fit h-fit"  onClick={handleToggle}>
-                <img className="h-2 w-fit"  src={rightExpandArrow} />
+                <img className="h-3 w-3"  src={rightExpandArrow} />
             </button>
             
         </div>

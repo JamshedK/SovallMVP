@@ -3,24 +3,34 @@ import giga from '../../../assets/common/giga_learnmore.svg';
 
 
 const LearnMore = (props) => {
-    const handleToggle = () => {
+    const handleToggleOpen = () => {
         props.setValue(prev => !prev);
+    };
+
+    const handleToggleClose = () => {
+        props.setValue(false);
     };
 
     const menuRef = useRef();
 
     useEffect(() => {
-        document.addEventListener("mousedown", (event) => {
+        const handler = (event) => {
             if(!menuRef.current.contains(event.target)) {
-                handleToggle();
+                handleToggleClose()
             }
-        });
+        }
+
+        document.addEventListener("mousedown", handler);
+
+        return () => {
+            document.removeEventListener("mousedown", handler);
+        }
     });
 
     return(
         <div>
             <div className="">
-                <div onClick={handleToggle} className={props.value ? "hidden" : "flex absolute right-[133px] bottom-[133px] bg-white rounded-[11px] w-[160px] h-[35px] items-center justify-center font-semibold font-inter font-[13px] cursor-pointer"}>
+                <div onClick={handleToggleOpen} className={props.value ? "hidden" : "flex absolute right-[133px] bottom-[133px] bg-white rounded-[11px] w-[160px] h-[35px] items-center justify-center font-semibold font-inter font-[13px] cursor-pointer"}>
                     <h1>Learn more</h1>
                 </div>
 
