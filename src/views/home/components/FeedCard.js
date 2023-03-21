@@ -213,6 +213,7 @@ const FeedCard= (props) => {
             // TODO: Do not delete comment but set the deleted field for collection to true 
             await deleteDoc(doc(db, 'posts', data.post_id))
         }
+        setShowDeleteBtn(false);
     }
 
     return (
