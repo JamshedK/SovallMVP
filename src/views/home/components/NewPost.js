@@ -114,7 +114,6 @@ const NewPost = (props) => {
                         <option value='Solutions'>Solutions</option>
                         <option value='Resources'>Resources</option>
                         <option value='Opportunities'>Opportunities</option>
-                        <option value='Polls'>Polls</option>
                         <option value='Other'>Other</option>
                     </select>
 
