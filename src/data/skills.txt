@@ -1,327 +1,327 @@
-Problem-solving
-Fundraising
-Event planning
-Organizational skills
-Marketing
-Business development
-Sales
-Customer service
-Financial management
-Research and analysis
-Project management
-Programming
-IT skills
-Graphic design
-Architecture design
-Design thinking
-Sewing
-Analytics
-Research
-Software development
-Writing
-Strategic planning
-Advertising
-Media production
-Search engine optimization (SEO)
-Budgeting
 Accounting
-Auditing
-Data analysis
-Data visualization
-Data management
-geospatial analysis
-Biomedical engineering
-Artificial intelligence
-Cybersecurity
-Jewelry Design
-Cooking
-Fashion design
-Photography
-Baking
-Painting
-Drawing
-Sculpting
-Singing
-Dancing
-UX/UI
-Adobe suite
-Web 3
-C+
-Java
-Python
-JavaScript
-C#
-PHP
-Swift
-Ruby
-Go
-Tcl
-R
-Kotlin
-VHDL
-Elixir
-OCaml
-PHP
-Scala
-Rust
-Dart
-Elixir
-F#
-Erlang
-Prolog
-Lisp
-Julia
-Bash
-Haskell
-Scala
-Lua
-Objective-C
-SQL
-Assembly
-BASIC
-Ruby on Rails
-HTML
-CSS
-MATLAB
-TypeScript
-COBOL
-Verilog
-Illustration
-VX design
-Maya
-Nuke
-Redshift
-Unity
-Unreal Engine
-ZBrush
-Adobe Photoshop
-Adobe Illustrator
-Adobe InDesign
-Adobe After Effects
-Adobe Premiere Pro
-Adobe Dreamweaver
-Adobe Animate
 Adobe Acrobat
+Adobe After Effects
+Adobe Animate
 Adobe Audition
-Adobe Lightroom
 Adobe Bridge
-Adobe XD
 Adobe Character Animator
 Adobe Dimension
+Adobe Dreamweaver
+Adobe Illustrator
 Adobe InCopy
+Adobe InDesign
+Adobe Lightroom
 Adobe Muse
+Adobe Photoshop
+Adobe Premiere Pro
 Adobe Premiere Rush
+Adobe Project Felix
 Adobe Spark
 Adobe Substance
-Adobe Project Felix
-Animation
-Interior Design
-Motion Design
-Product Design
-Creative Writing
-Fine Arts
-Film
-Wood carving
-Game Design
-Interior Architecture
-Google ads
-Google apps
-Motion Graphics
-Music Production
-Visual Effects
-Cinema 4D
-Mechanical Engineering
-3d printing
-3d modeling
-Autodesk Fusion 360
-Blender
-Cura
-MeshLab
-Netfabb
-SketchUp
-SolidWorks
-Figma
-Sketch
-Math
-Programming
-Video editing
-Branding
-Golf
-Football
-Soccer
-Baseball
-Weight lifting
-Running
-Pilates
-Yoga
-Swimming
-Crocheting
-Knitting
-Fishing
-Packaging
-Package design
-Poster design
-Logo design
-Gorilla marketing
-Sailing
-Copywriting
-Videography
-Production
-Exterior design
-Fitness
-Cycling
-Energy
-Civil engineering
-City planning
-Webdesign
-Big data
-Machine learning
-M2M communication
-Cloud computing
-E-Commerce
-Crowdfunding
-Stage design
-Set design
-Production design
-Industrial design
-Audiography
-Chemical engineering
-Electrical engineering
+Adobe suite
+Adobe XD
+Advertising
+Advertising design
 Aerospace engineering
-Biomedical engineering
-Environmental engineering
-Industrial engineering
-Materials engineering
-Nuclear engineering
-Petroleum engineering
-Agricultural engineering
-Applied engineering
-Audio engineering
-Automotive engineering
-Biochemical engineering
-Ceramic engineering
-Chemical-biological engineering
-Control engineering
-Electrical and computer engineering
-Electronic engineering
-Energy Engineering
-Packaging engineering
 Agricultural and biosystems engineering
-Environmental and water resources engineering
-Fire protection engineering
-Geotechnical engineering
-Health and safety engineering
-Manufacturing engineering
-Nanotechnology engineering
-Marine engineering
-Mining engineering
-Food engineering
-Geomatics engineering
-Wood engineering
-Municipal or urban engineering
-Ocean engineering
-Paper engineering
-Petroleum and natural gas engineering
-Pharmaceutical engineering
-Physics engineering
-Process engineering
-Manufacturing systems engineering
-Structural engineering
-Information engineering
-Systems engineering
-Mechatronics engineering
-Telecommunications engineering
-Textile engineering
-Software engineering
-Retails
+Agricultural engineering
 Algorithms
-Bioinformatics
-Computer architecture
-Computer graphics
-Computer networks
-Computer security
-Cryptography
-Data structures
-Databases
-Distributed systems
-Human-computer interaction
-Information theory
-Mobile computing
-Mobile app development
-Natural language processing
-Operating systems
-Programming languages
-Scientific computing
-Systems programming
-Theory of computation
-User experience design
-User interface design
-Web development
-Virtual reality development
-Computer-aided design
-Deep learning
-Computer-aided manufacturing
-Computer-aided engineering
-Computer vision
-Image processing
+Analytics
+Animation
+Applied engineering
+AR design
+Architecture design
+Artificial intelligence
+Assembly
+Audio engineering
+Audiography
+Auditing
 Augmented reality
-Computer simulations
+Autodesk Fusion 360
+Automotive engineering
+Baking
+Baseball
+Bash
+BASIC
+Big data
+Biochemical engineering
+Bioinformatics
+Biomedical engineering
+Biomedical engineering
+Blender
+Branding
+Budgeting
+Business development
+C#
+C+
+Ceramic engineering
+Character design
+Chemical engineering
+Chemical-biological engineering
+Cinema 4D
+City planning
+Civil engineering
+Cloud computing
+Cloud computing
+COBOL
+Computer architecture
 Computer forensics
-Data mining
-Graphics programming
+Computer graphics
 Computer modeling
 Computer Music
-Quantitative Finance
-Microelectronic circuits
-Cloud computing
+Computer networks
+Computer security
+Computer simulations
+Computer vision
+Computer-aided design
+Computer-aided engineering
+Computer-aided manufacturing
+Control engineering
+Cooking
+Copywriting
+Crafts/arts
+Creative Writing
+Crocheting
+Crowdfunding
+Cryptography
+CSS
+Cura
+Customer service
 Cybersecurity
-Network security
-Information security
+Cybersecurity
+Cycling
+Dancing
+Dart
+Data analysis
+Data management
+Data mining
 Data security
-Software security
+Data structures
+Data visualization
+Databases
+Deep learning
+Design
+Design thinking
+Distributed systems
+Drawing
+E-Commerce
+Electrical and computer engineering
+Electrical engineering
+Electronic engineering
+Elixir
+Elixir
+Energy
+Energy Engineering
+Engineering
+Entertainment
+Environmental and water resources engineering
+Environmental design
+Environmental engineering
+Erlang
+Event design
+Event planning
+Exhibition design
+Experience design
+Exterior design
+F#
+Fashion design
+Figma
+Film
+Filmmaking
+Finances
+Financial management
+Fine Arts
+Fire protection engineering
+Fishing
+Fitness
+Food engineering
+Football
+Fundraising
+Furniture design
+Game character design
+Game Design
+Game Design
+Game level design
+Geomatics engineering
+geospatial analysis
+Geotechnical engineering
+Go
+Golf
+Google ads
+Google apps
+Gorilla marketing
+Graphic design
+Graphics programming
+Haskell
+Health and safety engineering
+HTML
 Human-centered design
+Human-computer interaction
+Hunting
+Illustration
+Image processing
+Industrial design
+Industrial engineering
+Information Architecture
+Information engineering
+Information security
+Information theory
+Interaction design
+Interactive design
+Interior Architecture
+Interior Design
+IT skills
+Java
+JavaScript
+Jewelry Design
+Julia
+Knitting
+Kotlin
 Landscape design
+Lisp
+Logo design
+Lua
+M2M communication
+Machine learning
+Management skills
+Manufacturing engineering
+Manufacturing systems engineering
+Marine engineering
+Marketing
+Marketing and sales
+Marketing design
+Martial arts
+Materials engineering
+Math
+MATLAB
+Maya
+Mechanical Engineering
+Mechatronics engineering
+Media production
+MeshLab
+Microelectronic circuits
+Mining engineering
+Mobile app development
+Mobile computing
+Motion capture design
+Motion Design
+Motion Graphics
+Motion graphics
+Municipal or urban engineering
+Music Production
+Nanotechnology engineering
+Natural language processing
+Netfabb
+Network security
+Nuclear engineering
+Nuke
+Objective-C
+OCaml
+Ocean engineering
+Operating systems
+Organizational skills
+Package design
+Packaging
+Packaging engineering
+Painting
+Paper engineering
+Petroleum and natural gas engineering
+Petroleum engineering
+Pharmaceutical engineering
+Photography
+PHP
+PHP
+Physics engineering
+Pilates
+Poster design
+Print design
+Problem-solving
+Process engineering
+Product Design
+Production
+Production design
+Programming
+Programming
+Programming
+Programming languages
+Project management
+Prolog
+Publication design
+Python
+Quantitative Finance
+R
+Redshift
+Research
+Research
+Research and analysis
+Retails
+Rock climbing
+Ruby
+Ruby on Rails
+Running
+Rust
+Sailing
+Sales
+Scala
+Scala
+Scientific computing
+Sculpting
+Search engine optimization (SEO)
+Service design
+Set design
+Sewing
+Signage design
+Singing
+Sketch
+SketchUp
+Soccer
+Social media design
+Software development
+Software engineering
+Software security
+SolidWorks
+Sound design
+SQL
+Stage design
+Strategic planning
+Structural engineering
+Swift
+Swimming
+Systems engineering
+Systems programming
+Tcl
+Telecommunications engineering
+Textile engineering
+Theory of computation
+Toy design
+TypeScript
+Typography
+Unity
+Unreal Engine
 Urban design
 Urban planning
-Toy design
-Game Design
-Motion graphics
-Environmental design
-Exhibition design
-Vehicle design
-Furniture design
-Character design
-Filmmaking
-Visual effects
-Sound design
+User experience design
+User interface design
 User research
-Interaction design
-Information Architecture
-Social media design
-AR design
-Service design
-Experience design
-Marketing design
-Advertising design
-Print design
-Signage design
-Typography
-Publication design
-Event design
-Interactive design
-Motion capture design
-Game level design
-Game character design
-Martial arts
-Rock climbing
-Hunting
-Management skills
-Design
-Crafts/arts
-Research
-Marketing and sales
-Entertainment
-Finances
-Engineering
-Programming
+UX/UI
+Vehicle design
+Verilog
+VHDL
+Video editing
+Videography
+Virtual reality development
+Visual Effects
+Visual effects
+VX design
+Web 3
+Web development
+Webdesign
+Weight lifting
+Wood carving
+Wood engineering
 Writing
+Writing
+Yoga
+ZBrush
+3d modeling
+3d printing
