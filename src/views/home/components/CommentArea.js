@@ -148,6 +148,7 @@ const SingleComment = (props) => {
                         <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                             <button className='' onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
+                            <button>Delete</button>
                         </div>
                     </div>
                     {/* Display newReplyBox if the reply button is clicked */}
@@ -207,17 +208,18 @@ const CommentReplies = (props) => {
     const tsForDisplay = moment(ts).fromNow();
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
-                <div className='h-10 v-10'>
-                    <img className="rounded-full h-full" src = {userInfo.profilePicPath}></img>
+            <div className='h-10 v-10'>
+                <img className="rounded-full h-full" src = {userInfo.profilePicPath}></img>
+            </div>
+            <div className='flex flex-col space-y-1'>
+                <label className='font-bold'>{userInfo.username}</label>
+                <label>{props.reply_data.text}</label>
+                {containsImage && <img src={imageURL}></img>}
+                <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
+                    <label>{tsForDisplay}</label>
+                    <button>Delete</button>
                 </div>
-                <div className='flex flex-col space-y-1'>
-                    <label className='font-bold'>{userInfo.username}</label>
-                    <label>{props.reply_data.text}</label>
-                    {containsImage && <img src={imageURL}></img>}
-                    <div className='flex flex-row space-x-10'>
-                        <label className='text-[#6C6C6C]'>{tsForDisplay}</label>
-                    </div>
-                </div>
+            </div>
         </div>
     )
 };
