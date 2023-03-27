@@ -33,12 +33,12 @@ function HeaderLoggedIn(props) {
   ];
   const filterOptionsData = [
     ["All", "/"],
-    ["Problem", "/"],
-    ["Solutions", "/"],
-    ["Resources", "/"],
-    ["Opportunities", "/"],
+    // ["Problem", "/"],
+    // ["Solutions", "/"],
+    // ["Resources", "/"],
+    // ["Opportunities", "/"],
     ["People", "/"],
-    ["Other", "/"],
+    // ["Other", "/"],
   ];
 
   const quickAccess = quickAccessData.map((item, i) => {
@@ -54,9 +54,12 @@ function HeaderLoggedIn(props) {
   const handleFilter = (e) => {
     const value = parseInt(e.target.value);
     setCurrentFilter(value);
-    if(value===5){
+    if(value===1){
       searchCtx.updateEnterPressed();
       navigate('/search/people');
+    }
+    if(value === 0){
+      navigate('/mainfeed');
     }
   };
 
@@ -81,7 +84,7 @@ function HeaderLoggedIn(props) {
   const onEnterButtonClicked = (e) => {
     if (e.key === 'Enter') {
       searchCtx.updateEnterPressed();
-      if(currentFilter === 5){
+      if(currentFilter === 1){
         console.log(searchCtx.query);
         navigate('/search/people')
       }
