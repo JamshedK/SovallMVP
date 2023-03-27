@@ -26,7 +26,7 @@ export default function App() {
     const isLoggedIn = authCtx.isLoggedIn;
 
     return (
-        <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
+        <div className="md:screen md:h-screen font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
                     {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}

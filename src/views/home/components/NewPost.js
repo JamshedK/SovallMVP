@@ -98,6 +98,8 @@ const NewPost = (props) => {
                     <li>Offer a solution...</li>
                     <li>Find a team...</li>
                 </ul> */}
+
+
                 {/*profile and selecting category for the post*/ }
                 <div className='relative flex flex-row items-start'>
                     <img className="w-10 h-10 rounded-full" src={userCtx.profilePicPath} />
@@ -107,8 +109,8 @@ const NewPost = (props) => {
                     </div>
 
                 
-
-                    <select className="absolute top-[0px] w-35 h-9 align-text-top text-top text-[12px] right-0 rounded-[20px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                    <div className=''>
+                        <select className="absolute top-[0px] h-[39px] w-[110px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
                         <option className='' value="DEFAULT" disabled>No tab selected</option>
                         <option value='Problems'>Problems</option>
                         <option value='Solutions'>Solutions</option>
@@ -116,14 +118,15 @@ const NewPost = (props) => {
                         <option value='Opportunities'>Opportunities</option>
                         <option value='Polls'>Polls</option>
                         <option value='Other'>Other</option>
-                    </select>
+                        </select>
+                    </div>
 
                 </div>
 
                 {/* text area 
                 Text box automatic resizing with minimum of two lines.*/}
                 <div className='flex flex-col gap-5'>
-                    <textarea placeholder={placeholder} className='relative border-hidden rounded-[14.5px] w-[430px] h-[160px] top-2 placeholder:text-[15px] placeholder:px-[11px]'
+                    <textarea placeholder={placeholder} className='relative border-hidden rounded-[14.5px] w-full h-[10rem] top-2 placeholder:text-[15px] placeholder:px-[11px]'
                      ref={postTextRef}>
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
@@ -131,31 +134,31 @@ const NewPost = (props) => {
 
                 {/* post button */}
 
-                <div className='relative flex flex-row left-[160px] top-9 mb-4'>
+                <div className='relative flex flex-row justify-center w-full top-9 mb-4'>
                     <button onClick={handlePost} className=' rounded-[14.5px] w-20 h-7 text-[14px] bg-[#025B5B] text-white'>Post</button>
 
-                    <div className="relative left-[170px] top-1 w-fit h-full">
+                    <div className="relative left-[35%] top-1 w-fit h-full">
                     {/* TODO: Correct the styles */}
                     
                         <label className='w-fit h-fit cursor-pointer'>
+
                             <img src={doc}></img>
                             <input id='file-input' className='invisible w-4 h-4' type="file" accept="image/png, image/jpeg" ref={imageRef} onChange = {handleImageSelected}/>
 
                         </label>
-
-
+                                   
                     {/* TODO: Can add the poll here later */}
+
                     </div>
 
                 </div>
 
-                
-                
-
             </div>
-            
+
         </div>
+
     );
+    
 }
 
 export default NewPost;

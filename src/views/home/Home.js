@@ -1365,7 +1365,7 @@ const Home = (props) => {
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
     const [learnMore, setLearnMore] = useState(false);
-    const width = "w-[28rem] xl:w-[32rem]";
+    const width = "w-[20rem] md:w-[24rem] lg:w-[28rem] xl:w-[32rem]";
     
     const [postsData, setpostsData] = useState({});
     const authCtx = useContext(AuthContext);
