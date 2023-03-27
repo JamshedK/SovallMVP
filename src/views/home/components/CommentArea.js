@@ -5,7 +5,7 @@ import delete_image from '../../../assets/feedcard/close.svg';
 
 
 /*API stuff*/
-import {collection, doc, query, where, getDocs, getDoc, addDoc, orderBy, updateDoc, arrayUnion, increment, deleteDoc } from "firebase/firestore";
+import {collection, doc, query, where, getDocs, getDoc, addDoc, orderBy, updateDoc, arrayUnion, increment, deleteDoc, arrayRemove } from "firebase/firestore";
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {db, storage} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
@@ -36,6 +36,7 @@ import UserContext from '../../../contexts/user';
 const CommentArea = (props) => {
     const [commentsArray, setCommentsArray] = useState([]);
     const [newCommentAdded, setNewCommentAdded] = useState();
+    const [commentDeleted, setCommentDeleted] = useState();
     let commentItems = [null];
     // Get the comments from firestore and store them in an array
     useEffect(() => {
@@ -50,7 +51,7 @@ const CommentArea = (props) => {
             setCommentsArray(comments);
         }
         getComments();
-    }, [newCommentAdded])
+    }, [newCommentAdded, commentDeleted])
   
     const deleteComment = (comment_id) => {
         const commentIndex = commentsArray.findIndex(x => x.comment_id === comment_id)
@@ -66,6 +67,7 @@ const CommentArea = (props) => {
             return <SingleComment key={"comment-card-" + i} 
                         comment_data={comment}
                         setNewCommentAdded = {setNewCommentAdded}
+                        setCommentDeleted = {setCommentDeleted}
                         positionInCommentsArray = {i}
                         commentCount = {props.commentCount}
                         setCommentCount = {props.setCommentCount}
@@ -131,20 +133,34 @@ const SingleComment = (props) => {
         };
 
     },[props.comment_data]);
+
+    // removed the reply from the firestore
+    const deleteReply = async (i) => {
+        const commentRef = doc(db, 'comments', props.comment_data.comment_id);
+        await updateDoc(commentRef, {
+            replies: arrayRemove(props.comment_data.replies[i])
+        });
+        props.setCommentDeleted(new Date()); // unique identified to rerun the useEffect in CommentArea
+    }
+
     if(props.comment_data?.replies){
         var replies = props.comment_data.replies;
         replyItems = replies.map((reply, i) => {
             // Having key for each Comment is required per React docs
-            return <CommentReplies key={"reply-card-" + i} reply_data={reply}/>
+            return <CommentReplies key={"reply-card-" + i} reply_data={reply} i={i}  deleteReply={deleteReply}/>
         })
     }
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
+
     const onDeleteBtnClicked = async () => {
         if (window.confirm("Are you sure you want to delete the comment?")) {
             props.deleteComment(props.comment_data.comment_id);
-            // TODO: Do not delete comment but set the deleted field for collection to true 
+            /* TODO: 
+                - Do not delete comment but set the deleted field for collection to true
+                - Decrease the comment count 
+            */
             await deleteDoc(doc(db, 'comments', props.comment_data.comment_id))
         }
         setShowDeleteBtn(false);
@@ -198,6 +214,7 @@ const CommentReplies = (props) => {
     const [userInfo, setUserInfo] = useState({});
     const authCtx = useContext(AuthContext);
     const [showDeleteBtn, setShowDeleteBtn] = useState(props.reply_data.user_id === authCtx.userID);
+    const tsForDisplay = moment(ts).fromNow();
 
     // fetch the image if the reply contains one
     useEffect(() => {
@@ -227,7 +244,17 @@ const CommentReplies = (props) => {
         func();
     },[]);
 
-    const tsForDisplay = moment(ts).fromNow();
+    const onDeleteBtnClicked = async () => {
+        if (window.confirm("Are you sure you want to delete the reply?")) {
+            /* TODO: 
+                - Do not delete comment but set the deleted field for collection to true
+                - Decrease the comment count 
+            */
+           props.deleteReply(props.i)
+        }
+        setShowDeleteBtn(false);
+    }
+
     return (
         <div className='w-full flex flex-row space-x-4 space-y-2'>
             <div className='h-10 v-10'>
@@ -239,7 +266,7 @@ const CommentReplies = (props) => {
                 {containsImage && <img src={imageURL}></img>}
                 <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                     <label>{tsForDisplay}</label>
-                    {showDeleteBtn && <button>Delete</button>}
+                    {showDeleteBtn && <button onClick={onDeleteBtnClicked}>Delete</button>}
                 </div>
             </div>
         </div>
