@@ -83,6 +83,9 @@ const SingleComment = (props) => {
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
     const [userInfo, setUserInfo] = useState({});
+    const authCtx = useContext(AuthContext);
+    const [showDeleteBtn, setShowDeleteBtn] = useState(props.comment_data.user_id === authCtx.userID)
+
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
     // TODO: Repetetive code here and in CommentReplies. Make one function
@@ -148,7 +151,7 @@ const SingleComment = (props) => {
                         <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                             <button className='' onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
-                            <button>Delete</button>
+                            {showDeleteBtn && <button>Delete</button>}
                         </div>
                     </div>
                     {/* Display newReplyBox if the reply button is clicked */}
@@ -177,6 +180,9 @@ const CommentReplies = (props) => {
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
     const [userInfo, setUserInfo] = useState({});
+    const authCtx = useContext(AuthContext);
+    const [showDeleteBtn, setShowDeleteBtn] = useState(props.reply_data.user_id === authCtx.userID);
+
     // fetch the image if the reply contains one
     useEffect(() => {
         const getImage = async () => {
@@ -217,7 +223,7 @@ const CommentReplies = (props) => {
                 {containsImage && <img src={imageURL}></img>}
                 <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                     <label>{tsForDisplay}</label>
-                    <button>Delete</button>
+                    {showDeleteBtn && <button>Delete</button>}
                 </div>
             </div>
         </div>
