@@ -8,9 +8,10 @@ import interestsText from '../../../data/interests.txt';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { sendPasswordResetEmail } from "firebase/auth"
 import AuthContext from "../../../contexts/auth-context";
 import UserContext from '../../../contexts/user';
-import {db, storage} from '../../../firebase-config'
+import {auth, db, storage} from '../../../firebase-config'
 import {ref, uploadBytes} from 'firebase/storage';
 
 
@@ -128,8 +129,9 @@ const EditProfile = (props) => {
     }
 
     const handleChangePassword = () => {
-        // Redirect the user to change password page
-        navigate('/changepassword');
+        // TODO: Navigate to email sent page
+        sendPasswordResetEmail(auth, userInfo.email)
+        .then(a=>{alert(`Password reset email sent to ${userInfo.email}`)});
     }
     return(
         <div className="flex w-full justify-center bg-[#3C9A9A]">
