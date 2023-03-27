@@ -5,7 +5,7 @@ import delete_image from '../../../assets/feedcard/close.svg';
 
 
 /*API stuff*/
-import {collection, doc, query, where, getDocs, getDoc, addDoc, orderBy, updateDoc, arrayUnion, increment } from "firebase/firestore";
+import {collection, doc, query, where, getDocs, getDoc, addDoc, orderBy, updateDoc, arrayUnion, increment, deleteDoc } from "firebase/firestore";
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {db, storage} from '../../../firebase-config'
 import { useEffect, useState, useRef, useContext} from 'react';
@@ -52,6 +52,13 @@ const CommentArea = (props) => {
         getComments();
     }, [newCommentAdded])
   
+    const deleteComment = (comment_id) => {
+        const commentIndex = commentsArray.findIndex(x => x.comment_id === comment_id)
+        // remove the post from the PostsData array
+        const updatedComents = [...commentsArray.slice(0, commentIndex), ...commentsArray.slice(commentIndex + 1)]
+        setCommentsArray(updatedComents)
+    } 
+
     // Create comments component for every comment
     if(commentsArray.length > 0){
         commentItems = commentsArray.map((comment, i) => {
@@ -62,9 +69,11 @@ const CommentArea = (props) => {
                         positionInCommentsArray = {i}
                         commentCount = {props.commentCount}
                         setCommentCount = {props.setCommentCount}
+                        deleteComment = {deleteComment}
                     />
         })
     }
+
     return (
         <div className="w-full px-8">
             <NewCommentBox 
@@ -132,7 +141,14 @@ const SingleComment = (props) => {
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
     const ts = new Date(Date.parse(props.comment_data.ts))
     const timeForComment = moment(ts).fromNow();
-
+    const onDeleteBtnClicked = async () => {
+        if (window.confirm("Are you sure you want to delete the comment?")) {
+            props.deleteComment(props.comment_data.comment_id);
+            // TODO: Do not delete comment but set the deleted field for collection to true 
+            await deleteDoc(doc(db, 'comments', props.comment_data.comment_id))
+        }
+        setShowDeleteBtn(false);
+    }
     return (
         <div className='pt-2'>
             {/*Member comments*/}
@@ -151,7 +167,7 @@ const SingleComment = (props) => {
                         <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                             <button className='' onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             <label> {timeForComment} </label>
-                            {showDeleteBtn && <button>Delete</button>}
+                            {showDeleteBtn && <button onClick={onDeleteBtnClicked}>Delete</button>}
                         </div>
                     </div>
                     {/* Display newReplyBox if the reply button is clicked */}
