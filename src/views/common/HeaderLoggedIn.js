@@ -11,6 +11,7 @@ import dotsMenu from "../../assets/common/dots_menu.svg";
 import Search from "./Search";
 import SearchContext from "../../contexts/search-context";
 import UserContext from "../../contexts/user";
+import AuthContext from "../../contexts/auth-context";
 import {useNavigate } from "react-router-dom";
 
 
@@ -18,6 +19,9 @@ function HeaderLoggedIn(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
   const searchCtx = useContext(SearchContext);
   const userCtx = useContext(UserContext);
+  const authCtx = useContext(AuthContext)
+
+  const [showLogOutButton, setShowLogOutButton] = useState(false);
   const navigate = useNavigate();
 
   /*Hardtyped arrays*/
@@ -84,6 +88,13 @@ function HeaderLoggedIn(props) {
     }
   }
 
+  const onLogOutClicked = () => {
+    if(window.confirm("Are you sure you want to log out?")){
+      authCtx.logout();
+      navigate('/');
+    }
+  }
+
   return (
     <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
       <div className="flex flex-1 items-center justify-left gap-6">
@@ -97,13 +108,9 @@ function HeaderLoggedIn(props) {
         </div>
         <div className="flex">
           <Search
-            onEnterButtonClicked = {onEnterButtonClicked}
-            icon={searchIcon}
-            placeholder="Search"
-            placeholderColor="text-white"
-            style="text-white border border-white"
-            w="full"
-			h="5"
+            onEnterButtonClicked = {onEnterButtonClicked} icon={searchIcon} placeholder="Search"
+            placeholderColor="text-white" style="text-white border border-white"
+            w="full" h="5"
           />
         </div>
       </div>
@@ -116,11 +123,14 @@ function HeaderLoggedIn(props) {
               src={userCtx.profilePicPath}
             />
           </a>
-          <a className="h-full flex items-center" href="/">
-            <img className="rounded-full h-fit" src={dotsMenu} />
-          </a>
+          <button className="h-full flex items-center">
+            <img className="rounded-full h-fit" src={dotsMenu} onClick={() => setShowLogOutButton(!showLogOutButton)} />
+          </button>
+          {showLogOutButton && <button onClick={onLogOutClicked}>Logout</button>}
         </div>
     </div>
+  
+
   );
 }
 
