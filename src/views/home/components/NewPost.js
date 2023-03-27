@@ -11,6 +11,7 @@ import { db, storage } from '../../../firebase-config';
 import { collection, addDoc} from '@firebase/firestore';
 import {ref, uploadBytes} from 'firebase/storage';
 import moment from 'moment';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -40,10 +41,10 @@ const NewPost = (props) => {
     const selectCategoryRef = useRef();
     const postCollectionRef = collection(db, 'posts')
     const timeForPost = moment(new Date()).format('MMMM, D, YYYY');
+    const navigate = useNavigate();
 
         // Save the user post post to Firebase
     const handlePost = async () => {
-        console.log(postTextRef.current.value);
         const published_date = new Date();
         if(imageRef.current.files[0]){
             setContainsImage(true)
@@ -66,7 +67,8 @@ const NewPost = (props) => {
             imagePath:imagePath,
             category:selectCategoryRef.current.value
 		})
-
+        // reload the page (Neety trick LOL)
+        window.location.reload();
     }
 
         // Uploads the image to firebase storage
