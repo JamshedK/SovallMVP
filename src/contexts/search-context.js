@@ -4,7 +4,7 @@ import { createContext, useState } from "react";
  * to a different route, so storing it in local storage and then retreieve it
  */
 const SearchContext = createContext({
-    query: "",
+    query: " ",
     enterPressed: false,
     UpdateQuery: () => {},
     updateEnterPressed: () => {}

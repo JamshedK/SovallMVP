@@ -54,6 +54,10 @@ function HeaderLoggedIn(props) {
   const handleFilter = (e) => {
     const value = parseInt(e.target.value);
     setCurrentFilter(value);
+    if(value===5){
+      searchCtx.updateEnterPressed();
+      navigate('/search/people');
+    }
   };
 
   /* Pill menu code */
