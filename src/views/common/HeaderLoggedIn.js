@@ -1,10 +1,16 @@
 /* Header for after LogIn */
 import { useState, useEffect, useContext } from "react";
 import arrowPrev from "../../assets/common/arrow_prev.svg";
-import quick_1 from "../../assets/common/header_icon_1.svg";
-import quick_2 from "../../assets/common/header_icon_2.svg";
-import quick_3 from "../../assets/common/header_icon_3.svg";
-import quick_4 from "../../assets/common/header_icon_4.svg";
+import resources_plain from "../../assets/common/header_icon_1.svg";
+import resources_selected from "../../assets/common/resources_selected.svg";
+
+import rocket_plain from "../../assets/common/header_icon_2.svg";
+import rocket_selected from "../../assets/common/rocket_selected.svg";
+import saved_plain from "../../assets/common/header_icon_3.svg";
+import saved_selected from "../../assets/common/saved_selected.svg";
+import mainfeed_selected from "../../assets/common/header_icon_4.svg";
+import mainfeed_plain from "../../assets/common/home_plain.svg";
+
 import sovall from "../../assets/common/sovall_2.svg";
 import searchIcon from "../../assets/common/search_icon_white.svg";
 import dotsMenu from "../../assets/common/dots_menu.svg";
@@ -17,6 +23,7 @@ import {useNavigate } from "react-router-dom";
 
 function HeaderLoggedIn(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
+  const [currentMenuOption, setCurrentMenuOption] = useState(-1);
   const searchCtx = useContext(SearchContext);
   const userCtx = useContext(UserContext);
   const authCtx = useContext(AuthContext)
@@ -25,14 +32,14 @@ function HeaderLoggedIn(props) {
   const navigate = useNavigate();
 
   /*Hardtyped arrays*/
-  const quickAccessData = [
-    [quick_1, "/"],
-    [quick_2, "/"],
-    [quick_3, "/"],
-    [quick_4, "/mainfeed"],
+  const menuOptionsData = [
+    [resources_plain, resources_selected, "/"],
+    [rocket_plain, rocket_selected, "/"],
+    [saved_plain, saved_selected, "/"],
+    [mainfeed_plain, mainfeed_selected, "/mainfeed"],
   ];
   const filterOptionsData = [
-    ["All", "/"],
+    ["Posts", "/"],
     // ["Problem", "/"],
     // ["Solutions", "/"],
     // ["Resources", "/"],
@@ -41,12 +48,22 @@ function HeaderLoggedIn(props) {
     // ["Other", "/"],
   ];
 
-  const quickAccess = quickAccessData.map((item, i) => {
+    
+  const handleMenuOptionSelected = (e) =>{
+    const value = parseInt(e.currentTarget.value)
+    setCurrentMenuOption(parseInt(value));
+    navigate('/mainfeed');
+    console.log(e.currentTarget.value)
+  }
+
+  const menuOptions = menuOptionsData.map((item, i) => {
     const h = i === 1 ? "h-full" : "h-[80%]";
+    const j = i === currentMenuOption ? 1 : 0;
+    console.log("For menu " + i + " the value of j is " + j);
     return (
-      <a key={"quick-acces-" + i} className={h} href={item[1]}>
-        <img className="h-5" src={item[0]} />
-      </a>
+      <button key={"menu-option-" + i} className={h} onClick={handleMenuOptionSelected} value={i}>
+        <img className="h-5" src={item[j]} />
+      </button>
     );
   });
 
@@ -102,6 +119,8 @@ function HeaderLoggedIn(props) {
     }
   }
 
+  const profilePicStyle = currentMenuOption === -1 ? "bg-yellow-2" : "";
+
   return (
     <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
       <div className="flex flex-1 items-center justify-left gap-6">
@@ -123,10 +142,10 @@ function HeaderLoggedIn(props) {
       </div>
         <div className="flex flex-2 py-1 gap-4 items-center">{filterOptions}</div>
 		<div className="flex flex-1 gap-8 justify-end items-center">
-          {quickAccess}
+          {menuOptions}
           <a href="/">
             <img
-              className="w-8 rounded-full p-[0.05rem]"
+              className={"w-8 rounded-full p-[0.05rem] " + profilePicStyle}
               src={userCtx.profilePicPath}
             />
           </a>
