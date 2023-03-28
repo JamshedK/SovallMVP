@@ -52,8 +52,12 @@ function HeaderLoggedIn(props) {
   const handleMenuOptionSelected = (e) =>{
     const value = parseInt(e.currentTarget.value)
     setCurrentMenuOption(parseInt(value));
-    navigate('/mainfeed');
-    console.log(e.currentTarget.value)
+    if(value === 3){
+      navigate('/mainfeed');
+    }
+    else{
+      navigate('/comingsoon')
+    }
   }
 
   const menuOptions = menuOptionsData.map((item, i) => {
