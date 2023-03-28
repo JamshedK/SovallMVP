@@ -34,6 +34,8 @@ const NewPost = (props) => {
     // useState(false);
     const [containsImage, setContainsImage] = useState(false);
     const [imagePath, setImagePath] = useState(null);
+    const [disablePostButton, setDisablePostButton] = useState(true); 
+    const [showWarning, setShowWarning] = useState(false);
     const authCtx = useContext(AuthContext);
     const userCtx = useContext(UserContext)
     const postTextRef = useRef();       // useRef hook to get reference for the textArea and get it's content later on
@@ -45,6 +47,12 @@ const NewPost = (props) => {
 
         // Save the user post post to Firebase
     const handlePost = async () => {
+        // check if a category is selected
+        const category = selectCategoryRef.current.value;
+        if (category === "DEFAULT"){
+            setShowWarning(true)
+            return 0;
+        }
         const published_date = new Date();
         if(imageRef.current.files[0]){
             setContainsImage(true)
@@ -88,12 +96,29 @@ const NewPost = (props) => {
         setImagePath(URL.createObjectURL(imageRef.current.files[0]))
     }
 
+    const handleTextareaChanged = () => {
+        if(postTextRef.current.value === ''){
+            setDisablePostButton(true)
+        } else{
+            setDisablePostButton(false)
+        }
+    }
+
+    const onCategorySelected = () => {
+        setShowWarning(false)
+    }
+
     const placeholder = 'Venture towards excellence: \n   ● Identify a problem\n   ● Offer a solution\n   ● Share resources\n\
    ● Find a team member\n   ● Launch a poll and collect data'
 
     return (
         <div className={"relative w-full h-fit flex flex-col border border-dashed border-gray-300 rounded-xl bg-white gap-6 p-8 px-8 " + props.width }>
             <div className="text-green-1">
+            {showWarning && (
+                <label className='absolute top-0 right-0 text-red-500 py-3 pr-8 text-xs'>
+                    Please select a category
+                </label>
+                )}
                 {/* <label className="font-semibold" >We are here to help you grow. Venture towards excellence</label>
                 <ul className="list-disc pl-7 w-full cursor-text" onClick={handleClick}>
                     <li>Identify a problem...</li>
@@ -112,13 +137,18 @@ const NewPost = (props) => {
 
                 
                     <div className=''>
-                        <select className="absolute top-[0px] h-[39px] w-[110px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
-                        <option className='' value="DEFAULT" disabled>No tab selected</option>
-                        <option value='Problems'>Problems</option>
-                        <option value='Solutions'>Solutions</option>
-                        <option value='Resources'>Resources</option>
-                        <option value='Opportunities'>Opportunities</option>
-                        <option value='Other'>Other</option>
+                        <select 
+                                className="absolute top-[0px] h-[39px] w-[110px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" 
+                                ref = {selectCategoryRef}
+                                defaultValue={'DEFAULT'}
+                                onChange={onCategorySelected}
+                                >
+                            <option className='' value="DEFAULT" disabled>No tab selected</option>
+                            <option value='Problems'>Problems</option>
+                            <option value='Solutions'>Solutions</option>
+                            <option value='Resources'>Resources</option>
+                            <option value='Opportunities'>Opportunities</option>
+                            <option value='Other'>Other</option>
                         </select>
                     </div>
 
@@ -128,7 +158,7 @@ const NewPost = (props) => {
                 Text box automatic resizing with minimum of two lines.*/}
                 <div className='flex flex-col gap-5'>
                     <textarea placeholder={placeholder} className='relative border-hidden rounded-[14.5px] w-full h-[10rem] top-2 placeholder:text-[15px] placeholder:px-[11px]'
-                     ref={postTextRef}>
+                     ref={postTextRef} onChange={handleTextareaChanged}>
                     </textarea>
                     {containsImage && <img src = {imagePath}></img>}
                 </div>
@@ -136,7 +166,10 @@ const NewPost = (props) => {
                 {/* post button */}
 
                 <div className='relative flex flex-row justify-center w-full top-9 mb-4'>
-                    <button onClick={handlePost} className=' rounded-[14.5px] w-20 h-7 text-[14px] bg-[#025B5B] text-white'>Post</button>
+                    <button onClick={handlePost}
+                        disabled={disablePostButton} 
+                        className='rounded-[14.5px] w-20 h-7 text-[14px] bg-[#025B5B] text-white disabled:bg-gray-400 disabled:hover:cursor-no-drop'>Post
+                    </button>
 
                     <div className="relative left-[35%] top-1 w-fit h-full">
                     {/* TODO: Correct the styles */}
