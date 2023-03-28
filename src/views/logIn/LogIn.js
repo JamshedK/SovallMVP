@@ -100,7 +100,7 @@ const LogIn = (props) => {
                         <a className="text-[11pt]" href="/about">Learn more...</a>
                     </ul>
                     <div className="h-auto flex py-1">
-                        <iframe className="md:w-[85%] aspect-video" src="https://www.youtube.com/watch?v=FUu5eZ0oLdM&t=33s&ab_channel=HamidMubariz" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <iframe className="md:w-[85%] aspect-video" src="https://youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
                 </div>
             </div>
