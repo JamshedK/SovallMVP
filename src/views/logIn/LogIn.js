@@ -78,8 +78,9 @@ const LogIn = (props) => {
                 {/*Left panel - ie login container*/ }
                 <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center"} >
                     {/* style={{backgroundImage: `url(${background})`}} */}
-                    <div className="flex flex-col items-center">
-                        <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
+                    <div className="flex flex-col items-center gap-4">
+                        <img className="h-12 md:h-7 lg:h-8" src={logo} />
+                        {/* <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1> */}
                         <a href = '/accountsetup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
                     <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center gap-3 lg:w-2/3">
@@ -92,7 +93,7 @@ const LogIn = (props) => {
 
                 {/*Right Panel - quick info about sovall*/}
                 <div className={containerStyle + " gap-3 flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
-                    <img className="h-14 md:h-7 lg:h-8" src={logo} />
+                    {/* <img className="h-14 md:h-7 lg:h-8" src={logo} /> */}
                     <p className="text-yellow-4 underline font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt]">Solve problems</p>
                     <ul className="md:text-[10pt] lg:text-[13pt]  xl:text-[15pt]  2xl:text-[17pt] md:ml-6">
                         {bullet_points}
