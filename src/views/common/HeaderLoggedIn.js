@@ -33,9 +33,9 @@ function HeaderLoggedIn(props) {
 
   /*Hardtyped arrays*/
   const menuOptionsData = [
-    [resources_plain, resources_selected, "/"],
-    [rocket_plain, rocket_selected, "/"],
-    [saved_plain, saved_selected, "/"],
+    [resources_plain, resources_selected, "/comingsoon"],
+    [rocket_plain, rocket_selected, "/comingsoon"],
+    [saved_plain, saved_selected, "/comingsoon"],
     [mainfeed_plain, mainfeed_selected, "/mainfeed"],
   ];
   const filterOptionsData = [
