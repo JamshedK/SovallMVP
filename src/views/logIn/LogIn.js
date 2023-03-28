@@ -74,9 +74,9 @@ const LogIn = (props) => {
 
     return (
         <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
-            <div className="h-fit flex justify-center items-center p-1 gap-20">
+            <div className="h-fit flex max-sm:flex-col justify-center items-center p-1 gap-20">
                 {/*Left panel - ie login container*/ }
-                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:300px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center"} style={{backgroundImage: `url(${background})`}}>
+                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center"} style={{backgroundImage: `url(${background})`}}>
                     <div className="flex flex-col items-center">
                         <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
                         <a href = '/accountsetup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
