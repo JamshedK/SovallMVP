@@ -26,9 +26,9 @@ function HeaderLoggedIn(props) {
 
   /*Hardtyped arrays*/
   const quickAccessData = [
-    [quick_1, "/"],
-    [quick_2, "/"],
-    [quick_3, "/"],
+    [quick_1, "/comingsoon"],
+    [quick_2, "/comingsoon"],
+    [quick_3, "/comingsoon"],
     [quick_4, "/mainfeed"],
   ];
   const filterOptionsData = [

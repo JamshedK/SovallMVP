@@ -16,6 +16,7 @@ import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
 import HeaderLoggedIn from "./views/common/HeaderLoggedIn";
 import NewPost from "./views/Post/NewPost";
+import ComingSoon from "./views/common/ComingSoon";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
 
@@ -51,6 +52,7 @@ export default function App() {
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
+                    <Route path="/comingsoon" element={<ComingSoon/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 </div>
