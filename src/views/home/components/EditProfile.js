@@ -20,8 +20,8 @@ const EditProfile = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [allSkills, setAllSkills] = useState([])
     const [allInterests, setAllInterests] = useState([])
-    const [skills, setSkills] = useState([]);
-    const [interests, setInterests] = useState([]);
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedInterests, setSelectedInterests] = useState([]);
 
     const userCtx = useContext(UserContext);
     const authCtx = useContext(AuthContext);
@@ -64,12 +64,35 @@ const EditProfile = (props) => {
             const response = await getDoc(doc(db, "users", authCtx.userID))
             const data = response.data();
             setUserInfo(response.data())
-            setSkills(data.skills);
-            setInterests(data.interests);
+            setSelectedSkills(data.skills);
+            setSelectedInterests(data.interests);
             setIsLoading(false);
         } 
         getUserInfo();
+        updateIsSelected();
     }, [userCtx])
+
+    const updateIsSelected = () => {
+        console.log("I was called")
+        for(var i in selectedInterests){
+            for(var j in allInterests){
+                if(selectedInterests[i] === allInterests[j].value){
+                    allInterests[j].isSelected = true;
+                    var temp = allInterests;
+                    setAllInterests(temp);
+                }
+            }
+        }
+        for(var i in selectedSkills){
+            for(var j in allSkills){
+                if(selectedSkills[i] === allSkills[j].value){
+                    allSkills[j].isSelected = true;
+                    var temp = allSkills;
+                    setAllSkills(temp);
+                }
+            }
+        }
+    }
 
     const handleProfilePicSelected = () => {
         const file = imageRef.current.files[0];
@@ -108,8 +131,8 @@ const EditProfile = (props) => {
                 "firstname": firstname,
                 "lastname": lastname, 
                 "image_path": image_path,
-                "skills": skills, 
-                "interests": interests
+                "skills": selectedSkills, 
+                "interests": selectedInterests
             })
 
             // redirect the user to home page
@@ -156,8 +179,14 @@ const EditProfile = (props) => {
                 </div>
                 </div>
                 <div className="flex flex-col">
-                    {!isLoading && <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>}
-                    {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-black"  selectedItems={interests} setSelectedItems={setInterests} />}
+                    {!isLoading && <Card 
+                        title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" 
+                        selectedItems={selectedSkills} setSelectedItems={setSelectedSkills}
+                        updateIsSelected={updateIsSelected}/>}
+                    {!isLoading && <Card 
+                        title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-black"  
+                        selectedItems={selectedInterests} setSelectedItems={setSelectedInterests} 
+                        updateIsSelected={updateIsSelected}/>}
                     <button onClick={handleChangePassword}>Click here to change password</button>
                     <button onClick={handleSaveChanges}>Save changes</button>
                 </div>
@@ -169,16 +198,35 @@ const EditProfile = (props) => {
 
 const Card = (props) => {
     const [query, setQuery] = useState('');
-    const filteredData = props.data.filter(item => {
+    var filteredData = props.data.filter(item => {
         if (item.value.toLowerCase().includes(query.toLowerCase())){
             return item
         }
     })
+    // sort the data by selected first
+    filteredData.sort((item1, item2) => {
+        if (item1.isSelected > item2.isSelected){
+            console.log(true);
+            return 1;
+        }
+        else if (item1.isSelected < item2.isSelected){
+            return -1
+        }
+        return 0;
+    })
+    for(var i in filteredData){
+        if (filteredData[i].isSelected === true){
+            console.log(filteredData[i])
+        }
+    }
     const options = filteredData.map(item => {
         const id = props.data.indexOf(item);
         var tempIsSelected;
         if(props.selectedItems.includes(item.value)) tempIsSelected = true;
-        return <Toggle key={id} value={item.value} selectedStyle={props.accentStyle} isSelected={tempIsSelected} selectedItems={props.selectedItems} setSelectedItems={props.setSelectedItems} />
+        return <SkillInterestItem 
+                    key={id} value={item.value} selectedStyle={props.accentStyle} 
+                    isSelected={tempIsSelected} selectedItems={props.selectedItems} 
+                    setSelectedItems={props.setSelectedItems} updateIsSelected={props.updateIsSelected}/>
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
@@ -196,7 +244,7 @@ const Card = (props) => {
     );
 }
 
-const Toggle = (props) => {
+const SkillInterestItem = (props) => {
     const [checked, setChecked] = useState(props.isSelected);
     const selectedStyle = props.selectedStyle;
     const style = checked ? selectedStyle : "bg-gray-200";
@@ -212,8 +260,8 @@ const Toggle = (props) => {
         }
 
         props.setSelectedItems(temp);
+        props.updateIsSelected();
         setChecked(prev => !prev);
-        console.log(temp)
     }
     return (
         <button className={"h-fit w-fit px-2 py-1 rounded-full " + style} onClick={handleClick}>
