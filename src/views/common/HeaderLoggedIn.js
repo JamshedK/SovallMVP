@@ -63,7 +63,6 @@ function HeaderLoggedIn(props) {
   const menuOptions = menuOptionsData.map((item, i) => {
     const h = i === 1 ? "h-full" : "h-[80%]";
     const j = i === currentMenuOption ? 1 : 0;
-    console.log("For menu " + i + " the value of j is " + j);
     return (
       <button key={"menu-option-" + i} className={h} onClick={handleMenuOptionSelected} value={i}>
         <img className="h-5" src={item[j]} />
