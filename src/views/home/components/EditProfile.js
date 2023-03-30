@@ -157,7 +157,7 @@ const EditProfile = (props) => {
                 </div>
                 <div className="flex flex-col">
                     {!isLoading && <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>}
-                    {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />}
+                    {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-black"  selectedItems={interests} setSelectedItems={setInterests} />}
                     <button onClick={handleChangePassword}>Click here to change password</button>
                     <button onClick={handleSaveChanges}>Save changes</button>
                 </div>
