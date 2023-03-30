@@ -129,10 +129,7 @@ function HeaderLoggedIn(props) {
     <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
       <div className="flex flex-1 items-center justify-left gap-6">
         <div className="flex items-center gap-2">
-          <a href="/">
-            <img className="h-3" src={arrowPrev} />
-          </a>
-          <a href="/">
+          <a href="/mainfeed">
             <img className="h-5" src={sovall} />
           </a>
         </div>
