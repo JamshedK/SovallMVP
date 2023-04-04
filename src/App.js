@@ -40,7 +40,7 @@ export default function App() {
                         or false, which shows if the user is logged in. 
                     */}
                     <Route path="/" element={isLoggedIn ? <Home /> : <LogIn />} />
-                    {!authCtx.isLoggedIn && <Route path="/forgotpassword" element={<ForgotPassword />} />}
+                    <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={isLoggedIn ? <Home /> : <AccountSetUp />} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
