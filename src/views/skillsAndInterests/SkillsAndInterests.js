@@ -41,7 +41,7 @@ const SkillsAndInterests = (props) => {
             <span className='text-white pb-5'> By joining I agree to Sovall's{' '}
                 <a href="/about" className="underline"> terms and conditions</a>
           </span>
-            <button className="rounded-full w-fit bg-white px-2 py-1" onClick={handleSubmit}>Continue</button>
+            <button className="rounded-full w-fit bg-white px-4 py-1" onClick={handleSubmit}>Continue</button>
         </div>
         );
 }
