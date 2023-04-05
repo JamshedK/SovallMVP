@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 
 import rightExpandArrow from '../../../assets/home/right_expand_arrow.svg';
-import messages from '../../../assets/home/messages_white.svg';
+import messages from '../../../assets/home/message.svg';
 
 const MessagesToggle = (props) => {
     const handleToggle = () => {
@@ -13,9 +13,9 @@ const MessagesToggle = (props) => {
                 <img className="h-5 w-5"  src={messages} />
             </button>
             
-            <button className="w-fit h-fit"  onClick={handleToggle}>
+            {/* <button className="w-fit h-fit"  onClick={handleToggle}>
                 <img className="h-3 w-3"  src={rightExpandArrow} />
-            </button>
+            </button> */}
             
         </div>
         );

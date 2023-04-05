@@ -19,6 +19,7 @@ import NewPost from "./views/Post/NewPost";
 import ComingSoon from "./views/common/ComingSoon";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
+import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
 
 
 export default function App() {
@@ -47,7 +48,7 @@ export default function App() {
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/edit-profile" element={<EditProfile/>}/>
-                    <Route path="/about" element={<About />} />
+                    <Route path="/about" element={<AboutSoftLaunch />} />
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>

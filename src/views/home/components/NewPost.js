@@ -112,7 +112,7 @@ const NewPost = (props) => {
 
                 
                     <div className=''>
-                        <select className="absolute top-[0px] h-[39px] w-[110px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                        <select className="absolute top-[0px] h-[39px] w-[138px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
                         <option className='' value="DEFAULT" disabled>No tab selected</option>
                         <option value='Problems'>Problems</option>
                         <option value='Solutions'>Solutions</option>

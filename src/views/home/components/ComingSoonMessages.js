@@ -12,7 +12,7 @@ const ComingSoonMessages = (props) => {
     };
 
     return (
-        <div className={props.value ? "bg-white mr-0 relative pr-14 rounded-l-[14.5px] w-[280px] h-[280px] items-center mt-3" : "hidden"}>
+        <div className={props.value ? "bg-white mr-0 border-2 border-[#3C9A9A] border-r-white relative pr-14 rounded-l-[14.5px] w-[280px] h-[280px] items-center mt-3" : "hidden"}>
 
             <button className="relative left-[220px] top-[20px]" onClick={handleToggle}>
                 <img className="" src={message} />

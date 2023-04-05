@@ -30,11 +30,11 @@ const LearnMore = (props) => {
     return(
         <div>
             <div className="">
-                <div onClick={handleToggleOpen} className={props.value ? "hidden" : "flex absolute right-[133px] bottom-[133px] bg-white rounded-[11px] w-[160px] h-[35px] items-center justify-center font-semibold font-inter font-[13px] cursor-pointer"}>
+                <div onClick={handleToggleOpen} className={props.value ? "hidden" : "flex absolute right-[133px] bottom-[53px] bg-white rounded-[11px] w-[160px] h-[35px] items-center justify-center font-semibold font-inter font-[13px] cursor-pointer"}>
                     <h1>Learn more</h1>
                 </div>
 
-                <div ref={menuRef} className={!props.value ? "hidden" : "flex flex-col space-y-4 absolute right-[133px] bottom-[133px] bg-white rounded-[11px] w-[180px] h-[270px] justify-center text-center text-[#525252] font-inter font-[13px]"}>
+                <div ref={menuRef} className={!props.value ? "hidden" : "flex flex-col space-y-4 absolute right-[133px] bottom-[53px] bg-white rounded-[11px] w-[180px] h-[270px] justify-center text-center text-[#525252] font-inter font-[13px]"}>
                     <ul className="flex flex-col space-y-2">
                         <a href="../../about">
                             <h1>Our purpose</h1> 
@@ -74,7 +74,7 @@ const LearnMore = (props) => {
                 </div>
             </div>
 
-            <img className="absolute right-[80px] bottom-[80px]" src={giga} />
+            <img className="absolute right-[80px] bottom-[0]" src={giga} />
 
         </div>
     );
