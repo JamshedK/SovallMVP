@@ -70,7 +70,7 @@ const SkillsAndInterests = (props) => {
                     selectedItems={selectedInterests} setSelectedItems={setSelectedInterests} />
             </div>
             <span className='text-white pb-5'> By joining I agree to Sovall's{' '}
-                <a href="/about" className="underline"> terms and conditions</a>
+                <a href='https://docs.google.com/document/d/13tB0fN7BY4HWO-0wXTR6dxqY_FxrOrVASthmgs81GLY/edit' className="underline"> terms and conditions</a>
           </span>
             <button className="rounded-full w-fit bg-white px-4 py-1" onClick={handleSubmit}>Continue</button>
         </div>
@@ -111,7 +111,7 @@ export const Card = (props) => {
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
-            <h1 className="font-bold">{props.title}</h1>
+            <h1 className="font-medium font-inter">{props.title}</h1>
             <div>
                 <p className="pl-4">Select at least three</p>
                 <input className="bg-center bg-no-repeat w-full rounded-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none"

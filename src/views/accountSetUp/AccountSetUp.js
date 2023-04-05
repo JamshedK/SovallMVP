@@ -13,6 +13,7 @@ const AccountSetUp = () => {
 	const [name, setName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
+	const [university, setUniversity] = useState('')
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
@@ -83,15 +84,14 @@ const AccountSetUp = () => {
 
 	}
 
-	
-
 	const addUserToFirestore = async (localId) => {
 		console.log(localId);
 		await setDoc(doc(db, 'users', localId), {
 			firstname:name, 
 			lastname: lastName,
 			email:email,
-			image_path: 'account/default_profile_pic.svg'
+			image_path: 'account/default_profile_pic.svg',
+			university: university
 		})
 	}
 	
@@ -167,6 +167,7 @@ const AccountSetUp = () => {
 						<Input placeholder="First Name" value={name} setValue={setName} />
 						<Input placeholder="Last Name" value={lastName} setValue={setLastName} />
 						<Input placeholder="Email" value={email} setValue={setEmail} />
+						<Input placeholder="University" value={university} setValue={setUniversity} />
 						<Input placeholder="Password" value={password} setValue={setPassword} ps={true}/>
 						<Input placeholder="Re-enter your password" value={passwordConfirmation} setValue={setPasswordConfirmation} ps={true}/>
 					</form>

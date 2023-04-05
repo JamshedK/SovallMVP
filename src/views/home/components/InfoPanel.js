@@ -109,7 +109,7 @@ const InfoPanel = (props) => {
                             <div className="flex flex-col w-fit ">
                                 <a href="/home" className="font-bold">{username}</a>
                                 <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
-                                <p className="text-[9pt]">Let's have fun with creativity!</p>
+                                <p className="text-[9pt]">{userInfo?.university}</p>
                             </div>
 
                         </div>
