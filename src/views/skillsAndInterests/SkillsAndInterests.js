@@ -7,14 +7,13 @@ import {db} from '../../firebase-config'
 import skillsText from '../../data/skills.txt';
 import interestsText from '../../data/interests.txt';
 
+import magnifying_glass from '../../assets/account/magnifying_glass.svg';
+
+
 
 
 //TODO: make the conection with the contexts in ./store
 //update the card components to scroll horizontally
-
-/*Hardtyped arrays*/
-const skills_data = ["Management skills", "Design", "Crafts/arts", "Research", "Marketing and sales", "Entertainment", "Finances", "Engineering", "Programming", "Writing"];
-const interests_data = ["Entrepreneurship", "Service industry", "Design", "Architecture", "Engineering", "Programming", "Fine Arts", "Film/photography", "Science", "Social sciences", "Medical", "Politics", "Entertainment", "Writing", "Safety/security"];
 
 const SkillsAndInterests = (props) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
@@ -78,7 +77,7 @@ const SkillsAndInterests = (props) => {
         );
 }
 
-const Card = (props) => {
+export const Card = (props) => {
     const [query, setQuery] = useState('');
     var filteredData = props.data.filter(item => {
         if (item.value.toLowerCase().includes(query.toLowerCase())){
@@ -115,9 +114,17 @@ const Card = (props) => {
             <h1 className="font-bold">{props.title}</h1>
             <div>
                 <p className="pl-4">Select at least three</p>
-                <input className="w-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-                        type="text" placeholder="Search"
-                        onChange={e => setQuery(e.target.value)}/>
+                <input className="bg-center bg-no-repeat w-full rounded-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none"
+                    type="text" placeholder="Search"
+                    onChange={e => setQuery(e.target.value)}
+                    // styling for magnifying glass
+                    style={{
+                        backgroundImage: `url(${magnifying_glass})`,
+                        backgroundPosition: '10px center', 
+                        backgroundSize: '16px auto', 
+                        paddingLeft: '35px',
+                      }}
+                />
             </div>
             <div className="h-[9rem] flex flex-wrap gap-3 overflow-auto">
                 {options}
@@ -126,7 +133,7 @@ const Card = (props) => {
     );
 }
 
-const SkillInterestItem = (props) => {
+export const SkillInterestItem = (props) => {
     const [checked, setChecked] = useState(props.isSelected);
     const selectedStyle = props.selectedStyle;
     const style = checked ? selectedStyle : "bg-gray-200";
@@ -145,7 +152,7 @@ const SkillInterestItem = (props) => {
         setChecked(prev => !prev);
     }
     return (
-        <button className={"h-fit w-fit px-2 py-1 rounded-full " + style} onClick={handleClick}>
+        <button className={"h-fit w-fit px-4 py-1 rounded-full " + style} onClick={handleClick}>
             {props.value}
         </button>
         );
