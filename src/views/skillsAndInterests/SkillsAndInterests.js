@@ -108,7 +108,7 @@ const Card = (props) => {
         return <SkillInterestItem 
                     key={id} value={item.value} selectedStyle={props.accentStyle} 
                     isSelected={tempIsSelected} selectedItems={props.selectedItems} 
-                    setSelectedItems={props.setSelectedItems} updateIsSelected={props.updateIsSelected}/>
+                    setSelectedItems={props.setSelectedItems}/>
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
@@ -142,7 +142,6 @@ const SkillInterestItem = (props) => {
         }
 
         props.setSelectedItems(temp);
-        props.updateIsSelected();
         setChecked(prev => !prev);
     }
     return (
