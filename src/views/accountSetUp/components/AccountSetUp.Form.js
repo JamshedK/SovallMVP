@@ -50,7 +50,6 @@ const Form = (props) => {
 			return true;
 		}
 
-
 	}
 
 	const requirements = data.map(req => {

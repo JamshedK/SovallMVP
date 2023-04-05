@@ -13,7 +13,7 @@ import Loader from '../../loader/Loader';
 
 const QuickAccess = (props) => {
     return (
-        <a href={props.href} className="flex flex-col h-5">
+        <a href={props.href} className="flex flex-col h-[1.25rem]">
             <img className="h-full" src={props.src} />
             <label className="text-[8pt]">{props.label}</label>
         </a>
@@ -21,13 +21,14 @@ const QuickAccess = (props) => {
 }
 const Label = (props) => {
     const bg = props.bg;
-    return <label className={"text-white rounded-xl px-2 py-1 text-[8pt] " + bg} >{props.value}</label>
+    const tc = props.textColor
+    return <label className={"rounded-xl px-[0.5rem] py-[0.25rem] text-[8pt] " + bg + " " + tc} >{props.value}</label>
 }
 const InfoBlock = (props) => {
     return (
-        <div className="w-full flex flex-col gap-2">
+        <div className="w-full flex flex-col gap-[0.5rem]">
             <h1 className="font-bold text-[11pt]">{props.title}</h1>
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-[0.25rem]">
                 {props.children}
             </div>
         </div>
@@ -37,7 +38,7 @@ const InfoBlock = (props) => {
 
 const Own = () => {
     return (
-        <div className="flex gap-2 text-gray-500" >
+        <div className="flex gap-[0.5rem] text-gray-500" >
             <QuickAccess label="network" src={network} href="/search/people" />
             <QuickAccess label="edit profile" src={edit} href="/edit-profile" />
         </div>
@@ -46,7 +47,7 @@ const Own = () => {
 
 const Other = () => {
     return (
-        <div className="flex gap-2 text-gray-500" >
+        <div className="flex gap-[0.5rem] text-gray-500" >
             <QuickAccess label="network" src={network} href="/home" />
             <QuickAccess label="edit profile" src={messages} href="/home" />
             <QuickAccess label="edit profile" src={friends} href="/home" />
@@ -89,11 +90,11 @@ const InfoPanel = (props) => {
         Check if array of interests is empty and if so, sets it to null
     */
     const skills = userInfo.skills && Array.isArray(userInfo.skills) ? userInfo.skills.map((skill,i) => {
-        return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4"/>
+        return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4" textColor="text-white"/>
     }) : null
 
     const interests = userInfo.interests && Array.isArray(userInfo.interests) ? userInfo.interests.map((interest,i) => {
-        return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
+        return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" textColor="text-black"/>
     }) : null;
 
     return(
@@ -101,10 +102,10 @@ const InfoPanel = (props) => {
             {isLoading ? (
                     <Loader/>
             ): (
-                <div className={"bg-white h-fit px-8 pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
+                <div className={"bg-white h-fit px-[2rem] pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
                     <div className="flex justify-between ">
                         <div className="flex gap-4">
-                            <img className="w-16 h-16 rounded-full" src={profilePicPath} />
+                            <img className="w-[4rem] h-[4rem] rounded-full" src={profilePicPath} />
                             <div className="flex flex-col w-fit ">
                                 <a href="/home" className="font-bold">{username}</a>
                                 <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
@@ -115,7 +116,7 @@ const InfoPanel = (props) => {
                         {props.own? <Own/> : <Other/>}
                     </div>
 
-                    <div className={showDetails? "flex flex-col gap-6" : "hidden"}>
+                    <div className={showDetails? "flex flex-col gap-[1.5rem]" : "hidden"}>
                         <InfoBlock title="Skills">{skills}</InfoBlock>
                         <InfoBlock title="Interest">{interests}</InfoBlock>
                     </div>
@@ -123,7 +124,7 @@ const InfoPanel = (props) => {
                         
                         <button className="w-fit flex flex-col justify-center items-center " onClick={handleClick}>
                             <p className={"text-[8pt] "+ (showDetails ? "order-last" : "")}>{(showDetails ? "Hide details" : "Show details")}</p>
-                            <img className={"h-2 w-fit " + (!showDetails ? "rotate-180" : "")} src={arrow_up} />
+                            <img className={"h-[0.5rem] w-fit " + (!showDetails ? "rotate-180" : "")} src={arrow_up} />
                         </button>
                     </div>
 

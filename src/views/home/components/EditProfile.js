@@ -3,14 +3,15 @@ import add_profile_pic from '../../../assets/editprofile/add_profile_pic.svg';
 import remove_interest from '../../../assets/editprofile/remove_interest.svg';
 import skillsText from '../../../data/skills.txt';
 import interestsText from '../../../data/interests.txt';
-
+import { Card } from '../../skillsAndInterests/SkillsAndInterests';
 
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { sendPasswordResetEmail } from "firebase/auth"
 import AuthContext from "../../../contexts/auth-context";
 import UserContext from '../../../contexts/user';
-import {db, storage} from '../../../firebase-config'
+import {auth, db, storage} from '../../../firebase-config'
 import {ref, uploadBytes} from 'firebase/storage';
 
 
@@ -19,8 +20,8 @@ const EditProfile = (props) => {
     const [isLoading, setIsLoading] = useState(true);
     const [allSkills, setAllSkills] = useState([])
     const [allInterests, setAllInterests] = useState([])
-    const [skills, setSkills] = useState([]);
-    const [interests, setInterests] = useState([]);
+    const [selectedSkills, setSelectedSkills] = useState([]);
+    const [selectedInterests, setSelectedInterests] = useState([]);
 
     const userCtx = useContext(UserContext);
     const authCtx = useContext(AuthContext);
@@ -63,12 +64,35 @@ const EditProfile = (props) => {
             const response = await getDoc(doc(db, "users", authCtx.userID))
             const data = response.data();
             setUserInfo(response.data())
-            setSkills(data.skills);
-            setInterests(data.interests);
+            setSelectedSkills(data.skills);
+            setSelectedInterests(data.interests);
             setIsLoading(false);
         } 
         getUserInfo();
+        updateIsSelected();
     }, [userCtx])
+
+    const updateIsSelected = () => {
+        console.log("I was called")
+        for(var i in selectedInterests){
+            for(var j in allInterests){
+                if(selectedInterests[i] === allInterests[j].value){
+                    allInterests[j].isSelected = true;
+                    var temp = allInterests;
+                    setAllInterests(temp);
+                }
+            }
+        }
+        for(var i in selectedSkills){
+            for(var j in allSkills){
+                if(selectedSkills[i] === allSkills[j].value){
+                    allSkills[j].isSelected = true;
+                    var temp = allSkills;
+                    setAllSkills(temp);
+                }
+            }
+        }
+    }
 
     const handleProfilePicSelected = () => {
         const file = imageRef.current.files[0];
@@ -107,8 +131,8 @@ const EditProfile = (props) => {
                 "firstname": firstname,
                 "lastname": lastname, 
                 "image_path": image_path,
-                "skills": skills, 
-                "interests": interests
+                "skills": selectedSkills, 
+                "interests": selectedInterests
             })
 
             // redirect the user to home page
@@ -128,8 +152,9 @@ const EditProfile = (props) => {
     }
 
     const handleChangePassword = () => {
-        // Redirect the user to change password page
-        navigate('/changepassword');
+        // TODO: Navigate to email sent page
+        sendPasswordResetEmail(auth, userInfo.email)
+        .then(a=>{alert(`Password reset email sent to ${userInfo.email}`)});
     }
     return(
         <div className="flex w-full justify-center bg-[#3C9A9A]">
@@ -154,8 +179,14 @@ const EditProfile = (props) => {
                 </div>
                 </div>
                 <div className="flex flex-col">
-                    {!isLoading && <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>}
-                    {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />}
+                    {!isLoading && <Card 
+                        title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" 
+                        selectedItems={selectedSkills} setSelectedItems={setSelectedSkills}
+                        updateIsSelected={updateIsSelected}/>}
+                    {!isLoading && <Card 
+                        title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-black"  
+                        selectedItems={selectedInterests} setSelectedItems={setSelectedInterests} 
+                        updateIsSelected={updateIsSelected}/>}
                     <button onClick={handleChangePassword}>Click here to change password</button>
                     <button onClick={handleSaveChanges}>Save changes</button>
                 </div>
@@ -163,61 +194,6 @@ const EditProfile = (props) => {
         </div>
     )
     
-}
-
-const Card = (props) => {
-    const [query, setQuery] = useState('');
-    const filteredData = props.data.filter(item => {
-        if (item.value.toLowerCase().includes(query.toLowerCase())){
-            return item
-        }
-    })
-    const options = filteredData.map(item => {
-        const id = props.data.indexOf(item);
-        var tempIsSelected;
-        if(props.selectedItems.includes(item.value)) tempIsSelected = true;
-        return <Toggle key={id} value={item.value} selectedStyle={props.accentStyle} isSelected={tempIsSelected} selectedItems={props.selectedItems} setSelectedItems={props.setSelectedItems} />
-    });
-    return (
-        <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
-            <h1 className="font-bold">{props.title}</h1>
-            <div>
-                <p className="pl-4">Select at least three</p>
-                <input className="w-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none focus:border-blue-500"
-                        type="text" placeholder="Search"
-                        onChange={e => setQuery(e.target.value)}/>
-            </div>
-            <div className="h-[9rem] flex flex-wrap gap-3 overflow-auto">
-                {options}
-            </div>
-        </div>
-    );
-}
-
-const Toggle = (props) => {
-    const [checked, setChecked] = useState(props.isSelected);
-    const selectedStyle = props.selectedStyle;
-    const style = checked ? selectedStyle : "bg-gray-200";
-    const handleClick = () => {
-        let temp = props.selectedItems;
-
-        if (temp.includes(props.value)) {
-            const index = temp.indexOf(props.value);
-            temp.splice(index, 1);
-            
-        } else {
-            temp.push(props.value);
-        }
-
-        props.setSelectedItems(temp);
-        setChecked(prev => !prev);
-        console.log(temp)
-    }
-    return (
-        <button className={"h-fit w-fit px-2 py-1 rounded-full " + style} onClick={handleClick}>
-            {props.value}
-        </button>
-        );
 }
 
 export default EditProfile;

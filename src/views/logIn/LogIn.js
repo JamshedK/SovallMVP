@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
 import AuthContext from "../../contexts/auth-context";
+import background from '../../assets/common/signup_background.png'
 
 
 
@@ -72,15 +73,17 @@ const LogIn = (props) => {
     });
 
     return (
-        <div className="relative bg-green-6 h-full w-full flex justify-center flex-col items-center text-white overflow-auto">
-            <div className="h-fit flex justify-center items-center p-1 gap-20">
+        <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
+            <div className="h-fit flex max-sm:flex-col justify-center items-center p-1 gap-20">
                 {/*Left panel - ie login container*/ }
-                <div className={containerStyle +" rounded-xl bg-[#197474] flex justify-between md:py-8 items-center"}>
-                    <div className="flex flex-col items-center">
-                        <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1>
+                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center h-80 py-4"} >
+                    {/* style={{backgroundImage: `url(${background})`}} */}
+                    <div className="flex flex-col items-center gap-4">
+                        <img className="h-14 md:h-7 lg:h-8" src={logo} />
+                        {/* <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1> */}
                         <a href = '/accountsetup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
                     </div>
-                    <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center lg:w-2/3">
+                    <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center gap-3 lg:w-2/3">
                         <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>
                         <Input type="password" placeholder="Password" value={password} setValue={setPassword} ps={true}/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>
@@ -89,15 +92,15 @@ const LogIn = (props) => {
                 </div>
 
                 {/*Right Panel - quick info about sovall*/}
-                <div className={containerStyle + " flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
-                    <img className="md:h-7 lg:h-8" src={logo} />
+                <div className={containerStyle + " gap-3 flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
+                    {/* <img className="h-14 md:h-7 lg:h-8" src={logo} /> */}
                     <p className="text-yellow-4 underline font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt]">Solve problems</p>
                     <ul className="md:text-[10pt] lg:text-[13pt]  xl:text-[15pt]  2xl:text-[17pt] md:ml-6">
                         {bullet_points}
                         <a className="text-[11pt]" href="/about">Learn more...</a>
                     </ul>
                     <div className="h-auto flex py-1">
-                        <iframe className="md:w-[85%] aspect-video" src="https://www.youtube.com/embed/uw7UkWrxQFc" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        <iframe className="md:w-[85%] aspect-video" src="https://www.youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
                 </div>
             </div>

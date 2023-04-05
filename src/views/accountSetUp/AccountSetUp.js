@@ -25,10 +25,10 @@ const AccountSetUp = () => {
 	
 	//hardtyped data for the password requirements
 	const data = [
-		"At least 12 characters",
-		"A mixture of uppercase and lowercase",
-		"At least one number",
-		"At least one special character, e.g., ! @ # ? ]"
+		"At least 6 characters"
+		// "A mixture of uppercase and lowercase",
+		// "At least one number",
+		// "At least one special character, e.g., ! @ # ? ]"
 	];
 	
 	/*Components*/
@@ -48,29 +48,29 @@ const AccountSetUp = () => {
 	/*utility functions*/
 	const checkAndUpdateRequirements = () => {
 		const update = [...reqs];
-		if (password.length >= 12) {
+		if (password.length >= 6) {
 			update[0] = true;
 		} else {
 			update[0] = false;
 		}
 
-		if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
-			update[1] = true;
-		} else {
-			update[1] = false;
-		}
+		// if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
+		// 	update[1] = true;
+		// } else {
+		// 	update[1] = false;
+		// }
 
-		if (/[0-9]/.test(password)) {
-			update[2] = true;
-		} else {
-			update[2] = false;
-		}
+		// if (/[0-9]/.test(password)) {
+		// 	update[2] = true;
+		// } else {
+		// 	update[2] = false;
+		// }
 
-		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
-			update[3] = true;
-		} else {
-			update[3] = false;
-		}
+		// if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
+		// 	update[3] = true;
+		// } else {
+		// 	update[3] = false;
+		// }
 
 		setReqs(update);
 
@@ -104,8 +104,7 @@ const AccountSetUp = () => {
 
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
-			// if (checkAndUpdateRequirements()) {
-				
+			if (checkAndUpdateRequirements()) {
 			const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
 			const response = await fetch(url, {
 								method: 'POST',
@@ -138,10 +137,10 @@ const AccountSetUp = () => {
 			}
 			
 			}
-		// } else {
-		// 	setPassMatch(false);
-		// 	return;
-		// }
+		} else {
+			setPassMatch(false);
+			return;
+		}
 	}
 	
 	

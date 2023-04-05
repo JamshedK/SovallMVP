@@ -16,6 +16,7 @@ import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
 import HeaderLoggedIn from "./views/common/HeaderLoggedIn";
 import NewPost from "./views/Post/NewPost";
+import ComingSoon from "./views/common/ComingSoon";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
 
@@ -26,7 +27,7 @@ export default function App() {
     const isLoggedIn = authCtx.isLoggedIn;
 
     return (
-        <div className="font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
+        <div className="md:screen md:h-screen font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
                     {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
@@ -39,7 +40,7 @@ export default function App() {
                         or false, which shows if the user is logged in. 
                     */}
                     <Route path="/" element={isLoggedIn ? <Home /> : <LogIn />} />
-                    {!authCtx.isLoggedIn && <Route path="/forgotpassword" element={<ForgotPassword />} />}
+                    <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={isLoggedIn ? <Home /> : <AccountSetUp />} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
@@ -51,6 +52,7 @@ export default function App() {
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
+                    <Route path="/comingsoon" element={<ComingSoon/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
                 </div>
