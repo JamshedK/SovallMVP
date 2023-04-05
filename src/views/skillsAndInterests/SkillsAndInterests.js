@@ -70,7 +70,7 @@ const SkillsAndInterests = (props) => {
                     selectedItems={selectedInterests} setSelectedItems={setSelectedInterests} />
             </div>
             <span className='text-white pb-5'> By joining I agree to Sovall's{' '}
-                <a href="/about" className="underline"> terms and conditions</a>
+                <a href='https://docs.google.com/document/d/13tB0fN7BY4HWO-0wXTR6dxqY_FxrOrVASthmgs81GLY/edit' className="underline"> terms and conditions</a>
           </span>
             <button className="rounded-full w-fit bg-white px-4 py-1" onClick={handleSubmit}>Continue</button>
         </div>
