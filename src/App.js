@@ -25,6 +25,7 @@ export default function App() {
     const [subscription, setSubscription] = React.useState(false);
     const authCtx = React.useContext(AuthContext);  //Auth Context which gives access to the user that is logged in
     const isLoggedIn = authCtx.isLoggedIn;
+    const [isMobile, setisMobile] = React.useState(false);
 
     return (
         <div className="md:screen md:h-screen font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
