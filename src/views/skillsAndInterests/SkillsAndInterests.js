@@ -111,7 +111,7 @@ export const Card = (props) => {
     });
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
-            <h1 className="font-bold">{props.title}</h1>
+            <h1 className="font-medium font-inter">{props.title}</h1>
             <div>
                 <p className="pl-4">Select at least three</p>
                 <input className="bg-center bg-no-repeat w-full rounded-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none"
