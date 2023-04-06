@@ -76,19 +76,28 @@ const LogIn = (props) => {
         <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
             <div className="h-fit flex max-sm:flex-col justify-center items-center p-1 gap-20">
                 {/*Left panel - ie login container*/ }
-                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center h-80 py-4"} >
+                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center h-[416px] py-6"} >
                     {/* style={{backgroundImage: `url(${background})`}} */}
-                    <div className="flex flex-col items-center gap-4">
-                        <img className="h-14 md:h-7 lg:h-8" src={logo} />
+
+                    <div className="flex flex-col items-center gap-6">
+                        <img className="relative top-4 h-12 md:h-12 lg:h-12" src={logo} />
                         {/* <h1 className="text-yellow-4 w-fit font-bold md:text-[18pt] lg:text-[19pt] xl:text-[20pt] 2xl:text-[24pt]">Join Us</h1> */}
-                        <a href = '/accountsetup' className="underline w-fit lg:text-[13pt] xl:text-[15pt] 2xl:text-[17pt]">Create account</a>
+                        <button className="relative top-4 bg-white text-green-4 rounded-full w-fit px-4 py-1">
+                            <a href = '/accountsetup' className="">Create account</a>
+
+                        </button>
+
+                        <h1 className="relative">or</h1>
                     </div>
+
                     <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center gap-3 lg:w-2/3">
                         <Input type="email" placeholder="Email" value={email} setValue={setEmail}/>
                         <Input type="password" placeholder="Password" value={password} setValue={setPassword} ps={true}/>
                         <button className="bg-white text-green-4 rounded-full w-fit px-4 py-1">Login</button>
                     </form>
-                    <a href = '/forgotpassword' className="underline text-[8pt] lg:text-[10pt] xl:text-[12pt]">Forgot password?</a>
+
+                    <a href = '/forgotpassword' className=" text-[8pt] lg:text-[10pt] xl:text-[12pt]">forgot password?</a>
+                    
                 </div>
 
                 {/*Right Panel - quick info about sovall*/}
@@ -100,7 +109,11 @@ const LogIn = (props) => {
                         <a className="text-[11pt]" href="/about">Learn more...</a>
                     </ul>
                     <div className="h-auto flex py-1">
+<<<<<<< HEAD
                         <iframe className="md:w-[85%] aspect-video" src="https://www.youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+=======
+                        <iframe className="md:w-[85%] aspect-video" src="https://youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+>>>>>>> f10a1b5606ce2b3719020fa9c4129053a2c5c116
                     </div>
                 </div>
             </div>

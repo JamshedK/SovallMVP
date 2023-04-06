@@ -369,10 +369,10 @@ const NewCommentBox = (props) => {
                 <div className='w-full flex flex-row'>
                     <img className="h-9 rounded-full h-full" src = {userCtx.profilePicPath}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
-                        <div className='w-full flex flex-col'>
+                        <div className='w-full flex items-center flex-col'>
                             {/* {The styling for textarea is to remove the default stylings} */}
                             <textarea className="relative flex left-2 w-full border-solid rounded-[19px] outline-none resize-none overflow-hidden h-[30px] focus:bg-transparent 
-                                        focus:outline-none focus:ring-0 placeholder:text-[14px] placeholder:items-center" placeholder='Add a comment...'
+                                        focus:outline-none focus:ring-0 placeholder:text-[14px] leading-none" placeholder='Add a comment...'
                                 ref={textAreaRef}
                                 onChange={onTextAreaChange}
                                 ></textarea>

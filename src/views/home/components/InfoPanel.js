@@ -102,7 +102,7 @@ const InfoPanel = (props) => {
             {isLoading ? (
                     <Loader/>
             ): (
-                <div className={"bg-white h-fit px-[2rem] pt-8 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
+                <div className={"bg-white h-fit px-[2rem] pt-14 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
                     <div className="flex justify-between ">
                         <div className="flex gap-4">
                             <img className="w-[4rem] h-[4rem] rounded-full" src={profilePicPath} />

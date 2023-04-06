@@ -39,12 +39,12 @@ function HeaderLoggedIn(props) {
     [mainfeed_plain, mainfeed_selected, "/mainfeed"],
   ];
   const filterOptionsData = [
-    ["Posts", "/"],
+    ["Posts", "/search/posts"],
     // ["Problem", "/"],
     // ["Solutions", "/"],
     // ["Resources", "/"],
     // ["Opportunities", "/"],
-    ["People", "/"],
+    ["People", "/search/people"],
     // ["Other", "/"],
   ];
 
@@ -125,8 +125,8 @@ function HeaderLoggedIn(props) {
   const profilePicStyle = currentMenuOption === -1 ? "bg-yellow-2" : "";
 
   return (
-    <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
-      <div className="flex flex-1 items-center justify-left gap-6">
+    <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex flex-wrap gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
+      <div className="flex flex-1 flex-1 items-center justify-left gap-6">
         <div className="flex items-center gap-2">
           <a href="/mainfeed">
             <img className="h-5" src={sovall} />

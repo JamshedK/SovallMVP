@@ -137,18 +137,13 @@ const NewPost = (props) => {
 
                 
                     <div className=''>
-                        <select 
-                                className="absolute top-[0px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px] bg-transparent py-0.5" 
-                                ref = {selectCategoryRef}
-                                defaultValue={'DEFAULT'}
-                                onChange={onCategorySelected}
-                                >
-                            <option className='' value="DEFAULT" disabled>No tab selected</option>
-                            <option value='Problems'>Problems</option>
-                            <option value='Solutions'>Solutions</option>
-                            <option value='Resources'>Resources</option>
-                            <option value='Opportunities'>Opportunities</option>
-                            <option value='Other'>Other</option>
+                        <select className="absolute top-[0px] h-[39px] w-[138px] align-text-top text-top text-[12px] right-0 justify-end rounded-[30px]" ref = {selectCategoryRef}defaultValue={'DEFAULT'}>
+                        <option className='' value="DEFAULT" disabled>No tab selected</option>
+                        <option value='Problems'>Problems</option>
+                        <option value='Solutions'>Solutions</option>
+                        <option value='Resources'>Resources</option>
+                        <option value='Opportunities'>Opportunities</option>
+                        <option value='Other'>Other</option>
                         </select>
                     </div>
 

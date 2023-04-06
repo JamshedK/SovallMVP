@@ -12,7 +12,7 @@ const ComingSoonNotifications = (props) => {
     };
 
     return (
-        <div className={props.value ? "bg-white rounded-r-[14.5px] w-[280px] h-[280px] items-center mt-3" : "hidden"}>
+        <div className={props.value ? "bg-white border-2 border-l-white border-solid border-[#3C9A9A] rounded-r-[14.5px] w-[280px] h-[280px] items-center mt-3" : "hidden"}>
 
             <button className="relative left-[40px] top-[20px]" onClick={handleToggle}>
                 <img className="" src={notification} />
