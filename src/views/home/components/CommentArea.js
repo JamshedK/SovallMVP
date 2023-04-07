@@ -494,13 +494,13 @@ const NewReplyBox = (props) => {
     return (
             <div className='w-full flex flex-col items-center'>
                 {/* New comment box */}
-                <div className='w-full flex flex-row'>
-                    <img className="h-10 rounded-full h-full" src = {userCtx.profilePicPath}></img>
+                <div className='w-full flex flex-row gap-2'>
+                    <img className="h-9 rounded-full pl-2" src = {userCtx.profilePicPath}></img>
                     <div className='w-full flex flex-row rounded-2xl space-x-3'>
                         <div className='w-full flex flex-col'>
                             {/* {The styling for textarea is to remove the default stylings} */}
-                            <textarea className="w-full border-none outline-none resize-none overflow-hidden min-h-6
-                                        focus:bg-transparent focus:outline-none focus:ring-0" placeholder='Reply to the user...'
+                            <textarea className="w-full h-[30px] border-solid rounded-[19px] outline-none resize-none overflow-hidden min-h-6
+                                        focus:bg-transparent focus:outline-none focus:ring-0 leading-none " placeholder='Reply to the user...'
                                 ref={textAreaRef}
                                 onChange={onTextAreaChange}
                                 ></textarea>

@@ -257,14 +257,14 @@ const FeedCard= (props) => {
 
             {/*buttons*/}
             <div className={"flex justify-between w-full h-9 py-1 px-14"}>
-                <Button>
+                {/* <Button>
                     <img className="h-full" src={save} />
-                </Button>
-                <Button>
+                </Button> */}
+                {/* <Button>
                     <img className="h-full" src={share} />
-                    {/* Display the counts only when postsInfoCopy has shared_count and it's not zero */}
+                    Display the counts only when postsInfoCopy has shared_count and it's not zero
                     {sharedCount > 0 && <label>{sharedCount}</label>}
-                </Button>
+                </Button> */}
                 <Button onClick={handleCommentButtonClicked}>
                     <img className="h-full" src={comments} />
                     {commentCount > 0 && <label>{commentCount}</label>}
