@@ -77,9 +77,9 @@ const LogIn = (props) => {
 
     return (
         <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
-            <div className="h-full flex max-sm:flex-col justify-center items-center p-1 gap-20">
+            <div className="h-full flex max-md:mt-14 max-md:pt-8 max-sm:flex-col justify-center items-center p-1 gap-20">
                 {/*Left panel - ie login container*/ }
-                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center h-[416px] py-6"} >
+                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center max-md:h-[416px] py-6"} >
                     {/* style={{backgroundImage: `url(${background})`}} */}
 
                     <div className="flex flex-col items-center gap-6">
@@ -90,7 +90,7 @@ const LogIn = (props) => {
 
                         </button>
 
-                        <h1 className="relative top-4">or</h1>
+                        <h1 className="relative max-md:top-1 md:top-3">or</h1>
                     </div>
 
                     <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center gap-3 lg:w-2/3">
@@ -127,11 +127,11 @@ const LogIn = (props) => {
                         <LearnMore value={learnMore} setValue={setLearnMore} />
                     </div>
 
-                    <div className="h-auto relative top-9 max-md:top-20 flex py-1">
+                    <div className="h-auto relative top-9 max-md:top-24 flex py-1">
                         <iframe className="md:w-[85%] aspect-video" src="https://youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
 
-                    <a href="mailto:support@sovall.com" className="relative text-black border-2 bg-white text-center rounded-[14px] w-[250px] top-6  max-md:top-20 justify-center items-center text-sm"> Reach out: support@sovall.com </a>
+                    <a href="mailto:support@sovall.com" className="relative text-black border-2 bg-white text-center rounded-[14px] w-[250px] top-6  max-md:top-24 justify-center items-center text-sm"> Reach out: support@sovall.com </a>
 
 
                 </div>
