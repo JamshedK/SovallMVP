@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import profile from '../../../assets/common/profile.jpg';
 import network from '../../../assets/home/network.svg';
 import edit from '../../../assets/home/edit.svg';
@@ -102,6 +103,9 @@ const InfoPanel = (props) => {
 
     const [learnMore, setLearnMore] = useState(false);
 
+    // To get the current path/route of an object
+    const location = useLocation();
+
     return(
         <div>
             {isLoading ? (
@@ -133,9 +137,9 @@ const InfoPanel = (props) => {
                             <img className={"h-[0.5rem] w-fit " + (!showDetails ? "rotate-180" : "")} src={arrow_up} />
                         </button>
                     </div>
-
+                    
                     <div className={showDetails? "relative": "hidden"}>
-                        <LearnMore value={learnMore} setValue={setLearnMore} /> 
+                        {location.pathname === "/" && (<LearnMore value={learnMore} setValue={setLearnMore} /> )}
                     </div>
 
                     {/* <img className="h-9 w-9" src={giga} /> */}

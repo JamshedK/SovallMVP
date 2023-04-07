@@ -77,9 +77,9 @@ const LogIn = (props) => {
 
     return (
         <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
-            <div className="h-full flex max-md:mt-14 max-md:pt-8 max-sm:flex-col justify-center items-center p-1 gap-20">
+            <div className="h-full flex relative max-md:top-10 max-md:mt-14 max-md:pt-8 max-sm:flex-col justify-center items-center p-1 gap-10 max-md:gap-5">
                 {/*Left panel - ie login container*/ }
-                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center max-md:h-[416px] py-6"} >
+                <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center max-md:h-[416px] py-8"} >
                     {/* style={{backgroundImage: `url(${background})`}} */}
 
                     <div className="flex flex-col items-center gap-6">
