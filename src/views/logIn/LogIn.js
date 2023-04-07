@@ -90,7 +90,7 @@ const LogIn = (props) => {
 
                         </button>
 
-                        <h1 className="relative">or</h1>
+                        <h1 className="relative top-4">or</h1>
                     </div>
 
                     <form onSubmit = {handleLogin} className="flex flex-col flex md:gap-2 lg:gap-4 px-8 items-center gap-3 lg:w-2/3">
