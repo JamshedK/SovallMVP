@@ -15,7 +15,7 @@ import SearchContext from '../../contexts/search-context';
 const PeopleSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
-    const width = "w-[28rem] xl:w-[32rem]";
+    const width = "w-[28rem] max-md:w-full xl:w-[32rem]";
     const [people, setPeople] = useState({});
     const searchCtx = useContext(SearchContext);
 
@@ -54,7 +54,7 @@ const PeopleSearch = (props) => {
         <div className="relative h-full w-full flex flex-col items-center bg-[#3C9A9A]">
             <div className="w-full flex flex-col h-full items-center">     
                 {/*central panel*/ }       
-                <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center mt-2">
+                <div className=" w-full h-full pt-4 overflow-auto flex flex-col gap-4 items-center mt-2">
                     {Object.keys(people).length === 0 && <NoResults/>}
                     {userCards}                    
                 </div>

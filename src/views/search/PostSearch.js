@@ -21,7 +21,7 @@ import SearchContext from '../../contexts/search-context';
 const PostSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
-    const width = "w-[28rem] xl:w-[32rem]";
+    const width = "w-[28rem] max-md:w-full xl:w-[32rem]";
     const searchCtx = useContext(SearchContext);
     const [postsData, setpostsData] = useState({});
 
@@ -68,7 +68,7 @@ const PostSearch = (props) => {
             <div className="w-full flex flex-col h-full items-center">
 
                 {/*central panel*/ }
-                <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center">
+                <div className=" w-full h-full pt-4 overflow-auto flex flex-col gap-4 items-center">
                     <div className={"flex flex-col gap-4 " + width }>
                         {postItems}
                     </div>

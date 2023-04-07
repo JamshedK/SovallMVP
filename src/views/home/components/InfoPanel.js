@@ -10,6 +10,9 @@ import { doc, getDoc } from "firebase/firestore";
 import AuthContext from "../../../contexts/auth-context";
 import {db, storage} from '../../../firebase-config'
 import Loader from '../../loader/Loader';
+import LearnMore from './LearnMore'; 
+import giga from '../../../assets/common/giga_learnmore.svg';
+
 
 const QuickAccess = (props) => {
     return (
@@ -97,6 +100,8 @@ const InfoPanel = (props) => {
         return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" textColor="text-black"/>
     }) : null;
 
+    const [learnMore, setLearnMore] = useState(false);
+
     return(
         <div>
             {isLoading ? (
@@ -120,6 +125,7 @@ const InfoPanel = (props) => {
                         <InfoBlock title="Skills">{skills}</InfoBlock>
                         <InfoBlock title="Interest">{interests}</InfoBlock>
                     </div>
+
                     <div className="w-full flex justify-center ">
                         
                         <button className="w-fit flex flex-col justify-center items-center " onClick={handleClick}>
@@ -128,6 +134,11 @@ const InfoPanel = (props) => {
                         </button>
                     </div>
 
+                    <div className={showDetails? "relative": "hidden"}>
+                        <LearnMore value={learnMore} setValue={setLearnMore} /> 
+                    </div>
+
+                    {/* <img className="h-9 w-9" src={giga} /> */}
             </div>
             )}
         </div>

@@ -32,7 +32,7 @@ export default function App() {
         <div className="md:screen md:h-screen font-nunito w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
-                    {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
+                    {/* {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>} */}
                     {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
             </header>
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
