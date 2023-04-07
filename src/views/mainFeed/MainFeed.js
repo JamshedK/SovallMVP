@@ -28,7 +28,7 @@ const MainFeed = (props) => {
     const [messages, setMessages] = useState(false);
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
-    const width = "w-[28rem] xl:w-[32rem]";
+    const width = "w-[28rem] max-md:w-full xl:w-[32rem]";
     
     const [postsData, setpostsData] = useState([]);
     const authCtx = useContext(AuthContext);
@@ -99,7 +99,7 @@ const MainFeed = (props) => {
             <div className="w-full flex flex-col h-full items-center">
 
                 {/*central panel*/ }
-                <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center">
+                <div className=" w-full h-full pt-4 overflow-auto flex flex-col gap-4 items-center">
                     <NewPost width={width} />
                     <div className={"flex flex-col gap-4 " + width }>
                         {postItems}

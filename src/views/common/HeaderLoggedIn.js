@@ -32,12 +32,12 @@ function HeaderLoggedIn(props) {
     [quick_4, "/mainfeed"],
   ];
   const filterOptionsData = [
-    ["Posts", "/search/posts"],
+    ["Posts", "/"],
     // ["Problem", "/"],
     // ["Solutions", "/"],
     // ["Resources", "/"],
     // ["Opportunities", "/"],
-    ["People", "/search/people"],
+    ["People", "/"],
     // ["Other", "/"],
   ];
 
