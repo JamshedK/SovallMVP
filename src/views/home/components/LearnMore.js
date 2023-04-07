@@ -30,11 +30,11 @@ const LearnMore = (props) => {
     return(
         <div>
             <div className="">
-                <div onClick={handleToggleOpen} className={props.value ? "hidden" : "flex absolute right-[133px] bottom-[53px] bg-white rounded-[11px] w-[160px] h-[35px] items-center justify-center font-semibold font-inter font-[13px] cursor-pointer"}>
+                <div onClick={handleToggleOpen} className={props.value ? "hidden" : "flex absolute right-10 border-2 border-solid border-[D9D9D9] bottom-7 bg-white rounded-[11px] w-[105px] h-[35px] items-center justify-center font-semibold font-inter font-[12px] cursor-pointer"}>
                     <h1>Learn more</h1>
                 </div>
 
-                <div ref={menuRef} className={!props.value ? "hidden" : "flex flex-col space-y-4 absolute right-[133px] bottom-[53px] bg-white rounded-[11px] w-[180px] h-[270px] justify-center text-center text-[#525252] font-inter font-[13px]"}>
+                <div ref={menuRef} className={!props.value ? "hidden" : "flex flex-col space-y-4 absolute right-10 border-2 border-solid bottom-7 bg-white rounded-[11px] w-[180px] h-[270px] justify-center text-center text-[#525252] font-inter font-[13px]"}>
                     <ul className="flex flex-col space-y-2">
                         <a href="../../about">
                             <h1>Our purpose</h1> 
@@ -69,12 +69,13 @@ const LearnMore = (props) => {
                         <a href="../../about">Demo video </a>
                         <li href="../../about">FAQ </li>
                         <li href="../../about">Terms of service </li>
-                        <li href="../../about">Contact us </li>                         */}
+                        <li href="../../about">Contact us </li>       */}
                     </ul>
                 </div>
+
             </div>
 
-            <img className="absolute right-[80px] bottom-[0]" src={giga} />
+            <img className="absolute h-12 w-12 bottom-0 right-0" src={giga} />
 
         </div>
     );

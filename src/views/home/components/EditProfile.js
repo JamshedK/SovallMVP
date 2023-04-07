@@ -158,8 +158,11 @@ const EditProfile = (props) => {
                 <div className="flex flex-col">
                     {!isLoading && <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" selectedItems={skills} setSelectedItems={setSkills}/>}
                     {!isLoading && <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-white"  selectedItems={interests} setSelectedItems={setInterests} />}
-                    <button onClick={handleChangePassword}>Click here to change password</button>
-                    <button onClick={handleSaveChanges}>Save changes</button>
+                    <div className='flex flex-col justify-center items-center gap-3'>
+                        <button className='text-white w-[250px] bg-[#3C9A9A] border-2 border-solid rounded-[14px]' onClick={handleChangePassword}>Click here to change password</button>
+                        <button className='text-white w-[160px] bg-[#3C9A9A] border-2 border-solid rounded-[14px] ' onClick={handleSaveChanges}>Save changes</button>
+                    </div>
+                    
                 </div>
             </div>
         </div>

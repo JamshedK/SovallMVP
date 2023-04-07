@@ -1475,9 +1475,9 @@ const Home = (props) => {
                 </div>
 
                 {/* Learn More */}
-                <div className=''>
+                {/* <div className=''>
                     <LearnMore value={learnMore} setValue = {setLearnMore} />
-                </div>
+                </div> */}
 
         </div>
     </div>

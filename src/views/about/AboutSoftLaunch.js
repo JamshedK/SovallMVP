@@ -15,13 +15,21 @@ const AboutSoftLaunch = (props) => {
         "I chose the name Sovall because one of our approaches is root cause analysis. Many problems originate from a primary issue; if we don't identify and solve that, many secondary problems will always arise. By solving the root cause, so too can we address secondary problems: Sovall is the shorter version of \"Solve All\".",
         "I want to thank Mafer Bencomo Arevalo for help with making the first version of the phone app of Sovall and Rin Yokoi for her help with the demo video's music."
     ];
+
+    const aboutUpdated = ["My friends and I in high school developed a platform where UWC schools' alumni could arrange homestays and exchange skills. Although we worked an average of an hour on that project every week, at the end of high school we had learned more in that process than in any of my classes. That is because we were learning practical and up-to-date skills and were applying them to realize that project. It also helped me be more creative, collaborative, and innovative while trying to have a real-world impact.",
+        "In the spring of 2022, I was telling one of my friends about a transportation project I was working on with Gabriel. My friend told me that she would like to be involved with such projects but does not know where to start. I said whatever bothers you probably bothers a lot of others as well and quoted Vinod Khosla to her: \“Any problem is an opportunity. The bigger problem, the bigger the opportunity.\”",
+        "In the same week for my Design for Business Class assignment we were supposed to identify a problem, offer a solution, and brand the solution. I noticed that a lot of students were struggling to come up with an idea. Those students were very creative, just like the friends who wanted to be involved with solving real-world problems. So to help university students from different majors identify a problem, build teams around it, ideate solutions, and implement it I presented Sovall as my assignment."
+    ];
+
+    const aboutSovall = ["Sovall is a collaboration platform trying to connect students from diverse academic backgrounds to solve real-world problems. It fosters creative thinking and learning practical skills."];
+
     const [currentF, setCurrentF] = useState(0);
     
     const handleFounderChange = () => {
         setCurrentF(prev => (prev + 1) % 4);
     };
    
-    const about = aboutText.map(p => {
+    const about = aboutUpdated.map(p => {
         return <p key={Math.random()}>{p}</p>
     });
     return (
@@ -29,7 +37,7 @@ const AboutSoftLaunch = (props) => {
                 {/*Wheel*/}
             <div className="flex justify-center w-full max-md:h-[30rem] md:h-full md:w-1/2 ">
                     
-                    <div className="absolute top-2 w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[16rem] 2xl:h-[16rem] flex justify-center items-center ">
+                    <div className="absolute top-8 w-[20rem] h-[20rem] md:w-[14rem] md:h-[14rem] 2xl:w-[16rem] 2xl:h-[16rem] flex justify-center items-center ">
                         <div className="w-90% h-90% lg:h-52 lg:w-52 2xl:w-[15rem]  2xl:h-[15rem]  relative flex justify-center items-center">
 
                             <div className="absolute h-full w-full z-10 select-none ">
@@ -58,6 +66,7 @@ const AboutSoftLaunch = (props) => {
                         <div className="pb-4 max-md:pl-2 flex flex-col gap-2">
                                 <h1 className="text-yellow-3 md:sticky md:top-0 bg-green-2 md:m-0 xl:text-[1.5rem]"> Our Story</h1>
                                 <p className="text-sm xl:text-[1rem]">Hamid Mubariz, Founder</p>
+                                <p className='max-md:text-[12pt] text-lg font-[600] xl:text-[1rem]'>{aboutSovall}</p>
                                 <div className="flex flex-col gap-3 max-md:ml-2 md:pt-2 xl:text-[1rem]"> {about}</div>
                         </div>
 

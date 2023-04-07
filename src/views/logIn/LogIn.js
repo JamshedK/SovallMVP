@@ -4,6 +4,7 @@ import Input from './components/LogIn.Input';
 import logo from '../../assets/common/sovall_2.svg';
 import AuthContext from "../../contexts/auth-context";
 import background from '../../assets/common/signup_background.png'
+import LearnMore from "../home/components/LearnMore";
 
 
 
@@ -72,9 +73,11 @@ const LogIn = (props) => {
         );
     });
 
+    const [learnMore, setLearnMore] = useState(false);
+
     return (
         <div className="relative bg-green-6 h-full w-full flex  justify-center flex-col items-center text-white overflow-auto">
-            <div className="h-fit flex max-sm:flex-col justify-center items-center p-1 gap-20">
+            <div className="h-full flex max-sm:flex-col justify-center items-center p-1 gap-20">
                 {/*Left panel - ie login container*/ }
                 <div className={containerStyle +" rounded-xl bg-[#197474] bg-cover sm:bg-cover sm:bg-center sm:bg-justify-center sm:bg-[length:360px_180px] lg:bg-justify-center lg:bg-cover xl:bg-[length:700px_620px] lg:bg-justify-center lg:bg-[length:540px_540px] md:bg-center md:bg-justify-center md:bg-[length:360px_360px] bg-no-repeat flex justify-between md:py-8 items-center h-[416px] py-6"} >
                     {/* style={{backgroundImage: `url(${background})`}} */}
@@ -101,19 +104,37 @@ const LogIn = (props) => {
                 </div>
 
                 {/*Right Panel - quick info about sovall*/}
-                <div className={containerStyle + " gap-3 flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
+                <div className={containerStyle + " gap-1 flex justify-between border-red-500 lg:border-gray-500 xl:border-yellow-500 2xl:border-white"}>
                     {/* <img className="h-14 md:h-7 lg:h-8" src={logo} /> */}
-                    <p className="text-yellow-4 underline font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt]">Solve problems</p>
-                    <ul className="md:text-[10pt] lg:text-[13pt]  xl:text-[15pt]  2xl:text-[17pt] md:ml-6">
-                        {bullet_points}
-                        <a className="text-[11pt]" href="/about">Learn more...</a>
-                    </ul>
-                    <div className="h-auto flex py-1">
+                    <h1 className="text-yellow-4 font-bold text-[30px]">Solve Problems</h1>
+                    {/* text-yellow-4 font-bold text-[20pt] font-medium md:text-[11pt] lg:text-[14pt] xl:text-[16pt]  2xl:text-[18pt] */}
+                    {/* <ul className="md:text-[10pt] lg:text-[13pt]  xl:text-[15pt]  2xl:text-[17pt] "> */}
+                        {/* {bullet_points} */}
+                        {/* <h1>U</h1> */}
+                        {/* <a className="text-[11pt]" href="/about">Learn more...</a> */}
+                    {/* </ul> */}
+
+                    <h1 className="font-bold text-[30px]">Uni Students'</h1>
+                    <h1 className="font-bold text-[29px]">Collaboration</h1>
+                    <h1 className="font-bold text-[34px]">Community</h1>
+
+                    
+                    
+                    <div className="relative flex top-12 max-md:top-20 md:right-20 text-[#525252]">
+                        <LearnMore value={learnMore} setValue={setLearnMore} />
+                    </div>
+
+                    <div className="h-auto relative top-9 max-md:top-20 flex py-1">
                         <iframe className="md:w-[85%] aspect-video" src="https://youtube.com/embed/FUu5eZ0oLdM" title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                     </div>
+
+                    <a href="mailto:support@sovall.com" className="relative text-black border-2 bg-white text-center rounded-[14px] w-[250px] top-4  max-md:top-20 justify-center items-center text-sm"> Reach out: support@sovall.com </a>
+
+
                 </div>
+
+
             </div>
-            <a href="mailto:support@sovall.com" className="absolute bottom-3 text-sm"> Reach out: support@sovall.com </a>
         </div>
         );
 }
