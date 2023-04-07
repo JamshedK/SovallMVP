@@ -13,6 +13,7 @@ const AccountSetUp = () => {
 	const [name, setName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
+	const [university, setUniversity] = useState('')
 	const [password, setPassword] = useState("");
 	const [passwordConfirmation, setPasswordConfirmation] = useState("");
 	const [passMatch, setPassMatch] = useState(true);
@@ -25,10 +26,10 @@ const AccountSetUp = () => {
 	
 	//hardtyped data for the password requirements
 	const data = [
-		"At least 12 characters",
-		"A mixture of uppercase and lowercase",
-		"At least one number",
-		"At least one special character, e.g., ! @ # ? ]"
+		"At least 6 characters"
+		// "A mixture of uppercase and lowercase",
+		// "At least one number",
+		// "At least one special character, e.g., ! @ # ? ]"
 	];
 	
 	/*Components*/
@@ -48,29 +49,29 @@ const AccountSetUp = () => {
 	/*utility functions*/
 	const checkAndUpdateRequirements = () => {
 		const update = [...reqs];
-		if (password.length >= 12) {
+		if (password.length >= 6) {
 			update[0] = true;
 		} else {
 			update[0] = false;
 		}
 
-		if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
-			update[1] = true;
-		} else {
-			update[1] = false;
-		}
+		// if (/[A-Z]/.test(password) && /[a-z]/.test(password)) {
+		// 	update[1] = true;
+		// } else {
+		// 	update[1] = false;
+		// }
 
-		if (/[0-9]/.test(password)) {
-			update[2] = true;
-		} else {
-			update[2] = false;
-		}
+		// if (/[0-9]/.test(password)) {
+		// 	update[2] = true;
+		// } else {
+		// 	update[2] = false;
+		// }
 
-		if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
-			update[3] = true;
-		} else {
-			update[3] = false;
-		}
+		// if (/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(password)) {
+		// 	update[3] = true;
+		// } else {
+		// 	update[3] = false;
+		// }
 
 		setReqs(update);
 
@@ -83,15 +84,14 @@ const AccountSetUp = () => {
 
 	}
 
-	
-
 	const addUserToFirestore = async (localId) => {
 		console.log(localId);
 		await setDoc(doc(db, 'users', localId), {
 			firstname:name, 
 			lastname: lastName,
 			email:email,
-			image_path: 'account/default_profile_pic.svg'
+			image_path: 'account/default_profile_pic.svg',
+			university: university
 		})
 	}
 	
@@ -104,8 +104,7 @@ const AccountSetUp = () => {
 
 		if (password === passwordConfirmation) {
 			setPassMatch(true);
-			// if (checkAndUpdateRequirements()) {
-				
+			if (checkAndUpdateRequirements()) {
 			const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
 			const response = await fetch(url, {
 								method: 'POST',
@@ -138,10 +137,10 @@ const AccountSetUp = () => {
 			}
 			
 			}
-		// } else {
-		// 	setPassMatch(false);
-		// 	return;
-		// }
+		} else {
+			setPassMatch(false);
+			return;
+		}
 	}
 	
 	
@@ -168,6 +167,7 @@ const AccountSetUp = () => {
 						<Input placeholder="First Name" value={name} setValue={setName} />
 						<Input placeholder="Last Name" value={lastName} setValue={setLastName} />
 						<Input placeholder="Email" value={email} setValue={setEmail} />
+						<Input placeholder="University" value={university} setValue={setUniversity} />
 						<Input placeholder="Password" value={password} setValue={setPassword} ps={true}/>
 						<Input placeholder="Re-enter your password" value={passwordConfirmation} setValue={setPasswordConfirmation} ps={true}/>
 					</form>

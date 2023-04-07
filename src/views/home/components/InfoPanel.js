@@ -24,7 +24,8 @@ const QuickAccess = (props) => {
 }
 const Label = (props) => {
     const bg = props.bg;
-    return <label className={"text-white rounded-xl px-[0.5rem] py-[0.25rem] text-[8pt] " + bg} >{props.value}</label>
+    const tc = props.textColor
+    return <label className={"rounded-xl px-[0.5rem] py-[0.25rem] text-[8pt] " + bg + " " + tc} >{props.value}</label>
 }
 const InfoBlock = (props) => {
     return (
@@ -92,11 +93,11 @@ const InfoPanel = (props) => {
         Check if array of interests is empty and if so, sets it to null
     */
     const skills = userInfo.skills && Array.isArray(userInfo.skills) ? userInfo.skills.map((skill,i) => {
-        return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4"/>
+        return <Label key={"info-skill-"+i}  value={skill} bg="bg-green-4" textColor="text-white"/>
     }) : null
 
     const interests = userInfo.interests && Array.isArray(userInfo.interests) ? userInfo.interests.map((interest,i) => {
-        return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" />
+        return <Label key={"info-interest-" + i}  value={interest} bg="bg-yellow-4" textColor="text-black"/>
     }) : null;
 
     const [learnMore, setLearnMore] = useState(false);
@@ -113,7 +114,7 @@ const InfoPanel = (props) => {
                             <div className="flex flex-col w-fit ">
                                 <a href="/home" className="font-bold">{username}</a>
                                 <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
-                                <p className="text-[9pt]">Let's have fun with creativity!</p>
+                                <p className="text-[9pt]">{userInfo?.university}</p>
                             </div>
 
                         </div>

@@ -88,6 +88,8 @@ module.exports = {
 
             fontFamily: {
                 'nunito': ['Nunito', 'sans-serif'],
+                'inter': ['Inter', 'sans-serif'],
+
             },
             keyframes: {
                 step1: {
