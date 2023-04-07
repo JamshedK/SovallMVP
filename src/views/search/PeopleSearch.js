@@ -15,7 +15,7 @@ import SearchContext from '../../contexts/search-context';
 const PeopleSearch = (props) => {
     const [notification, setNotification] = useState(false);
     const [messages, setMessages] = useState(false);
-    const width = "w-[28rem] max-md:w-full xl:w-[32rem]";
+    const width = "md:w-[28rem] w-full xl:w-[32rem]";
     const [people, setPeople] = useState({});
     const searchCtx = useContext(SearchContext);
 
@@ -46,7 +46,7 @@ const PeopleSearch = (props) => {
         /*Arrays of components*/
         console.log('here')
         userCards = people.map((user, i) => {
-            return <InfoPanel key={user.id} width={width} own={true} user_id={user.id} />;
+            return <InfoPanel key={user.id} width={width} own={false} user_id={user.id} />;
         });
     }
 

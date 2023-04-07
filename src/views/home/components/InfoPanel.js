@@ -51,10 +51,13 @@ const Own = () => {
 
 const Other = () => {
     return (
-        <div className="flex gap-[0.5rem] text-gray-500" >
+        <div className="relative flex gap-[0.5rem] text-gray-500 right-0" >
             <QuickAccess label="network" src={network} href="/home" />
-            <QuickAccess label="edit profile" src={messages} href="/home" />
-            <QuickAccess label="edit profile" src={friends} href="/home" />
+
+            {/* Commented out for now since we haven't implemented them yet */}
+
+            {/* <QuickAccess label="edit profile" src={messages} href="/home" />
+            <QuickAccess label="edit profile" src={friends} href="/home" /> */}
         </div >
     )
 }
@@ -125,7 +128,7 @@ const InfoPanel = (props) => {
                         {props.own? <Own/> : <Other/>}
                     </div>
 
-                    <div className={showDetails? "flex flex-col gap-[1.5rem]" : "hidden"}>
+                    <div className={showDetails? "flex flex-col w-full gap-[1.5rem]" : "hidden"}>
                         <InfoBlock title="Skills">{skills}</InfoBlock>
                         <InfoBlock title="Interest">{interests}</InfoBlock>
                     </div>
