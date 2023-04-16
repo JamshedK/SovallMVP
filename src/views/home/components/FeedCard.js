@@ -12,6 +12,7 @@ import Interactor from './Interactor';
 import comments from '../../../assets/home/comments.svg';
 import dotsMenu from '../../../assets/home/dots_menu.svg';
 import share from '../../../assets/home/share.svg';
+import copy_post_link from '../../../assets/feedcard/copy_post_link.svg';
 import save from '../../../assets/home/saved.svg';
 import upvote from '../../../assets/home/upvote.svg';
 import upvote_selected from '../../../assets/home/upvote_selected.svg';
@@ -216,6 +217,12 @@ const FeedCard= (props) => {
         setShowDeleteBtn(false);
     }
 
+    const onCopyPostLinkClicked = () => {
+        let postLink = `sovall.com/search/posts/id?id=${props.data.post_id}`
+        // Copy the link to clipboard
+        navigator.clipboard.writeText(postLink);
+        alert('Post link copied to clipboard')
+    }
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
@@ -270,6 +277,9 @@ const FeedCard= (props) => {
                     <img className="h-full" src={comments} />
                     {commentCount > 0 && <label>{commentCount}</label>}
                 </Button>
+                <Button onClick={onCopyPostLinkClicked}>
+                    <img className="h-full w-3/4" src={copy_post_link} />
+                </Button> 
                 <Button className="border border-red-2" onClick = {onUpvote}>
                     {isPostUpvoted && <img className="h-full" src={upvote_selected}></img>}
                     {!isPostUpvoted && <img className="h-full" src={upvote} />}
