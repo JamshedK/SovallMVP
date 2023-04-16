@@ -24,7 +24,7 @@ const Button = props => {
 const FeedCard= (props) => {
     // For controlling which upvoted icon to display
     const [isPostUpvoted, setIsPostUpvoted] = useState(false);  // to swithc icons when upvoted or not
-    const [extendCommentArea, setExtendCommentArea] = useState(false); // to extend the comment area
+    const [extendCommentArea, setExtendCommentArea] = useState(props?.extendCommentArea || false); // to extend the comment area
     // TODO: Consider adding a callback function to update the post info in parent component
     const [commentCount, setCommentCount] = useState(0);
     const [sharedCount, setSharedCount] = useState(0);

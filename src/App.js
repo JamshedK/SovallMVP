@@ -20,6 +20,7 @@ import ComingSoon from "./views/common/ComingSoon";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
 import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
+import ShowPostById from "./views/search/ShowPostById";
 
 
 export default function App() {
@@ -54,6 +55,7 @@ export default function App() {
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
+                    <Route path="/search/posts/id" element={<ShowPostById/>}/>
                     <Route path="/comingsoon" element={<ComingSoon/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
