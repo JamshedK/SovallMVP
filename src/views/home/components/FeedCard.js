@@ -1,10 +1,12 @@
 import React, { Component, useEffect, useState, useContext} from 'react';
+import { useNavigate } from 'react-router-dom';
 import CommentArea from './CommentArea';
 import moment from 'moment'
 import { doc, updateDoc, increment, collection, addDoc, query, where, getDocs, getDoc, deleteDoc } from "@firebase/firestore";
 import {db, storage} from '../../../firebase-config'
 import {getDownloadURL, ref} from 'firebase/storage'
 import AuthContext from '../../../contexts/auth-context';
+import SearchContext from '../../../contexts/search-context';
 
 
 /* Assets */
@@ -41,6 +43,8 @@ const FeedCard= (props) => {
     const docRef = doc(db, "posts", data.post_id);
     const intereactionColRef = collection(db, 'interactions')
     const authCtx = useContext(AuthContext);
+    const searchCtx = useContext(SearchContext)
+    const navigate = useNavigate()
 
     // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
     const timeForPost = moment(data.published_date.toDate()).format('MMMM, D, YYYY');
@@ -223,12 +227,17 @@ const FeedCard= (props) => {
         navigator.clipboard.writeText(postLink);
         alert('Post link copied to clipboard')
     }
+
+    const handProfilePicClicked = () => {
+        searchCtx.UpdateQuery(username)
+        navigate('/search/people');
+    }
     return (
         <div className="w-full flex flex-col items-center bg-white border border-gray-300 rounded-xl py-8 gap-4" >
             {/*Post header*/}
             <div className={"flex justify-between items-center w-full " + px}>
                 <div className="flex items-center h-10">
-                    <img className="rounded-full h-full" src={profilePicPath} />
+                    <img className="rounded-full h-full cursor-pointer" src={profilePicPath} onClick={handProfilePicClicked} />
                     <div className="flex flex-col px-1">
                         <label className="font-bold text-[11pt]">{username}</label>
                         <label className="text-[9pt]">{timeForPost}</label>
