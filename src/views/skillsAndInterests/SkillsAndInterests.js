@@ -18,9 +18,9 @@ import magnifying_glass from '../../assets/account/magnifying_glass.svg';
 const SkillsAndInterests = (props) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedInterests, setSelectedInterests] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
     const [allSkills, setAllSkills] = useState([])
     const [allInterests, setAllInterests] = useState([])
+    const [disableContinue, setDisableContinue] = useState(true)
     const authCtx = useContext(AuthContext);
     const navigate = useNavigate();
 
@@ -48,11 +48,18 @@ const SkillsAndInterests = (props) => {
         readSkillsAndInterests();
     },[])
 
+    useEffect(() => {
+        if(selectedInterests.length > 0 && selectedSkills.length > 0){
+            setDisableContinue(false)
+        }
+        else{
+            setDisableContinue(true)
+        }
+    }, [selectedInterests, selectedSkills])
+
     /*Handlers*/
     const handleSubmit = async (e) => {
-        console.log(selectedSkills);
-        console.log(selectedInterests);
-        console.log(authCtx.userID);
+        // Save the skills and interests in Firestore
         await updateDoc(doc(db, "users", authCtx.userID),{
             "skills": selectedSkills,
             "interests": selectedInterests
@@ -67,12 +74,13 @@ const SkillsAndInterests = (props) => {
                 <Card title="Skills" data={allSkills} accentStyle="bg-green-2 text-white" 
                     selectedItems={selectedSkills} setSelectedItems={setSelectedSkills}/>
                 <Card title="Interests" data={allInterests} accentStyle="bg-yellow-2 text-black"  
-                    selectedItems={selectedInterests} setSelectedItems={setSelectedInterests} />
+                    selectedItems={selectedInterests} setSelectedItems={setSelectedInterests}/>
             </div>
             <span className='text-white pb-5'> By joining I agree to Sovall's{' '}
                 <a href='https://docs.google.com/document/d/13tB0fN7BY4HWO-0wXTR6dxqY_FxrOrVASthmgs81GLY/edit' className="underline"> terms and conditions</a>
           </span>
-            <button className="rounded-full w-fit bg-white px-4 py-1" onClick={handleSubmit}>Continue</button>
+            <button disabled={disableContinue} className="rounded-full w-fit bg-white px-4 py-1 disabled:bg-gray-400 disabled:hover:cursor-no-drop" 
+                onClick={handleSubmit}>Continue</button>
         </div>
         );
 }
@@ -108,12 +116,12 @@ export const Card = (props) => {
                     key={id} value={item.value} selectedStyle={props.accentStyle} 
                     isSelected={tempIsSelected} selectedItems={props.selectedItems} 
                     setSelectedItems={props.setSelectedItems}/>
-    });
+    });    
     return (
         <div className="bg-white rounded-xl h-fit w-[24rem] flex flex-col p-8 gap-3">
             <h1 className="font-medium font-inter">{props.title}</h1>
             <div>
-                <p className="pl-4">Select at least three</p>
+                <p className="pl-4 text-red-500">Select at least one</p>
                 <input className="bg-center bg-no-repeat w-full rounded-full px-3 py-2 placeholder-gray-500 border-b-2 border-gray-300 focus:outline-none"
                     type="text" placeholder="Search"
                     onChange={e => setQuery(e.target.value)}
@@ -138,12 +146,11 @@ export const SkillInterestItem = (props) => {
     const selectedStyle = props.selectedStyle;
     const style = checked ? selectedStyle : "bg-gray-200";
     const handleClick = () => {
-        let temp = props.selectedItems;
+        let temp = [...props.selectedItems];
 
         if (temp.includes(props.value)) {
             const index = temp.indexOf(props.value);
             temp.splice(index, 1);
-            
         } else {
             temp.push(props.value);
         }
