@@ -18,18 +18,26 @@ import Search from "./Search";
 import SearchContext from "../../contexts/search-context";
 import UserContext from "../../contexts/user";
 import AuthContext from "../../contexts/auth-context";
-import {useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 
 
 function HeaderLoggedIn(props) {
   const [currentFilter, setCurrentFilter] = useState(0);
-  const [currentMenuOption, setCurrentMenuOption] = useState(-1);
+  const [currentMenuOption, setCurrentMenuOption] = useState(3);
   const searchCtx = useContext(SearchContext);
   const userCtx = useContext(UserContext);
   const authCtx = useContext(AuthContext)
 
   const [showLogOutButton, setShowLogOutButton] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation()
+
+  useEffect(() => {
+     // if at route /home, set currentMenuOption to 4
+    if(location.pathname === '/home'){
+      setCurrentMenuOption(4)
+    }
+  }, [])
 
   /*Hardtyped arrays*/
   const menuOptionsData = [
@@ -47,7 +55,6 @@ function HeaderLoggedIn(props) {
     ["People", "/"],
     // ["Other", "/"],
   ];
-
     
   const handleMenuOptionSelected = (e) =>{
     const value = parseInt(e.currentTarget.value)
@@ -122,7 +129,7 @@ function HeaderLoggedIn(props) {
     }
   }
 
-  const profilePicStyle = currentMenuOption === -1 ? "bg-yellow-2" : "";
+  const profilePicStyle = currentMenuOption === 4 ? "bg-yellow-2" : "";
 
   return (
     <div className="h-[5rem] w-full bg-green-6 px-7 py-1 flex flex-wrap gap-[0.3rem] items-center justify-center text-white drop-shadow-xl z-20">
@@ -143,7 +150,7 @@ function HeaderLoggedIn(props) {
         <div className="flex flex-2 py-1 gap-4 items-center">{filterOptions}</div>
 		<div className="flex flex-1 gap-8 justify-end items-center">
           {menuOptions}
-          <a href="/">
+          <a href="/home">
             <img
               className={"w-8 rounded-full p-[0.05rem] " + profilePicStyle}
               src={userCtx.profilePicPath}

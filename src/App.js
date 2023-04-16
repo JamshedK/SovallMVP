@@ -42,7 +42,7 @@ export default function App() {
                         Routing permission depends on the state of the user. authCtx.isLoggedIn is either true
                         or false, which shows if the user is logged in. 
                     */}
-                    <Route path="/" element={isLoggedIn ? <Home /> : <LogIn />} />
+                    <Route path="/" element={isLoggedIn ? <MainFeed/> : <LogIn />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={isLoggedIn ? <Home /> : <AccountSetUp />} />
