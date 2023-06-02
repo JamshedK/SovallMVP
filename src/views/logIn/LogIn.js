@@ -28,7 +28,8 @@ const LogIn = (props) => {
     // Make an API request to firebase to login the user
     const handleLogin = async (e) => {
         e.preventDefault();
-        const url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCanACeDK7fsTwEPlfJDgehm9M2RFck9FA'
+        const apiKey = process.env.REACT_APP_FIREBASE_API_KEY;
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${apiKey}`
         const response = await fetch(url, {
                             method: 'POST',
                             body: JSON.stringify({
