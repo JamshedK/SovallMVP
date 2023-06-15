@@ -22,6 +22,7 @@ import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
 import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
 import ShowPostById from "./views/search/ShowPostById";
+import BottomNavBar from "./newInterface/NavBar/BottomNavBar";
 
 
 export default function App() {
@@ -35,8 +36,9 @@ export default function App() {
             <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
                     {/* {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>} */}
-                    {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
+                    {/* {authCtx.isLoggedIn && <HeaderLoggedIn/>}  */}
             </header>
+            
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
                 <Routes>
                     {/*
@@ -61,7 +63,8 @@ export default function App() {
                     <Route path="/comingsoon" element={<ComingSoon/>}></Route>
                     <Route path="*" element={<NotFound />} />
                 </Routes>
-                </div>
+            </div>
+            <BottomNavBar />
         </div>        
       );
 }

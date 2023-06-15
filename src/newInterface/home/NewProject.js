@@ -7,28 +7,20 @@ import save_icon from '../../assets/newInterface/home/save_icon.svg';
 
 
 
-const NewProject = (props) => {
+export const NewProjectLaptop = (props) => {
     return(
             <div className={"flex flex-row justify-between h-[20rem] rounded-3xl " + props.width}>
                 {/* left */}
                 <div className="px-8 bg-white bg-opacity-70 rounded-l-3xl h-full">
                     <div className='py-6 flex flex-col  justify-between h-full'>
                         <button>
-                            <img className='w-7' src={notification_icon}/>
+                            <img className='w-7' src={upvote_icon}/>
                         </button>
-                        <div className='flex flex-col space-y-2'>
-                            <button>
-                                <img className='w-7' src={upvote_icon}/>
-                            </button>
-                            <button>
-                                <img className='w-7' src={downvote_icon}/>
-                            </button>
-                        </div>
+                        <button>
+                            <img className='w-7' src={downvote_icon}/>
+                        </button>
                         <button>
                             <img className='w-7' src={comment_icon}/>
-                        </button>
-                        <button>
-                            <img className='w-7' src={save_icon}/>
                         </button>
                     </div>
                 </div>
@@ -52,4 +44,26 @@ const NewProject = (props) => {
     );
 }
 
-export default NewProject;
+export const NewProjectMobile = (props) => {
+    return (
+        <div className={"flex rounded-xl justify-between bg-white w-full px-10 py-9 "}>
+            {/* username, date, save and notification button */}
+            <div className="flex flex-row justify-between text-xs w-full">
+                <div className='flex flex-row'>
+                    <img className="rounded-full h-full cursor-pointer"/>
+                    <label className="">Jamshed Karimnazarov</label>
+                    <label className=""> - </label>
+                    <label className="">September, 2012</label>
+                </div>
+                <div className='flex flex-row'>
+                    <button>
+                        <img className='w-3' src={save_icon}/>
+                    </button>
+                    <button>
+                        <img className='w-3' src={notification_icon}/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+}
