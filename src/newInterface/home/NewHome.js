@@ -1,4 +1,4 @@
-import NewProject from "./NewProject"
+import { ProjectCard } from "./ProjectCard";
 
 const NewHome = (props) => {
     // TODO: change the rems to make the website responsive for phones
@@ -9,7 +9,7 @@ const NewHome = (props) => {
     return (
             <div className="relative h-full w-full bg-[#3C9A9A]">
                 <div className="flex flex-row justify-center mt-12">
-                    <NewProject width={width}/>
+                    <ProjectCard width={width}/>
                 </div>
             </div>
             );
