@@ -1,9 +1,9 @@
 // assets
-import notification_icon from '../../assets/newInterface/home/notification_icon.svg';
-import downvote_icon from '../../assets/newInterface/home/downvote_icon.svg';
-import comment_icon from '../../assets/newInterface/home/comment_icon.svg';
-import save_icon from '../../assets/newInterface/home/save_icon.svg';
-import profile from '../../assets/common/profile.jpg';
+import notification_icon from '../../../assets/newInterface/home/notification_icon.svg';
+import downvote_icon from '../../../assets/newInterface/home/downvote_icon.svg';
+import comment_icon from '../../../assets/newInterface/home/comment_icon.svg';
+import save_icon from '../../../assets/newInterface/home/save_icon.svg';
+import profile from '../../../assets/common/profile.jpg';
 
 
 

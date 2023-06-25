@@ -1,4 +1,4 @@
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard } from "./components/ProjectCard";
 
 const NewHome = (props) => {
     // TODO: change the rems to make the website responsive for phones

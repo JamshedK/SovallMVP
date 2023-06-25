@@ -1,14 +1,14 @@
 // assets
-import notification_icon from '../../assets/newInterface/home/notification_icon.svg';
-import upvote_icon_disabled from '../../assets/newInterface/home/upvote_icon_disabled.svg';
-import downvote_icon from '../../assets/newInterface/home/downvote_icon.svg';
-import comment_icon from '../../assets/newInterface/home/comment_icon.svg';
-import save_icon from '../../assets/newInterface/home/save_icon.svg';
-import issue_icon from '../../assets/newInterface/home/issue_icon.svg';
-import recruiting_icon from '../../assets/newInterface/home/recruiting_icon.svg';
-import example_image from '../../assets/newInterface/home/example_image.jpg';
+import notification_icon from '../../../assets/newInterface/home/notification_icon.svg';
+import upvote_icon_disabled from '../../../assets/newInterface/home/upvote_icon_disabled.svg';
+import downvote_icon from '../../../assets/newInterface/home/downvote_icon.svg';
+import comment_icon from '../../../assets/newInterface/home/comment_icon.svg';
+import save_icon from '../../../assets/newInterface/home/save_icon.svg';
+import issue_icon from '../../../assets/newInterface/home/issue_icon.svg';
+import recruiting_icon from '../../../assets/newInterface/home/recruiting_icon.svg';
+import example_image from '../../../assets/newInterface/home/example_image.jpg';
 
-import profile from '../../assets/common/profile.jpg';
+import profile from '../../../assets/common/profile.jpg';
 
 export const ProjectCard = (props) => {
     var buttonsArray = [issue_icon, recruiting_icon, comment_icon, downvote_icon, upvote_icon_disabled]
