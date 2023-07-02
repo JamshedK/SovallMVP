@@ -8,6 +8,7 @@ import close_image_icon from '../../assets/newInterface/new_project/close_image_
 import add_image_icon from '../../assets/newInterface/new_project/add_image_icon.svg';
 
 import { useContext, useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/user';
 import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
@@ -23,10 +24,13 @@ export const NewProjectMobile = (props) => {
     const [recruitmentArray, setRecruitmentArray] = useState([])
     const [projectTitle, setProjectTitle] = useState('')
     const [projectDescription, setProjectDescription] = useState('')
+    
     const textRef = useRef();
     const recruitmentNoticeInputRef = useRef()  
     const imageRef = useRef();
     const collaboratorSearchRef = useRef()
+    
+    const navigate = useNavigate()
 
     const userCtx= useContext(UserContext);
 
@@ -224,6 +228,7 @@ export const NewProjectMobile = (props) => {
         try {
           const projectDoc = await addDoc(projectRef, projectData);
           alert('Project submitted')
+          navigate('/home')
           // Handle success or perform additional operations
         } catch (error) {
           console.error('Error submitting project:', error);
