@@ -7,57 +7,11 @@ import add_recruitment_notice_icon from '../../assets/newInterface/new_project/a
 import close_image_icon from '../../assets/newInterface/new_project/close_image_icon.svg';
 import add_image_icon from '../../assets/newInterface/new_project/add_image_icon.svg';
 
-
-
 import { useContext, useState, useRef, useEffect } from 'react';
 import UserContext from '../../contexts/user';
 import { collection, getDocs, query } from 'firebase/firestore';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
-
 import {db, storage} from '../../firebase-config'
-
-const categoryObj = {
-                    "project": ["Project Title", "Project Description"],
-                    "idea": ["Title", "Description"],
-                    "ask_sovall": ["Title", "Description"]
-                    };
-
-export const NewProjectLaptop = (props) => {
-    return(
-            <div className={"flex flex-row justify-between h-[20rem] rounded-3xl " + props.width}>
-                {/* left */}
-                <div className="px-8 bg-white bg-opacity-70 rounded-l-3xl h-full">
-                    <div className='py-6 flex flex-col  justify-between h-full'>
-                        <button>
-                            <img className='w-7' src=''/>
-                        </button>
-                        <button>
-                            <img className='w-7' src={downvote_icon}/>
-                        </button>
-                        <button>
-                            <img className='w-7' src={comment_icon}/>
-                        </button>
-                    </div>
-                </div>
-                {/*  main screen */}
-                <div className='flex flex-grow bg-white w'>
-
-                </div>
-                {/* collaborators */}
-                <div className='px-2 py-4 w-52 bg-white bg-opacity-70 rounded-r-3xl h-full'>
-                    <h1 className='font-inter text-xl font-medium'>Collaborators</h1>
-                    <div className="flex items-center h-10">
-                        <img className="rounded-full h-full" />
-                        <div className="flex flex-col px-1">
-                            <label className="text-[11pt]">Hamid Mubariz</label>
-                            <label className="text-[9pt]">Designer</label>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-    );
-}
 
 export const NewProjectMobile = (props) => {
     const [containsImage, setContainsImage] = useState(false);
@@ -65,7 +19,10 @@ export const NewProjectMobile = (props) => {
     const [allUser, setAllUsers] = useState([])
     const [collaboratorsSuggestions, setCollaboratorsSuggestions] = useState([]) 
     const [imagePath, setImagePath] = useState(null);
-
+    const [recruitmentArray, setRecruitmentArray] = useState([])
+    
+    const textRef = useRef();
+    const recruitmentNoticeInputRef = useRef()  
     const imageRef = useRef();
     const collaboratorSearchRef = useRef()
 
@@ -79,7 +36,8 @@ export const NewProjectMobile = (props) => {
             const querySnapshot = await getDocs(usersRef)
             querySnapshot.forEach((doc) => {
                 var obj = doc.data()
-                tempArray.push({"user_id": doc.id, "fullname": obj?.firstname + ' ' + obj?.lastname, 'image_path': obj?.image_path })
+                tempArray.push({"user_id": doc.id, "fullname": obj?.firstname + ' ' + obj?.lastname, 'image_path': obj?.image_path, 'skill': obj?.skills
+             })
             });
             setAllUsers(tempArray)
         }
@@ -96,6 +54,23 @@ export const NewProjectMobile = (props) => {
     const handleRemoveImage = () => {
         setContainsImage(false)
         setImagePath(null)
+    }
+
+    // To handle textarea resizing
+    const handleTextareaChange = () => {
+        if (textRef.current.value) {
+            textRef.current.style.height = '7px'; // Reset the height 7px
+            textRef.current.style.height = `${textRef.current.scrollHeight}px`; // Set the height to the scrollHeight
+        }
+    };
+
+    const handleAddRecruitmentNotice =() => {
+        const inputValue = recruitmentNoticeInputRef.current.value;
+        if (inputValue.trim() !== '') {
+            setRecruitmentArray(prevArray => [...prevArray, inputValue]);
+            recruitmentNoticeInputRef.current.value = '';
+        }
+
     }
 
     const handleCollaboratorSearch = async () => {
@@ -144,13 +119,18 @@ export const NewProjectMobile = (props) => {
         }
     }
 
-    var suggestionsComp = null
     // to create components for the list of collaborators the search button is used
-    console.log('Suggestions length ' + collaboratorsSuggestions.length)
+    var suggestionsComp = null
+
     if (collaboratorsSuggestions.length > 0){
         suggestionsComp = collaboratorsSuggestions.map((suggestion) => {
             return (
-                <div className='flex flex-row space-x-2 text-[12px] cursor-pointer'>
+                <div 
+                    className='flex flex-row space-x-2 text-[12px] cursor-pointer' 
+                    onClick={() => {
+                        setCollaborators([...collaborators, suggestion])
+                        setCollaboratorsSuggestions([])
+                    }}>
                     <div className="rounded-full h-5 w-5">
                         <img className="rounded-full h-full w-full object-cover" src={suggestion.image_path} alt="Profile" />
                     </div>
@@ -160,9 +140,64 @@ export const NewProjectMobile = (props) => {
         })
     }
 
+    // to create components for list of collaborators
+    var collaboratorsComp = null
+    if (collaborators.length > 0){
+        collaboratorsComp = collaborators.map((user) => {
+            return (
+                <div className='flex flex-row space-x-1 cursor-pointer'>
+                    <div className="rounded-full h-5 w-5">
+                        <img className="rounded-full h-full w-full object-cover" src={user.image_path} alt="Profile" />
+                    </div>
+                    <div className='flex flex-col'>
+                        <label className="text-[10px]">{user.fullname.trim()}</label>
+                        <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
+                    </div>
+                </div>
+            )
+        })    
+    }
+
+    // to create components for list of recruitment notices
+    var recruitmentsComp = null
+    if (recruitmentArray.length > 0){
+        recruitmentsComp = recruitmentArray.map((message, i)=>{
+            return(
+                <div className='text-[9px] space-y-1'>
+                     <div className='rounded-md px-3 py-2 bg-[#016A69] mt-4 text-white'>
+                        {message}
+                    </div>
+                    <div className='text-[#3C9A9A] italic flex flex-row justify-start ml-2 space-x-6'>
+                        <button onClick={() => handleEditPressed(i)}>Edit </button>
+                        <button onClick={() => {
+                            setRecruitmentArray(prevArray => {
+                                const newArray = [...prevArray];
+                                newArray.splice(i, 1); // Remove the element at index i
+                                return newArray;
+                              });                            
+                            }}>Delete
+                        </button>  
+                    </div>
+                </div>
+        )})
+    }
+
+    // To edit the recruitment message
+    const handleEditPressed = (i) => {
+        const text = recruitmentArray[i]
+        // remote the current item 
+        setRecruitmentArray(prevArray => {
+            const newArray = [...prevArray];
+            newArray.splice(i, 1); // Remove the element at index i
+            return newArray;
+          }); 
+          recruitmentNoticeInputRef.current.value = text
+    }
+
+
     return (
         <div className="relative w-full bg-[#3C9A9A] flex items-center justify-center h-screen">
-            <div className={"flex flex-col justify-center rounded-xl bg-green w-[99%] md:max-w-[50%] bg-white pl-3 pt-4 mx-2 pr-5"}>
+            <div className={"flex flex-col justify-center rounded-xl bg-green w-[99%] bg-white pl-3 pt-4 mx-2 pr-5"}>
                 {/* username and profile NewProjectMobile */}
                 <div className='flex flex-row space-x-1 text-[13px]'>
                     <div className="rounded-full h-5 w-5">
@@ -172,8 +207,13 @@ export const NewProjectMobile = (props) => {
                 </div>
                 {/* project details */}
                 <input className="font-medium pt-3 outline-none"placeholder='Project Title ... (35 characters)'></input>
-                <div>
-                    <textarea className='relative border-hidden pl-0 focus:ring-0' placeholder='Project Description'></textarea>
+                <div className='h-fit'>
+                    <textarea 
+                        className='form-textarea border-none w-full pl-0 focus:ring-0 resize-none' 
+                        placeholder='Project Description'
+                        onChange={handleTextareaChange}
+                        ref = {textRef}>
+                    </textarea>
                     {!containsImage &&    
                         <div className="flex justify-end mr-7">
                             <label htmlFor="photoInput" className="cursor-pointer">
@@ -195,25 +235,34 @@ export const NewProjectMobile = (props) => {
                 <div>
                     <h1 className='text-center text-[12px] pb-2'>Project Collaborators</h1>
                     <div className='flex flex-row justify-around align-top min-h-[8rem] items-start flex-wrap'>
-                        <div className= 'w-[9rem] flex flex-col'>
-                            <div className='inline-flex space-x-1 w-[9rem]'>
-                                <img src={magnifying_glass}/>
-                                <input className='outline-none text-[11px]' placeholder='Add a collaborator' 
-                                    ref={collaboratorSearchRef} onChange={handleCollaboratorSearch}/>
+                        <div className='flex flex-col space-y-3'>
+                            {collaborators.length > 0 && 
+                                <div className='flex flex-col space-y-3'>
+                                    {collaboratorsComp}
+                                </div>}
+                            <div className= 'w-[9rem] flex flex-col'>
+                                <div className='inline-flex space-x-1 w-[9rem] pl-1'>
+                                    <img src={magnifying_glass}/>
+                                    <input className='outline-none text-[11px]' placeholder='Add a collaborator' 
+                                        ref={collaboratorSearchRef} onChange={handleCollaboratorSearch}/>
+                                </div>
+                                {collaboratorsSuggestions.length > 0 && <div className='flex flex-col rounded-b-md border-2 w-[9rem] px-2 py-2'>
+                                    {suggestionsComp}
+                                </div>}
                             </div>
-                            {collaboratorsSuggestions.length > 0 && <div className='flex flex-col rounded-b-md border-2 w-[9rem] px-2 py-2'>
-                                {suggestionsComp}
-                            </div>}
-                        </div>
-                        <div className='flex items-start mt-4'>
-                            {/* The negative margins is to position the image with the div post the recruitments notice */}
-                            <button>
-                                <img className='absolute w-5 -ml-2 -mt-2' src={add_recruitment_notice_icon}/>
-                            </button>
-                            <div className='rounded-md px-3 pb-2 border-2 bg-[#E9E9E9] text-[9px]'>
-                                <input className='outline-none bg-transparent' placeholder='Post a recruitments notice'/>
+                        </div>  
+                        <div>
+                            <div className='flex items-start mt-4'>
+                                {/* The negative margins is to position the image with the div post the recruitments notice */}
+                                <button onClick={handleAddRecruitmentNotice}>
+                                    <img className='absolute w-5 -ml-2 -mt-2' src={add_recruitment_notice_icon}/>
+                                </button>
+                                <div className='rounded-md px-3 pb-2 border-2 bg-[#E9E9E9] text-[9px]'>
+                                    <input ref={recruitmentNoticeInputRef} className='outline-none bg-transparent' placeholder='Post a recruitments notice'/>
+                                </div>
                             </div>
-                        </div>
+                            {recruitmentsComp}
+                        </div>  
                     </div>
                 </div>
                 <div className='flex items-center justify-center text-[11px] mb-5'>   
