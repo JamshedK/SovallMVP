@@ -9,7 +9,7 @@ import add_image_icon from '../../assets/newInterface/new_project/add_image_icon
 
 import { useContext, useState, useRef, useEffect } from 'react';
 import UserContext from '../../contexts/user';
-import { collection, getDocs, query } from 'firebase/firestore';
+import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {db, storage} from '../../firebase-config'
 
@@ -19,8 +19,10 @@ export const NewProjectMobile = (props) => {
     const [allUser, setAllUsers] = useState([])
     const [collaboratorsSuggestions, setCollaboratorsSuggestions] = useState([]) 
     const [imagePath, setImagePath] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
     const [recruitmentArray, setRecruitmentArray] = useState([])
-    
+    const [projectTitle, setProjectTitle] = useState('')
+    const [projectDescription, setProjectDescription] = useState('')
     const textRef = useRef();
     const recruitmentNoticeInputRef = useRef()  
     const imageRef = useRef();
@@ -45,9 +47,15 @@ export const NewProjectMobile = (props) => {
     }, [])
 
     // Show preview of an image when it's selected
-    const handleImageSelected = () => {
-        setContainsImage(true);
-        setImagePath(URL.createObjectURL(imageRef.current.files[0]))
+    const handleImageSelected = (e) => {
+        if(e.target.files[0] != null){
+            setContainsImage(true);
+            setImagePath(URL.createObjectURL(imageRef.current.files[0]))
+            setSelectedImage(imageRef.current.files[0]);
+        }
+        else{
+            setContainsImage(false);
+        }
     }
 
     // remove image preview when the x button is clicked 
@@ -59,6 +67,7 @@ export const NewProjectMobile = (props) => {
     // To handle textarea resizing
     const handleTextareaChange = () => {
         if (textRef.current.value) {
+            setProjectDescription(textRef.current.value)
             textRef.current.style.height = '7px'; // Reset the height 7px
             textRef.current.style.height = `${textRef.current.scrollHeight}px`; // Set the height to the scrollHeight
         }
@@ -101,6 +110,7 @@ export const NewProjectMobile = (props) => {
             setCollaboratorsSuggestions([])
         }
       };
+
       
       // helper method to get download links for profile pictures
       const getProfilePic = async (userObj) => {
@@ -121,7 +131,6 @@ export const NewProjectMobile = (props) => {
 
     // to create components for the list of collaborators the search button is used
     var suggestionsComp = null
-
     if (collaboratorsSuggestions.length > 0){
         suggestionsComp = collaboratorsSuggestions.map((suggestion) => {
             return (
@@ -194,6 +203,51 @@ export const NewProjectMobile = (props) => {
           recruitmentNoticeInputRef.current.value = text
     }
 
+    const handleProjectSubmission = async () => {
+        // Create a new document in the "projects" collection
+        const projectRef = collection(db, 'projects');
+        var dbImagePath = '';
+        if (containsImage){
+            dbImagePath = await uploadImage(selectedImage) 
+        }
+        const projectData = {
+          title: projectTitle,
+          description: projectDescription,
+          imagePath: dbImagePath,
+          collaborators: collaborators,
+          recruitmentNotices: recruitmentArray,
+          isForTest: true,
+          publishedDate: serverTimestamp() // Use serverTimestamp to set the current date and time
+        };
+        console.log(projectData)
+        
+        try {
+          const projectDoc = await addDoc(projectRef, projectData);
+          alert('Project submitted')
+          // Handle success or perform additional operations
+        } catch (error) {
+          console.error('Error submitting project:', error);
+          // Handle error or show error message
+        }
+      };
+      
+      const uploadImage = async (selectedImage) => {
+        // generate a random number to be added to the name of the image
+        const randomNum = Math.round(Math.random()*1000)
+        // path for the image to be saved
+        var dbImagePath = `projects/${selectedImage.name + randomNum}`
+        // Uploads the image to firebase storage
+        const filesFolderRef = ref(storage,dbImagePath)
+        try{
+            await uploadBytes(filesFolderRef, selectedImage)
+        } catch(e){
+            console.log(e);
+        }
+        // remove the image after the image was uploaded
+        handleRemoveImage();
+        return dbImagePath
+      }
+
 
     return (
         <div className="relative w-full bg-[#3C9A9A] flex items-center justify-center h-screen">
@@ -206,7 +260,13 @@ export const NewProjectMobile = (props) => {
                     <label className="">{userCtx.username}</label>
                 </div>
                 {/* project details */}
-                <input className="font-medium pt-3 outline-none"placeholder='Project Title ... (35 characters)'></input>
+                <input 
+                    className="font-medium pt-3 outline-none" 
+                    placeholder='Project Title ... (35 characters)'
+                    onChange={(e) => {
+                        setProjectTitle(e.target.value)
+                        }}>
+                    </input>
                 <div className='h-fit'>
                     <textarea 
                         className='form-textarea border-none w-full pl-0 focus:ring-0 resize-none' 
@@ -266,7 +326,12 @@ export const NewProjectMobile = (props) => {
                     </div>
                 </div>
                 <div className='flex items-center justify-center text-[11px] mb-5'>   
-                    <button type="submit" className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg text-[9px] flex justify-center'>Start my project</button>
+                    <button 
+                        type="submit" 
+                        className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg text-[9px] flex justify-center'
+                        onClick={handleProjectSubmission}> 
+                        Start my project
+                    </button>
                 </div>
             </div>
         </div>
