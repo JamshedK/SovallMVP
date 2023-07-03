@@ -20,40 +20,42 @@ export const ProjectCard = (props) => {
         )
     })
     return (
-        <div className={"flex flex-col rounded-xl justify-between bg-white w-full px-10 py-9 "}>
-            {/* username, date, save and notification button */}
-            <div className="flex flex-row justify-between text-xs w-full">
-                <div className='flex flex-row space-x-1'>
-                    <div className="rounded-full h-3 w-3">
-                        <img className="rounded-full h-full w-full object-cover cursor-pointer" src={profile} alt="Profile" />
+        <div className={"flex flex-col rounded-xl justify-between bg-white w-full py-9 "}>
+            <div className='px-3'>
+                {/* username, date, save and notification button */}
+                <div className="flex flex-row justify-between text-xs w-full pr-8">
+                    <div className='flex flex-row space-x-1'>
+                        <div className="rounded-full h-3 w-3">
+                            <img className="rounded-full h-full w-full object-cover cursor-pointer" src={profile} alt="Profile" />
+                        </div>
+                        <label className="">Jamshed Karimnazarov</label>
+                        <label className=""> - </label>
+                        <label className="">September, 2012</label>
                     </div>
-                    <label className="">Jamshed Karimnazarov</label>
-                    <label className=""> - </label>
-                    <label className="">September, 2012</label>
+                    <div className='flex flex-row space-x-5'>
+                        <button>
+                            <img className='w-3' src={save_icon}/>
+                        </button>
+                        <button>
+                            <img className='w-3' src={notification_icon}/>
+                        </button>
+                    </div>
                 </div>
-                <div className='flex flex-row space-x-5'>
-                    <button>
-                        <img className='w-3' src={save_icon}/>
-                    </button>
-                    <button>
-                        <img className='w-3' src={notification_icon}/>
-                    </button>
+                <h1 className='pt-2 pb-1 text-sm font-bold'>Attention Span</h1>
+                {/* Text and image */}
+                <div className='text-[12px]'>
+                    {/* TODO: Control the paragraph length to 5 and add "see more" right after cropping the text in the same last line */}
+                    <p>
+                        Heya, I just realized we are now a community of a hundred. yay! I was wondering if there could be better ways of 
+                        increasing/improving attention span. I have tried a few things and wanted to share. Since I have a chill semester abroad 
+                        I get to spend  I get to speak ... 
+                    </p>
+                    <button className="flex flex-row font-bold justify-end w-full">see more</button>
                 </div>
             </div>
-            <h1 className='pt-2 pb-1 text-sm font-bold'>Attention Span</h1>
-            {/* Text and image */}
-            <div className='pl-2 text-[12px]'>
-                {/* TODO: Control the paragraph length to 5 and add "see more" right after cropping the text in the same last line */}
-                <p>
-                    Heya, I just realized we are now a community of a hundred. yay! I was wondering if there could be better ways of 
-                    increasing/improving attention span. I have tried a few things and wanted to share. Since I have a chill semester abroad 
-                    I get to spend  I get to speak ... 
-                </p>
-                <button className="flex flex-row font-bold justify-end w-full">see more</button>
-                <img className='rounded-xl pt-2' src={example_image}></img>
-            </div>
+            <img className='pt-2' src={example_image}></img>
             {/* Bottom buttons */}
-            <div className='flex justify-between text-xs pt-4'>
+            <div className='flex justify-between text-xs pt-4 px-12'>
                 {bottomButtons}
             </div>
         </div>
