@@ -24,6 +24,7 @@ import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
 import ShowPostById from "./views/search/ShowPostById";
 import BottomNavBar from "./newInterface/NavBar/BottomNavBar";
 import { NewProjectMobile } from "./newInterface/home/NewProject";
+import { TabsMobile } from "./newInterface/home/Tabs";
 
 export default function App() {
     const [subscription, setSubscription] = React.useState(false);
@@ -57,6 +58,7 @@ export default function App() {
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
                     <Route path="/newproject" element={<NewProjectMobile/>}/>
+                    <Route path="/discussion" element={<TabsMobile/>}/>
                     <Route path='/mainfeed' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
