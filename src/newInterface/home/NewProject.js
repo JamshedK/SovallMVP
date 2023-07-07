@@ -274,7 +274,7 @@ export const NewProjectMobile = (props) => {
                     </input>
                 <div className='h-fit'>
                     <textarea 
-                        className='form-textarea border-none w-full pl-0 focus:ring-0 resize-none' 
+                        className='form-textarea text-[14px] border-none w-full pl-0 focus:ring-0 resize-none' 
                         placeholder='Project Description'
                         onChange={handleTextareaChange}
                         ref = {textRef}>
