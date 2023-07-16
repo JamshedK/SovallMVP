@@ -18,11 +18,11 @@ import {getDownloadURL, ref} from 'firebase/storage'
 import {db, storage} from '../../firebase-config'
 import { doc, updateDoc, collection, increment, serverTimestamp, addDoc, query, where, getDocs, getDoc, deleteDoc } from "@firebase/firestore";
 import AuthContext from '../../contexts/auth-context';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const MAX_LINES = 2; // Maximum number of lines before showing "See more"
 
-export const ProjectCard = (props) => {
+export const ProjectInfo = (props) => {
     const data = props.data
 
     const [commentCount, setCommentCount] = useState(props.data.commentCount)
@@ -32,29 +32,22 @@ export const ProjectCard = (props) => {
     const [issueCount, setIssueCount] = useState(props.data?.issueCount || 0)
     const [isUpvoted, setIsUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [isDownvoted, setIsDownvoted] = useState(false);  // to swithc icons when downvoted or not
-    const [isExpanded, setIsExpanded] = useState(false);
     const [imageURL, setImageURL] = useState('');
     const [containsImage, setContainsImage] = useState(false);
     const [username, setUserName] = useState('');
     const [profilePicPath, setProfilePicPath] = useState(''); 
-
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editedDescription, setEditedDescription] = useState(data?.description);  
     const intereactionColRef = collection(db, 'interactions')
-    const projectDocRef = doc(db, "projects", data.projectID);
-    const descriptionRef = useRef(null);
+    const projectDocRef = doc(db, "projects", data?.projectID);
+    const descriptionRef = useRef(null);    
 
     const navigate = useNavigate()
-
     const authCtx = useContext(AuthContext)
 
     // When the post loads, determine if the user had liked it or not
     useEffect(() => {
-        // To control the height of the description box
-        const descriptionElement = descriptionRef.current;
-        if (descriptionElement && descriptionElement.clientHeight > MAX_LINES * 13) {
-            setIsExpanded(false);
-        } else {
-            setIsExpanded(true);
-        }
+
         const checkAlreadyInteracted = async (interactionType) => {
             const q = query(
                 intereactionColRef,
@@ -113,6 +106,40 @@ export const ProjectCard = (props) => {
             }
             getUserInfo();
     }, []);
+    
+    const handleEditClick = () => {
+        setIsEditMode(true);
+    };
+      
+    const handleSaveClick = async () => {
+        setIsEditMode(false);
+        // Get the updated description content from the ref
+        const updatedDescription = descriptionRef.current.textContent.trim();
+        setEditedDescription(updatedDescription);
+
+        // Update the description in Firebase
+        await updateDoc(projectDocRef, { description: editedDescription });
+    };
+
+    const handleCancelClick = () => {
+        setIsEditMode(false);
+        // reload to make sure the changes do not save
+        window.location.reload()
+    };      
+
+    const handleDeleteClick = async () => {
+        // Show a confirmation dialog
+        const isConfirmed = window.confirm('Are you sure you want to delete this project?');
+    
+        if (isConfirmed) {
+          // Delete the project from Firebase
+          await deleteDoc(projectDocRef);
+    
+          // Navigate to "/newhome"
+          navigate('/newhome')
+        }
+    };
+    
 
     const handleUpvote = async () => {
         // Increment or decrement upvoteCount in posts collection
@@ -176,18 +203,10 @@ export const ProjectCard = (props) => {
         setIsDownvoted(!isDownvoted);
     }
 
-    const handleRedirect = () => {
-        const params = {id: data.projectID}
-        navigate({
-            pathname: '/project-page',
-            search:`${createSearchParams(params)}`
-        })
-    }
-
     const buttonsArray = [
                 {icon: issue_icon, text: `${issueCount} Issues`},
                 {icon: recruiting_icon, text: `${recruitingCount} Recruiting`,},
-                {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : "", onClick: handleRedirect},
+                {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : ""},
                 {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
                 {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote}
         ];
@@ -200,29 +219,21 @@ export const ProjectCard = (props) => {
             </button>
         )
     })
-
-    // To expand the description box
-    const toggleExpanded = () => {
-        setIsExpanded((prevState) => !prevState);
-    };
     
-    // to get the style fo the description box
-    const getDescriptionStyle = () => {
-        return isExpanded ? "max-h-full" : "max-h-[4.5rem] overflow-hidden";
-    };
-    
-
     // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
     const timeForPost = moment(data.publishedDate.toDate()).format('MMMM, D, YYYY');
 
     return (
-        <div className={"flex flex-col rounded-xl justify-between bg-white w-full py-5 lg:max-w-[40%] "}>
+        <div className={"flex flex-col rounded-xl justify-between bg-white w-full h-fit py-5 lg:max-w-[40%] "}>
             <div className='px-3'>
                 {/* username, date, save and notification button */}
                 <div className="flex flex-row justify-between text-xs w-full pr-3">
                     <div className='flex flex-row space-x-1'>
                         <div className="rounded-full h-3 w-3">
-                            <img className="rounded-full h-full w-full object-cover cursor-pointer" src={profilePicPath} alt="Profile" />
+                            <img 
+                                className="rounded-full h-full w-full object-cover cursor-pointer" 
+                                src={profilePicPath} alt="Profile"
+                            />
                         </div>
                         <label className="">{username}</label>
                         <label className=""> - </label>
@@ -240,13 +251,28 @@ export const ProjectCard = (props) => {
                 <h1 className='pt-2 pb-1 text-sm font-bold'>{data?.title}</h1>
                 {/* Text and image */}
                 <div className="text-[12px]">
-                    <div className={getDescriptionStyle()} ref={descriptionRef}>
-                        <p>{data?.description}</p>
+                    <div className='focus:outline-none'
+                        ref={descriptionRef}
+                        contentEditable={isEditMode}
+                    >
+                        {editedDescription}
                     </div>
-                    {!isExpanded && (
-                        <button className="flex flex-row font-bold justify-end w-full" onClick={toggleExpanded}> see more </button>
+                </div>
+
+
+                {/* Edit and delete button */}
+                <div className='flex flex-row text-[12px] space-x-4 mt-2 text-[#3C9A9A]'>
+                    <button onClick={handleEditClick}>Edit</button>
+                    <button onClick={handleDeleteClick}>Delete</button>
+                    {/*Save Button */}
+                    {isEditMode && (
+                        <button onClick={handleSaveClick}>Save</button>
                     )}
-                    </div>
+                    {isEditMode && (
+                        <button onClick={handleCancelClick}>Cancel</button>
+                    )}
+
+                </div>
             </div>
             <img className='pt-2' src={imageURL}></img>
             {/* Bottom buttons */}
