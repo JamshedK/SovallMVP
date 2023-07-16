@@ -10,9 +10,10 @@ import add_image_icon from '../../assets/newInterface/new_project/add_image_icon
 import { useContext, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/user';
+import AuthContext from '../../contexts/auth-context';
 import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
-import {db, storage} from '../../firebase-config'
+import {auth, db, storage} from '../../firebase-config'
 
 export const NewProjectMobile = (props) => {
     const [containsImage, setContainsImage] = useState(false);
@@ -33,6 +34,7 @@ export const NewProjectMobile = (props) => {
     const navigate = useNavigate()
 
     const userCtx= useContext(UserContext);
+    const authCtx = useContext(AuthContext)
 
     useEffect(()=>{
         // Get the list of all users so we can filter for collaborators search
@@ -221,7 +223,8 @@ export const NewProjectMobile = (props) => {
           collaborators: collaborators,
           recruitmentNotices: recruitmentArray,
           isForTest: true,
-          publishedDate: serverTimestamp() // Use serverTimestamp to set the current date and time
+          publishedDate: serverTimestamp(), // Use serverTimestamp to set the current date and time
+          userID: authCtx.userID
         };
         console.log(projectData)
         
