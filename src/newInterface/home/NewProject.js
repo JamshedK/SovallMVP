@@ -298,7 +298,7 @@ export const NewProjectMobile = (props) => {
                         </div>}
                 </div>
 
-                <hr className='border-gray-300 my-4'/>
+                <hr className='border-[#3C9A9A] my-4'/>
                 {/* collaborators */}
                 <div>
                     <h1 className='text-center text-[12px] pb-2'>Project Collaborators</h1>

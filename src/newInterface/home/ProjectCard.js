@@ -184,22 +184,6 @@ export const ProjectCard = (props) => {
         })
     }
 
-    const buttonsArray = [
-                {icon: issue_icon, text: `${issueCount} Issues`},
-                {icon: recruiting_icon, text: `${recruitingCount} Recruiting`,},
-                {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : "", onClick: handleRedirect},
-                {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
-                {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote}
-        ];
-
-    const bottomButtons = buttonsArray.map((obj, i) => {
-        return(
-            <button key={'button-'+i} className='flex flex-row space-x-1 items-center' onClick={obj.onClick}>
-                <img className='w-4' src={obj.icon}/>
-                <label className='mt-1'>{obj.text}</label>
-            </button>
-        )
-    })
 
     // To expand the description box
     const toggleExpanded = () => {
@@ -214,8 +198,26 @@ export const ProjectCard = (props) => {
 
     // Format the date using moment library. Docs: https://momentjs.com/docs/#/displaying/format/
     const timeForPost = moment(data.publishedDate.toDate()).format('MMMM, D, YYYY');
+    // Project card for mobile
+    const mobileProjectCard = () => {
+        const buttonsArray = [
+            {icon: issue_icon, text: `${issueCount} Issues`},
+            {icon: recruiting_icon, text: `${recruitingCount} Recruiting`,},
+            {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : "", onClick: handleRedirect},
+            {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
+            {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote}
+        ];
 
-    return (
+        const bottomButtons = buttonsArray.map((obj, i) => {
+            return(
+                <button key={'button-'+i} className='flex flex-row space-x-1 items-center' onClick={obj.onClick}>
+                    <img className='w-4' src={obj.icon}/>
+                    <label className='mt-1'>{obj.text}</label>
+                </button>
+            )
+        })
+
+        return (
         <div className={"flex flex-col rounded-xl justify-between bg-white w-full py-5 lg:max-w-[40%] "}>
             <div className='px-3'>
                 {/* username, date, save and notification button */}
@@ -253,6 +255,108 @@ export const ProjectCard = (props) => {
             <div className='flex justify-between text-xs pt-4 px-6'>
                 {bottomButtons}
             </div>
+        </div>
+    )}
+    // Project card for desktop
+    const desktopProjectCard = () => {
+        const buttonsArray = [
+            {icon: notification_icon},
+            {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
+            {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote},
+            {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : "", onClick: handleRedirect},
+            {icon: save_icon}
+        ];
+
+        const buttonsComp = buttonsArray.map((obj, i) => {
+            return(
+                <button key={'button-'+i} className='flex flex-row space-x-1 items-center' onClick={obj.onClick}>
+                    <img className='w-5' src={obj.icon}/>
+                    <label className=''>{obj.text}</label>
+                </button>
+            )
+        })
+        const numCollaborators = data.collaborators.length;
+        const collaboratorsComp = data.collaborators.slice(0,2).map((user) => {
+            return (
+                <div key={'div-'+Math.random()} className='flex flex-row space-x-1 cursor-pointer'>
+                    <div className="rounded-full h-7 w-7">
+                        <img className="rounded-full h-full w-full object-cover" src={user.image_path} alt="Profile" />
+                    </div>
+                    <div className='flex flex-col'>
+                        <label className="text-[12px]">{user.fullname.trim()}</label>
+                        <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
+                    </div>
+                </div>
+            )
+        })    
+        return(
+            <div className={"flex flex-row justify-between h-[13rem] rounded-lg w-[65%]"}>
+                {/* left */}
+                <div className="px-8 bg-white rounded-l-xl h-full border-r-[2px] border-[#3C9A9A]">
+                    <div className='py-6 flex flex-col  justify-between h-full space-y-1'>
+                        {buttonsComp}
+                    </div>
+                </div>
+                {/*  main screen */}
+                <div className='flex flex-grow bg-white'>
+                    <div className='flex flex-row w-full'>
+                        {/* profile pic of post owner*/}
+                        <div className="rounded-full h-7 w-7 ml-4 mt-5 ">
+                            <img 
+                                className="rounded-full h-full w-full object-cover" 
+                                src={profilePicPath}
+                                alt="Profile">
+                            </img>
+                        </div>
+                        <div className='flex flex-row justify-around w-full'>
+                            {/* project details */}
+                            <div className='flex flex-col flex-grow ml-3 mt-5 max-w-[400px]'>
+                                <h1 className='text-xl'>{data?.title}</h1>
+                                <label className="text-[11px]">{`${username.split(" ")[0]} - ${timeForPost}` }</label>
+                                <div className={getDescriptionStyle()} ref={descriptionRef}>
+                                    <p className='text-[15px]'>{data?.description}</p>
+                                </div>
+                                <div className="flex-grow"></div> {/* This div will push the issueCount to the bottom */}
+                                {issueCount > 0 &&
+                                    <label 
+                                        className='text-[13px] text-[#BD1B1B] mb-5'
+                                    >
+                                        {`+${issueCount} unsolved issues`}
+                                    </label>
+                                }
+                            </div>
+                            {/* image */}
+                            <div className='mr-0'>
+                                <img className='h-full object-cover w-[300px]' src={imageURL}></img>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {/* collaborators */}
+                <div className='px-2 py-4 w-52 bg-white rounded-r-xl h-full border-l-[2px] border-[#3C9A9A]'>
+                    <h1 className='font-inter text-[14px] font-medium'>Collaborators</h1>
+                    <div className='flex flex-col space-y-3 mt-2'>
+                        <div className='flex flex-row items-end'>
+                            <div className='flex flex-col space-y-3'>
+                                {collaboratorsComp}
+                                </div>
+                            {numCollaborators > 2 && 
+                                <label className='text-[11px]'>{`+${numCollaborators-2}`}</label>}
+                        </div>
+                        <div className='flex flex-row space-x-1 cursor-pointer text-[12px] items-center'>
+                            <div className="rounded-full h-7 w-7">
+                                <img className="rounded-full h-full w-full object-cover" src={recruiting_icon} alt="Profile" />
+                            </div>
+                            <label>{`(${recruitingCount}) Recruiting`}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    return (
+        <div className='w-screen flex justify-center'>
+            {desktopProjectCard()}
         </div>
     );
 }

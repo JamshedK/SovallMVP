@@ -25,7 +25,7 @@ const ProjectPageMain = (props) => {
         fetchProjectData();
     },[queryParameters])
     return (
-        <div className="flex flex-row justify-center mt-12 w-full">
+        <div className="flex flex-row justify-center mt-12 w-full bg-[#3C9A9A] h-screen">
             {projectData && <ProjectInfo data={projectData}/>}
         </div>
     )
