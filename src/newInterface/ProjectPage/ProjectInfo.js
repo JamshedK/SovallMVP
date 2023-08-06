@@ -224,7 +224,7 @@ export const ProjectInfo = (props) => {
     const timeForPost = moment(data.publishedDate.toDate()).format('MMMM, D, YYYY');
 
     return (
-        <div className={"flex flex-col rounded-xl justify-between bg-white w-full h-fit py-5 lg:max-w-[40%] "}>
+        <div className={"flex flex-col rounded-t-xl justify-between bg-white w-full h-fit py-5 lg:max-w-[40%] "}>
             <div className='px-3'>
                 {/* username, date, save and notification button */}
                 <div className="flex flex-row justify-between text-xs w-full pr-3">
