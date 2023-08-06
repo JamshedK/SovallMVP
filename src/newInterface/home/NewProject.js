@@ -18,6 +18,7 @@ import {auth, db, storage} from '../../firebase-config'
 export const NewProjectMobile = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     const [collaborators, setCollaborators] = useState([])
+    const [showPostButton, setShowPostButton] = useState(false)
     const [allUser, setAllUsers] = useState([])
     const [collaboratorsSuggestions, setCollaboratorsSuggestions] = useState([]) 
     const [imagePath, setImagePath] = useState(null);
@@ -84,6 +85,7 @@ export const NewProjectMobile = (props) => {
         if (inputValue.trim() !== '') {
             setRecruitmentArray(prevArray => [...prevArray, inputValue]);
             recruitmentNoticeInputRef.current.value = '';
+            onRecruitmentNoticeInputChange()
         }
 
     }
@@ -145,6 +147,7 @@ export const NewProjectMobile = (props) => {
                     onClick={() => {
                         setCollaborators([...collaborators, suggestion])
                         setCollaboratorsSuggestions([])
+                        collaboratorSearchRef.current.value = ''
                     }}>
                     <div className="rounded-full h-5 w-5">
                         <img className="rounded-full h-full w-full object-cover" src={suggestion.image_path} alt="Profile" />
@@ -155,12 +158,23 @@ export const NewProjectMobile = (props) => {
         })
     }
 
+    const removeCollaborator = (index) => {
+        // Create a shallow copy of the collaborators array to avoid directly mutating the state
+        const updatedCollaborators = [...collaborators];
+      
+        // Remove the collaborator at the specified index
+        updatedCollaborators.splice(index, 1);
+      
+        // Update the collaborators state with the updated array
+        setCollaborators(updatedCollaborators);
+    };
+      
     // to create components for list of collaborators
     var collaboratorsComp = null
     if (collaborators.length > 0){
-        collaboratorsComp = collaborators.map((user) => {
+        collaboratorsComp = collaborators.map((user, i) => {
             return (
-                <div className='flex flex-row space-x-1 cursor-pointer'>
+                <div className='flex flex-row space-x-1'>
                     <div className="rounded-full h-5 w-5">
                         <img className="rounded-full h-full w-full object-cover" src={user.image_path} alt="Profile" />
                     </div>
@@ -168,6 +182,11 @@ export const NewProjectMobile = (props) => {
                         <label className="text-[10px]">{user.fullname.trim()}</label>
                         <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
                     </div>
+                    <button onClick={() => removeCollaborator(i)}>
+                        <img
+                            className='h-3' 
+                            src={close_image_icon}></img>
+                    </button>
                 </div>
             )
         })    
@@ -256,6 +275,14 @@ export const NewProjectMobile = (props) => {
         return dbImagePath
       }
 
+      const onRecruitmentNoticeInputChange = () => {
+        if (recruitmentNoticeInputRef.current.value !== ''){
+            setShowPostButton(true)
+        } else {
+            setShowPostButton(false)
+        }
+      }
+
 
     return (
         <div className="relative w-full bg-[#3C9A9A] flex items-center justify-center h-screen">
@@ -297,8 +324,8 @@ export const NewProjectMobile = (props) => {
                             <img className='w-full' src = {imagePath}></img>
                         </div>}
                 </div>
-
-                <hr className='border-[#3C9A9A] my-4'/>
+                {/* Negative margin is to ignore the margin in parent component */}
+                <hr className='left-0 right-0 border-[#3C9A9A] my-4 -mx-5'/>
                 {/* collaborators */}
                 <div>
                     <h1 className='text-center text-[12px] pb-2'>Project Collaborators</h1>
@@ -320,13 +347,20 @@ export const NewProjectMobile = (props) => {
                             </div>
                         </div>  
                         <div>
-                            <div className='flex items-start mt-4'>
-                                {/* The negative margins is to position the image with the div post the recruitments notice */}
-                                <button onClick={handleAddRecruitmentNotice}>
-                                    <img className='absolute w-5 -ml-2 -mt-2' src={add_recruitment_notice_icon}/>
-                                </button>
-                                <div className='rounded-md px-3 pb-2 border-2 bg-[#E9E9E9] text-[9px]'>
-                                    <input ref={recruitmentNoticeInputRef} className='outline-none bg-transparent' placeholder='Post a recruitments notice'/>
+                            <div className='flex items-start '>
+                                <div className='flex flex-col items-center rounded-md px-3 pb-2 border-2 bg-[#E9E9E9] text-[9px] '>
+                                    <input 
+                                        ref={recruitmentNoticeInputRef} 
+                                        onChange={onRecruitmentNoticeInputChange}
+                                        className='outline-none bg-transparent' 
+                                        placeholder='Post a recruitments notice'/>
+                                    {showPostButton && 
+                                        <button 
+                                            onClick={handleAddRecruitmentNotice} 
+                                            className="bg-[#00AAC1] text-white w-fit rounded-md text-[9px] px-4 py-0.5 mt-2"
+                                        >
+                                            Post
+                                        </button>}
                                 </div>
                             </div>
                             {recruitmentsComp}
