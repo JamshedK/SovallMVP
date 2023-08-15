@@ -9,6 +9,7 @@ import comment_icon from '../../assets/newInterface/home/comment_icon.svg';
 import save_icon from '../../assets/newInterface/home/save_icon.svg';
 import issue_icon from '../../assets/newInterface/home/issue_icon.svg';
 import recruiting_icon from '../../assets/newInterface/home/recruiting_icon.svg';
+import recruiting_icon_web from '../../assets/newInterface/home/recruiting_icon_web.svg';
 
 import { useState, useEffect, useContext, useRef } from 'react';
 
@@ -345,7 +346,7 @@ export const ProjectCard = (props) => {
                         </div>
                         <div className='flex flex-row space-x-1 cursor-pointer text-[12px] items-center'>
                             <div className="rounded-full h-7 w-7">
-                                <img className="rounded-full h-full w-full object-cover" src={recruiting_icon} alt="Profile" />
+                                <img className="rounded-full h-full w-full object-cover" src={recruiting_icon_web} alt="Profile" />
                             </div>
                             <label>{`(${recruitingCount}) Recruiting`}</label>
                         </div>
