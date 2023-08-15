@@ -355,9 +355,25 @@ export const ProjectCard = (props) => {
             </div>
         );
     }
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+    // Update the isMobile state when the screen is resized
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
+
     return (
         <div className='w-screen flex justify-center'>
-            {desktopProjectCard()}
+            {isMobile ? mobileProjectCard() : desktopProjectCard()}
         </div>
     );
 }
