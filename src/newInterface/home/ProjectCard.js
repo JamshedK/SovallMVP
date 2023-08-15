@@ -246,9 +246,20 @@ export const ProjectCard = (props) => {
                     <div className={getDescriptionStyle()} ref={descriptionRef}>
                         <p>{data?.description}</p>
                     </div>
-                    {!isExpanded && (
-                        <button className="flex flex-row font-bold justify-end w-full" onClick={toggleExpanded}> see more </button>
-                    )}
+                    <div className='flex flex-row justify-between w-full text-[10px] py-2 px-4'>
+                        {!isExpanded && (
+                            <button className="italic w-fit cursor-pointer" onClick={toggleExpanded}> Read more </button>
+                        )}
+                        {isExpanded && (
+                            <button className="italic w-fit cursor-pointer" onClick={toggleExpanded}> Read less </button>
+                        )}
+                        <button 
+                            className="italic w-fit"
+                            onClick={() => handleRedirect()}
+                        >
+                            View full project
+                        </button>
+                    </div>
                     </div>
             </div>
             <img className='pt-2' src={imageURL}></img>
@@ -355,7 +366,8 @@ export const ProjectCard = (props) => {
             </div>
         );
     }
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // for checking if the user in mobile
 
     // Update the isMobile state when the screen is resized
     useEffect(() => {
