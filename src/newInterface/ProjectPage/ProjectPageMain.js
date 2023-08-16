@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { db } from "../../firebase-config";
 import { getDoc, doc, collection } from "firebase/firestore";
 import ProductPageCommentArea from "./ProductPageComments";
+import { TabsMobile } from "../home/Tabs";
 
 const ProjectPageMain = (props) => {
     const [queryParameters] = useSearchParams()
@@ -33,7 +34,11 @@ const ProjectPageMain = (props) => {
     },[queryParameters])
     return (
         <div className="flex flex-col justify-top mt-12 w-full bg-[#3C9A9A] h-screen">
-            {projectData && <ProjectInfo data={projectData}/>}
+            {projectData && 
+                <ProjectInfo 
+                    data={projectData}
+                />}
+            <TabsMobile setSelectedTab={setSelectedTab}/>
             {projectData && 
                 <ProductPageCommentArea 
                     commentCount={commentCount}
