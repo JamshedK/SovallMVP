@@ -9,6 +9,7 @@ import AuthContext from '../../contexts/auth-context';
 import moment from 'moment';   // library for formatting dates
 import { async } from 'q';
 import UserContext from '../../contexts/user';
+import SelectedTabContext from '../../contexts/selected-tab-context';
 
  // get username and profile pic
  const getUserInfo = async (userID) => {
@@ -71,7 +72,6 @@ const ProductPageCommentArea = (props) => {
                     />
         })
     }
-
     return (
         <div className="w-full">
             <div className='bg-white border-2 border-white'>
@@ -285,6 +285,7 @@ const CommentReplies = (props) => {
 // Component for writing a new comment
 // TODO: image and file input
 const NewCommentBox = (props) => {
+    const stCtx = useContext(SelectedTabContext) // context for selectedTab
     const textAreaRef = useRef();  
     const [showCommentButton, setShowCommentButton] = useState(false);  // control whether to show comment button or not
     const [containsImage, setContainsImage] = useState(false);
@@ -294,6 +295,10 @@ const NewCommentBox = (props) => {
     const projectsDocRef = doc(db, "projects", props.projectID);
     const authCtx = useContext(AuthContext);
     const userCtx = useContext(UserContext)
+    console.log(stCtx.selectedTab)
+    const commentPageText = {'discussions': 'Start a discussion', 
+                            'issues': 'Create an issue', 
+                            'progress': 'Share progress updates'}
 
     // Display comment button only when the user types something
     const onTextAreaChange = (event) => {
@@ -372,7 +377,6 @@ const NewCommentBox = (props) => {
         })
         setShowCommentButton(false)
     }
-
     return (
         <div className='w-full flex flex-col items-center bg-[#E9E9E9] rounded-lg px-2 py-2 '>
             <div className='flex w-full space-x-2'>
@@ -380,7 +384,7 @@ const NewCommentBox = (props) => {
                     <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                     <textarea 
                         className="form-textarea w-full text-[12px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-10 text-black" 
-                        placeholder='Start a discussion'
+                        placeholder={commentPageText[stCtx.selectedTab]}
                         ref={textAreaRef}
                         onChange={onTextAreaChange}
                     ></textarea>
