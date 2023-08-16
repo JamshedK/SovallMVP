@@ -38,7 +38,7 @@ const ProjectPageMain = (props) => {
                 <ProjectInfo 
                     data={projectData}
                 />}
-            <TabsMobile setSelectedTab={setSelectedTab}/>
+            <TabsMobile/>
             {projectData && 
                 <ProductPageCommentArea 
                     commentCount={commentCount}

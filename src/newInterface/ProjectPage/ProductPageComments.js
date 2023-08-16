@@ -35,6 +35,7 @@ const ProductPageCommentArea = (props) => {
     const [newCommentAdded, setNewCommentAdded] = useState();
     const [commentDeleted, setCommentDeleted] = useState();
     let commentItems = [null];
+    const stCtx = useContext(SelectedTabContext)
     // Get the comments from firestore and store them in an array
     useEffect(() => {
         var comments = []
@@ -45,6 +46,7 @@ const ProductPageCommentArea = (props) => {
             querySnapshot.forEach((doc) => {
                 comments.push({...doc.data(), "commentID": doc.id})
             });
+            console.log(comments)
             setCommentsArray(comments);
         }
         getComments();
@@ -56,10 +58,15 @@ const ProductPageCommentArea = (props) => {
         const updatedComents = [...commentsArray.slice(0, commentIndex), ...commentsArray.slice(commentIndex + 1)]
         setCommentsArray(updatedComents)
     } 
+    // Filter the comments based on the selectedTab
+    const filteredComments = commentsArray.filter(comment => {
+        console.log('Filtering selected tab ' + stCtx.selectedTab)
+        return comment.type === stCtx.selectedTab;
+    });
 
     // Create comments component for every comment
-    if(commentsArray.length > 0){
-        commentItems = commentsArray.map((comment, i) => {
+    if(filteredComments.length > 0){
+        commentItems = filteredComments.map((comment, i) => {
             // Having key for each Comment is required per React docs  
             return <SingleComment key={"comment-card-" + i} 
                         commentData={comment}
@@ -296,9 +303,19 @@ const NewCommentBox = (props) => {
     const authCtx = useContext(AuthContext);
     const userCtx = useContext(UserContext)
     console.log(stCtx.selectedTab)
-    const commentPageText = {'discussions': 'Start a discussion', 
-                            'issues': 'Create an issue', 
-                            'progress': 'Share progress updates'}
+    const commentPageText = {'discussions': {
+                                'inputPlaceholder': 'Start a discussion', 
+                                'buttonText': 'Comment'
+                                }, 
+                            'issues': {
+                                'inputPlaceholder': 'Create an issue', 
+                                'buttonText': 'Post issue'  
+                                }, 
+                            'progress':{ 
+                                'inputPlaceholder': 'Share progress updates',
+                                'buttonText':'Share update'
+                            }
+                        }
 
     // Display comment button only when the user types something
     const onTextAreaChange = (event) => {
@@ -354,7 +371,8 @@ const NewCommentBox = (props) => {
             text: textAreaRef.current.value,
             ts: serverTimestamp(),
             userID: authCtx.userID,
-            imagePath: imagePath
+            imagePath: imagePath,
+            type: stCtx.selectedTab
         }
         // Store the new comment in firebase
         const docRef = await addDoc(commentsCollectionRef, newCommentData)
@@ -384,7 +402,7 @@ const NewCommentBox = (props) => {
                     <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                     <textarea 
                         className="form-textarea w-full text-[12px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-10 text-black" 
-                        placeholder={commentPageText[stCtx.selectedTab]}
+                        placeholder={commentPageText[stCtx.selectedTab].inputPlaceholder}
                         ref={textAreaRef}
                         onChange={onTextAreaChange}
                     ></textarea>
@@ -395,7 +413,7 @@ const NewCommentBox = (props) => {
                     onClick={commentButtonHandler} 
                     className="relative top-2 bg-[#00AAC1] text-white rounded-md w-fit px-4 text-[12px] mb-4 py-1"
                 >
-                    Comment
+                    {commentPageText[stCtx.selectedTab].buttonText}
                 </button>}
         </div>      
     )
