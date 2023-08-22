@@ -171,14 +171,13 @@ const SingleComment = (props) => {
                 - Decrease the comment count 
             */
             await deleteDoc(doc(db, 'projectComments', props.commentData.commentID))
+            setShowDeleteBtn(false);
         }
-        setShowDeleteBtn(false);
     }
     return (
         <div className='pt-2 bg-white'>
             {/*Member comments*/}
             <div className='flex flex-row space-x-4'>
-                
                 <div className='flex flex-col space-y-5 w-full'>
                     <div className='flex flex-col px-4'>
                         {/* username info  */}
@@ -214,7 +213,7 @@ const SingleComment = (props) => {
                         </div>
                     }   
                     {/*Replies to member comment if present*/}
-                    <div>
+                    <div className='mx-8'>
                         {replyItems}
                     </div>
                 </div>
@@ -231,8 +230,9 @@ const CommentReplies = (props) => {
     const [userInfo, setUserInfo] = useState({});
     const authCtx = useContext(AuthContext);
     const [showDeleteBtn, setShowDeleteBtn] = useState(props.reply_data.user_id === authCtx.userID);
-    const tsForDisplay = moment(ts).fromNow();
-
+    // const tsForDisplay = moment(ts).fromNow();
+    // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
+    const timeForComment = moment(ts).format('MMMM, D, YYYY');
     // fetch the image if the reply contains one
     useEffect(() => {
         const getImage = async () => {
@@ -271,18 +271,25 @@ const CommentReplies = (props) => {
         }
         setShowDeleteBtn(false);
     }
-
+    console.log(props)
     return (
-        <div className='w-full flex flex-row space-x-4 space-y-2'>
-            <div className='h-10 v-10'>
-                <img className="rounded-full h-full" src = {userInfo.profilePicPath}></img>
-            </div>
-            <div className='flex flex-col space-y-1'>
-                <label className='font-bold'>{userInfo.username}</label>
-                <label>{props.reply_data.text}</label>
+        <div className='w-full flex flex-col space-x-4 space-y-1'>
+                {/* username info  */}
+                <div className='flex flex-row space-x-1 text-xs'>
+                    <div className="rounded-full h-3 w-3">
+                        <img 
+                            className="rounded-full h-full w-full object-cover cursor-pointer" 
+                            src={userInfo.profilePicPath} alt="Profile"
+                        />
+                    </div>
+                    <label className="">{userInfo.username}</label>
+                    <label className=""> - </label>
+                    <label className="">{timeForComment}</label>
+                </div>
+            <div className='flex flex-col space-y-1 text-xs'>
+                <label className='text-[12px]'>{props.reply_data.text}</label>
                 {containsImage && <img src={imageURL}></img>}
                 <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
-                    <label>{tsForDisplay}</label>
                     {showDeleteBtn && <button onClick={onDeleteBtnClicked}>Delete</button>}
                 </div>
             </div>
@@ -501,7 +508,7 @@ const NewReplyBox = (props) => {
         const interactionsColRef = collection(db, 'interactions')
         await addDoc(interactionsColRef, {
             user_id: authCtx.userID,
-            post_id: props.post_id,
+            projectID: props.projectID,
             commentID: props.commentID,
             ts: new Date(),
             type: "comment",
@@ -519,7 +526,7 @@ const NewReplyBox = (props) => {
                         <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                         <textarea 
                             className="form-textarea w-full text-[10px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-6 text-black" 
-                            placeholder='Reply to discussion'
+                            placeholder='Reply'
                             ref={textAreaRef}
                             onChange={onTextAreaChange}
                         ></textarea>
