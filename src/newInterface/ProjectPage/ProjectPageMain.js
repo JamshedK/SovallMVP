@@ -40,11 +40,14 @@ const ProjectPageMain = (props) => {
                 />}
             <TabsMobile/>
             {projectData && 
-                <ProductPageCommentArea 
-                    commentCount={commentCount}
-                    setCommentCount={setCommentCount}
-                    projectID={projectData.projectID}
-                />}
+                <div className="bg-white pt-4">
+                    <ProductPageCommentArea 
+                        commentCount={commentCount}
+                        setCommentCount={setCommentCount}
+                        projectID={projectData.projectID}
+                    />
+                </div>
+            }
         </div>
     )
 }
