@@ -35,9 +35,9 @@ const ProjectPageMain = (props) => {
     return (
         <div className="">
             {projectData && 
-                <div className="flex flex-col align-top pt-8 w-full bg-[#3C9A9A] h-full overflow-auto">
+                <div className="flex flex-col pt-8 w-screen items-center bg-[#3C9A9A] h-screen overflow-y-auto">
                     <ProjectInfo data={projectData}/>
-                    <div className="flex flex-col align-start bg-white mt-4 h-fit">
+                    <div className="flex flex-col bg-white mt-4 h-fit lg:max-w-[40%] w-full">
                         <TabsMobile/>
                         <ProductPageCommentArea 
                             commentCount={commentCount}

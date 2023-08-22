@@ -8,12 +8,13 @@ import home_icon_selected from '../../assets/newInterface/navbar/home_icon_selec
 import home_icon_unselected from '../../assets/newInterface/navbar/home_icon_unselected.svg';
 import example_image from '../../assets/newInterface/home/example_image.jpg';
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import UserContext from '../../contexts/user';
 const BottomNavBar = () => {
     const [currentMenuOption, setCurrentMenuOption] = useState(3);
     const profilePicStyle = currentMenuOption === 4 ? "border-[#F7B618]" : "border-[#044A54]";
-
+    const userCtx = useContext(UserContext)
     const menuOptionsArray = [
         [launch_logo_unselected, launch_logo_selected],
         [save_icon_unselected,save_icon_selected],
@@ -47,7 +48,10 @@ const BottomNavBar = () => {
                 {menuOptions}
                 <button value={4} onClick={handleMenuOptionSelected}>
                     <div className={"rounded-full h-7 w-7 border-2 " + profilePicStyle} >
-                        {/* <img className="object- cursor-pointer" src={example_image} alt="Profile" /> */}
+                        <img 
+                            className="rounded-full h-full w-full object-cover cursor-pointer" 
+                            src={userCtx.profilePicPath} alt="Profile"
+                        />
                     </div>
                 </button>
             </div>
