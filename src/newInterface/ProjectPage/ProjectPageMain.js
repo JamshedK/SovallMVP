@@ -33,20 +33,19 @@ const ProjectPageMain = (props) => {
         fetchProjectData();
     },[queryParameters])
     return (
-        <div className="flex flex-col justify-top mt-12 w-full bg-[#3C9A9A] h-screen">
+        <div className="">
             {projectData && 
-                <ProjectInfo 
-                    data={projectData}
-                />}
-            <TabsMobile/>
-            {projectData && 
-                <div className="bg-white pt-4">
-                    <ProductPageCommentArea 
-                        commentCount={commentCount}
-                        setCommentCount={setCommentCount}
-                        projectID={projectData.projectID}
-                    />
-                </div>
+                <div className="flex flex-col align-top pt-8 w-full bg-[#3C9A9A] h-full overflow-auto">
+                    <ProjectInfo data={projectData}/>
+                    <div className="flex flex-col align-start bg-white mt-4 h-fit">
+                        <TabsMobile/>
+                        <ProductPageCommentArea 
+                            commentCount={commentCount}
+                            setCommentCount={setCommentCount}
+                            projectID={projectData.projectID}
+                        />
+                    </div>
+                </div> 
             }
         </div>
     )

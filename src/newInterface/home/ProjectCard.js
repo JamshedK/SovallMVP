@@ -248,13 +248,13 @@ export const ProjectCard = (props) => {
                     </div>
                     <div className='flex flex-row justify-between w-full text-[10px] py-2 px-4'>
                         {!isExpanded && (
-                            <button className="italic w-fit cursor-pointer" onClick={toggleExpanded}> Read more </button>
+                            <button className="w-fit cursor-pointer text-[#7A7A7A]" onClick={toggleExpanded}> Read more </button>
                         )}
                         {isExpanded && (
-                            <button className="italic w-fit cursor-pointer" onClick={toggleExpanded}> Read less </button>
+                            <button className="w-fit cursor-pointer text-[#7A7A7A]" onClick={toggleExpanded}> Read less </button>
                         )}
                         <button 
-                            className="italic w-fit"
+                            className="w-fit text-[#7A7A7A]"
                             onClick={() => handleRedirect()}
                         >
                             View full project

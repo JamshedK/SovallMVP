@@ -25,7 +25,7 @@ export const TabsMobile = (props) => {
     };
 
     return (
-        <div className="flex w-full bg-white items-center justify-center h-screen mt-4">
+        <div className="flex w-full bg-white items-center justify-center h-fit">
             {/* Header Tabs */}
             <div className="flex flex-row justify-between items-center text-[10px] font-inter w-full">
                 <div
