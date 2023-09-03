@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
-import LogIn from "./views/logIn/LogIn";
+// import LogIn from "./views/logIn/LogIn";
+import Login from "./newInterface/account/Login";
 import Logout from "./views/logout/Logout";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
@@ -62,10 +63,10 @@ export default function App() {
                         Routing permission depends on the state of the user. authCtx.isLoggedIn is either true
                         or false, which shows if the user is logged in. 
                     */}
-                    <Route path="/" element={isLoggedIn ? <MainFeed/> : <LogIn />} />
+                    <Route path="/" element={isLoggedIn ? <MainFeed/> : <Login />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
-                    <Route path="/accountsetup" element={isLoggedIn ? <Home /> : <AccountSetUp />} />
+                    <Route path="/accountsetup" element={<AccountSetUp/>} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/newhome" element={<NewHome />} />
@@ -84,7 +85,7 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
-            {isMobile && <BottomNavBar />}
+            {isMobile && isLoggedIn && <BottomNavBar />}
         </div>        
       );
 }
