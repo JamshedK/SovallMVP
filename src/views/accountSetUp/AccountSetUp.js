@@ -80,8 +80,6 @@ const AccountSetUp = () => {
 		} else {
 			return true;
 		}
-
-
 	}
 
 	const addUserToFirestore = async (localId) => {
