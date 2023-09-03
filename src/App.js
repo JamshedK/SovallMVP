@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, Outlet, Navigate } from "react-router-dom";
 import LogIn from "./views/logIn/LogIn";
 import Logout from "./views/logout/Logout";
@@ -31,15 +32,29 @@ export default function App() {
     const [subscription, setSubscription] = React.useState(false);
     const authCtx = React.useContext(AuthContext);  //Auth Context which gives access to the user that is logged in
     const isLoggedIn = authCtx.isLoggedIn;
-    const [isMobile, setisMobile] = React.useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768); // for checking if the user in mobile
+
+    // Update the isMobile state when the screen is resized
+    useEffect(() => {
+        const handleResize = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        window.addEventListener('resize', handleResize);
+
+        // Clean up the event listener on component unmount
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
     return (
         <div className="md:screen md:h-screen font-inter w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
-            <header className="flex h-fit w-full sticky top-0 z-20">
+            {!isMobile && <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
-                    {/* {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>} */}
-                    {/* {authCtx.isLoggedIn && <HeaderLoggedIn/>}  */}
-            </header>
+                    {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
+                    {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
+            </header>}
             
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
                 <Routes>
@@ -69,7 +84,7 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
-            <BottomNavBar />
+            {isMobile && <BottomNavBar />}
         </div>        
       );
 }
