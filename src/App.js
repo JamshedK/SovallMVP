@@ -6,7 +6,8 @@ import Login from "./newInterface/account/Login";
 import Logout from "./views/logout/Logout";
 import ForgotPassword from "./views/password/ForgotPassword";
 import ChangePassword from "./views/password/ChangePassword";
-import AccountSetUp from "./views/accountSetUp/AccountSetUp";
+// import AccountSetUp from "./views/accountSetUp/AccountSetUp";
+import AccountSetup from "./newInterface/account/AccountSetup";
 import SkillsAndInterests from "./views/skillsAndInterests/SkillsAndInterests";
 import PeopleSearch from "./views/search/PeopleSearch";
 import PostSearch from "./views/search/PostSearch";
@@ -66,7 +67,7 @@ export default function App() {
                     <Route path="/" element={isLoggedIn ? <MainFeed/> : <Login />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
-                    <Route path="/accountsetup" element={<AccountSetUp/>} />
+                    <Route path="/accountsetup" element={<AccountSetup/>} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/newhome" element={<NewHome />} />

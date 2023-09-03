@@ -31,9 +31,13 @@ const Input = (props) => {
         <div className={"border-b flex w-full h-fit focus-within:border-orange-1"}>
             <input 
                 value={props.value} 
-                className="border-none h-fit text-black  bg-transparent pl-4 lg:text-[text-11px] 
+                className="border-none h-fit text-black  bg-transparent pl-1 lg:text-[text-11px] 
                     lg:placeholder:text-[11pt]  placeholder:text-[13px] w-full p-0 focus:border-transparent focus:ring-0" 
-                type={type} placeholder={props.placeholder} onChange={handleValue}></input>
+                type={type} 
+                placeholder={props.placeholder} 
+                onChange={handleValue}
+            >
+            </input>
             {props.ps && <Button />}
         </div>
         )
