@@ -7,18 +7,19 @@ import google_icon from '../../assets/newInterface/account/google_icon.svg';
 import sovall_logo from '../../assets/newInterface/account/sovall_logo.svg';
 
 import {GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-import { useState, useContext, useEffect, navigate } from "react";
+import { useState, useContext, useEffect } from "react";
 import AuthContext from "../../contexts/auth-context";
 import { auth } from "../../firebase-config";
 
 import Input from "../../views/common/Input";
+import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
     const authCtx = useContext(AuthContext);
     const [email,setEmail] = useState("");
     const [password,setPassword] = useState("");
     const [currentSlide, setCurrentSlide] = useState(0)
-
+    const navigate = useNavigate()
     const slideArray = [slide_1, slide_2, slide_3]
 
     useEffect(() => {
