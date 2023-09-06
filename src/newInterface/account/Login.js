@@ -92,14 +92,14 @@ const Login = (props) => {
         }
       };
     return (
-        <div className="bg-[#044A54] w-full h-full flex flex-row flex-wrap items-center justify-center ">
+        <div className="bg-[#044A54] w-full h-full flex flex-col justify-around items-center">
             <div>
                 {/* logo */}
-                <div className="flex justify-center">
+                <div className="flex justify-center w-full">
                         <img src={sovall_logo}/>
                     </div>
                     {/* Slideshow */}
-                    <div className="flex flex-row space-x-3 justify-center items-center mt-10 ">
+                    <div className="flex flex-row space-x-3 justify-center items-center mt-10 w-screen">
                         <button
                             className="h-fit" 
                             onClick={() => {
@@ -108,7 +108,7 @@ const Login = (props) => {
                         >
                             <img src={previous_slide}/>
                         </button>
-                        <img className="w-[80%] lg:w-[40%] md:w-[40%]"
+                        <img className="w-[80%] md:w-[50%] lg:w-[25%] xl:w-[25%] 2xl:w-[25%] mx-auto"
                             src={slideArray[currentSlide]}>
                         </img>
                         <button
@@ -121,8 +121,8 @@ const Login = (props) => {
                         </button>
                     </div>
             </div>
-            <div className="mx-16">
-                <form className="flex flex-col md:gap-2 lg:gap-4 items-center gap-3 lg:w-2/3">
+            <div className="mx-16 w-fit">
+                <form className="flex flex-col md:gap-2 lg:gap-4 items-center gap-3 md:w-72 lg:w-72">
                     <Input 
                         type="email" 
                         placeholder="Email..." 
@@ -135,7 +135,7 @@ const Login = (props) => {
                         setValue={setPassword} 
                         ps={true}/>
                     <button 
-                        className="bg-white text-green-4 w-full px-4 py-1 text-[15px] rounded-md"
+                        className="bg-white text-green-4 w-full px-4 py-1 text-[15px] rounded-md md: mt-10"
                         onClick={handleLogin}
                     >
                         Login

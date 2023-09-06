@@ -55,7 +55,7 @@ export default function App() {
         <div className="md:screen md:h-screen font-inter w-screen flex flex-col h-screen relative overflow-auto scrollbar-hide">
             {!isMobile && <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
-                    {!authCtx.isLoggedIn && <SearchContextProvider>{<HeaderA />}</SearchContextProvider>}
+                    {!authCtx.isLoggedIn && <SearchContextProvider></SearchContextProvider>}
                     {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
             </header>}
             
@@ -65,14 +65,13 @@ export default function App() {
                         Routing permission depends on the state of the user. authCtx.isLoggedIn is either true
                         or false, which shows if the user is logged in. 
                     */}
-                    <Route path="/" element={isLoggedIn ? <MainFeed/> : <Login />} />
+                    <Route path="/" element={isLoggedIn ? <NewHome/> : <Login />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={<AccountSetup/>} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/skills" element={<Skills />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="/newhome" element={<NewHome />} />
+                    <Route path="/home" element={<NewHome />} />
                     <Route path="/edit-profile" element={<EditProfile/>}/>
                     <Route path="/about" element={<AboutSoftLaunch />} />
                     <Route path="/signout" element={<Logout />} />
@@ -80,7 +79,7 @@ export default function App() {
                     <Route path="/newproject" element={<NewProjectMobile/>}/>
                     <Route path="/project-page" element={<ProjectPageMain/>}/> 
                     <Route path="/discussion" element={<TabsMobile/>}/>
-                    <Route path='/mainfeed' element={<MainFeed/>}></Route>
+                    <Route path='/mainfeed' element={<NewHome/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
                     <Route path="/search/posts/id" element={<ShowPostById/>}/>
