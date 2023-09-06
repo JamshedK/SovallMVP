@@ -45,7 +45,7 @@ const Skills = (props) => {
         await updateDoc(doc(db, "users", authCtx.userID),{
             "skills": selectedSkills
         })
-        navigate('/home')
+        navigate('/profile')
     };
 
     return (

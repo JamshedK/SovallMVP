@@ -59,7 +59,7 @@ const SkillsAndInterests = (props) => {
             "skills": selectedSkills,
             "interests": selectedInterests
         })
-        navigate('/home')
+        navigate('/profile')
     };
 
 

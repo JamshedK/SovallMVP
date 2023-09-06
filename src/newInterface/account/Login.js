@@ -59,7 +59,7 @@ const Login = (props) => {
                 // if login is successful, store the token in localStore using authContext hook
                 authCtx.login(data.idToken, data.localId);
                 // redirect the user after login
-                navigate('/home')
+                navigate('/profile')
             }else{
                 // if login was unsuccessful, let the user know what went wrong
                 console.log(data);
@@ -122,7 +122,7 @@ const Login = (props) => {
                         </button>
                     </div>
             </div>
-            <div className="mx-16 w-fit">
+            <div className="mx-16 w-fit mb-10">
                 <form className="flex flex-col md:gap-2 lg:gap-4 items-center gap-3 md:w-72 lg:w-72">
                     <Input 
                         type="email" 
@@ -136,13 +136,13 @@ const Login = (props) => {
                         setValue={setPassword} 
                         ps={true}/>
                     <button 
-                        className="bg-white text-green-4 w-full px-4 py-1 text-[15px] rounded-md md: mt-10"
+                        className="bg-white text-green-4 w-full px-4 py-1 text-[15px] rounded-md md:mt-5"
                         onClick={handleLogin}
                     >
                         Login
                     </button>
                     <h1 
-                        className="mt-4 text-[15px] lg:text-[10pt] xl:text-[12pt] text-white"
+                        className="mt-10 text-[15px] lg:text-[10pt] xl:text-[12pt] text-white"
                     >
                         Don't have an account?
                     </h1>

@@ -19,6 +19,7 @@ import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
 import HeaderLoggedIn from "./views/common/HeaderLoggedIn";
+import Profile from "./newInterface/profile/Profile";
 import NewPost from "./views/Post/NewPost";
 import ComingSoon from "./views/common/ComingSoon";
 import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
@@ -71,7 +72,7 @@ export default function App() {
                     <Route path="/accountsetup" element={<AccountSetup/>} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
                     <Route path="/skills" element={<Skills />} />
-                    <Route path="/home" element={<NewHome />} />
+                    <Route path="/profile" element={<Profile/>} />
                     <Route path="/edit-profile" element={<EditProfile/>}/>
                     <Route path="/about" element={<AboutSoftLaunch />} />
                     <Route path="/signout" element={<Logout />} />
