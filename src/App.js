@@ -29,6 +29,7 @@ import BottomNavBar from "./newInterface/NavBar/BottomNavBar";
 import { NewProjectMobile } from "./newInterface/home/NewProject";
 import { TabsMobile } from "./newInterface/home/Tabs";
 import ProjectPageMain from "./newInterface/ProjectPage/ProjectPageMain";
+import Skills from "./newInterface/account/Skills";
 
 export default function App() {
     const [subscription, setSubscription] = React.useState(false);
@@ -69,6 +70,7 @@ export default function App() {
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={<AccountSetup/>} />
                     <Route path="/skills-interests" element={<SkillsAndInterests />} />
+                    <Route path="/skills" element={<Skills />} />
                     <Route path="/home" element={<Home />} />
                     <Route path="/newhome" element={<NewHome />} />
                     <Route path="/edit-profile" element={<EditProfile/>}/>
