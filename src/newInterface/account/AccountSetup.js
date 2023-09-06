@@ -116,13 +116,15 @@ const AccountSetup = () => {
 	}
 
     return (
-        <div className='bg-[#044A54] w-full h-full flex flex-col items-center justify-start gap-32'>
-            <img 
-                className='w-40 mt-[25%]' 
-                src={sovall_logo}
-            />
+        <div className='bg-[#044A54] w-full h-full flex flex-col items-center justify-center gap-32'>
+            <div>
+                <img 
+                    className='w-40 mt-[25%]' 
+                    src={sovall_logo}
+                />
+            </div>
             {/* User info */}
-            <div className='flex justify-center flex-col items-center'>
+            <div className='flex justify-center flex-col items-center mb-20'>
                 <h1 
                     className='text-white text-[27px] w-fit '
                 >
