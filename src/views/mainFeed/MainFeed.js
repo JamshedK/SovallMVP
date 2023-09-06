@@ -107,7 +107,7 @@ const MainFeed = (props) => {
                 </div>
 
                 {/*right panel*/}
-                <div className={"flex flex-col w-fit absolute right-0 top-0 " + (notification ? "h-full" : "h-fit")}>
+                <div className={"flex flex-col w-fit absolute right-2 top-1 " + (notification ? "h-full" : "h-fit")}>
                     <NotificationsToggle value={notification} setValue={setNotification} />
                     {/* <Notifications value={notification} setValue={setNotification} /> */}
                     <Notifications value={notification} setValue={setNotification} />

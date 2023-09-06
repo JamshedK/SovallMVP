@@ -102,7 +102,7 @@ function HeaderLoggedIn(props) {
         key={"filter-option-" + i}
         value={i}
         className={
-          "flex-grow h-6 flex items-center text-[9pt] px-12  border-1 rounded-t-lg  border-[#3C9A9A] gap-2  " + style
+          "flex-grow h-6 flex items-center text-[12=3pt] px-12  border-1 rounded-t-lg  border-[#3C9A9A] gap-2  " + style
         }
         onClick={handleFilter}
       >

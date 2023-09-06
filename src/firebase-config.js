@@ -25,6 +25,5 @@ export const db = getFirestore();
 export const storage = getStorage(app);
 // Initialize auth
 export const auth = getAuth(app);
-
 // Enable Firebase Analytics
 const analytics = getAnalytics(app);
