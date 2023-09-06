@@ -12,18 +12,15 @@ import AccountSetUp from './views/accountSetUp/AccountSetUp';
 import { AuthContextProvider } from './contexts/auth-context';
 import { SearchContextProvider } from './contexts/search-context';
 import { UserContextProvider } from './contexts/user';
-import { SelectedTabContextProvider } from './contexts/selected-tab-context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <AuthContextProvider>
         <SearchContextProvider>
             <UserContextProvider>
-                <SelectedTabContextProvider>
-                    <BrowserRouter>
-                        {<App/>}
-                    </BrowserRouter>
-                </SelectedTabContextProvider>
+                <BrowserRouter>
+                    {<App/>}
+                </BrowserRouter>
             </UserContextProvider>
         </SearchContextProvider>
     </AuthContextProvider> 

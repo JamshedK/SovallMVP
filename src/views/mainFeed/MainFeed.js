@@ -24,7 +24,7 @@ import { useEffect, useState, useContext } from 'react';
 // TODO: adjust dotted border for NewPost
 // Fix the scroll for the "members who interacted with this post"
 const MainFeed = (props) => {
-    const [notification, setNotification] = useState(false);
+    const [notification, setNotification] = useState(true); //change notification state to capture data from DB
     const [messages, setMessages] = useState(false);
     const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
     const [chatQueue, setChatQueue] = useState([]);
@@ -106,16 +106,16 @@ const MainFeed = (props) => {
                     </div>
                 </div>
 
-                {/*left panel*/}
-                <div className={"flex flex-col w-fit absolute left-0 top-0 " + (notification ? "h-full" : "h-fit")}>
+                {/*right panel*/}
+                <div className={"flex flex-col w-fit absolute right-0 top-0 " + (notification ? "h-full" : "h-fit")}>
                     <NotificationsToggle value={notification} setValue={setNotification} />
                     {/* <Notifications value={notification} setValue={setNotification} /> */}
-                    <ComingSoonNotifications value={notification} setValue={setNotification} />
+                    <Notifications value={notification} setValue={setNotification} />
                 </div>
 
 
-                {/*right panel*/}
-                <div className={"flex flex-col w-fit items-end absolute right-0 top-0 " + (messages ? "h-full" : "h-fit")} >
+                {/*left panel*/}
+                <div className={"flex flex-col w-fit items-end absolute left-0 top-0 " + (messages ? "h-full" : "h-fit")} >
                     <MessagesToggle value={messages} setValue={setMessages} />
                     {/* <ChatHistory value={messages} setValue={setMessages} onClick={handleChatOpen} data={chat_history} /> */}
                     <ComingSoonMessages value={messages} setValue={setMessages} />

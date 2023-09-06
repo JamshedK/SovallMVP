@@ -18,6 +18,7 @@ import giga from '../../../assets/common/giga_learnmore.svg';
 const QuickAccess = (props) => {
     return (
         <a href={props.href} className="flex flex-col h-[1.25rem]">
+            <img className="h-full" src={props.src} />
             <label className="text-[8pt]">{props.label}</label>
         </a>
     );
@@ -42,8 +43,8 @@ const InfoBlock = (props) => {
 const Own = () => {
     return (
         <div className="flex gap-[0.5rem] text-gray-500" >
-            {/* <QuickAccess label="network" src={network} href="/search/people" /> */}
-            <QuickAccess label="Edit" href="/edit-profile" />
+            <QuickAccess label="network" src={network} href="/search/people" />
+            <QuickAccess label="edit profile" src={edit} href="/edit-profile" />
         </div>
     )
 }
@@ -113,8 +114,8 @@ const InfoPanel = (props) => {
             {isLoading ? (
                     <Loader/>
             ): (
-                <div className={"bg-white h-fit px-[2rem] pt-14 pb-3 lg:md:rounded-b-xl md:rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
-                    <div className="flex justify-between items-start">
+                <div className={"bg-white h-fit px-[2rem] pt-14 pb-3 rounded-b-xl flex flex-col gap-7 transition duration-150 ease-in-out " + props.width}>
+                    <div className="flex justify-between ">
                         <div className="flex gap-4">
                             <img className="w-[4rem] h-[4rem] rounded-full" src={profilePicPath} />
                             <div className="flex flex-col w-fit ">
@@ -122,14 +123,14 @@ const InfoPanel = (props) => {
                                 <a className="text-blue-500 text-[9pt]" href="/home">{userInfo.email}</a>
                                 <p className="text-[9pt]">{userInfo?.university}</p>
                             </div>
+
                         </div>
-                        <div>
-                            {props.own? <Own/> : <Other/>}
-                        </div>
+                        {props.own? <Own/> : <Other/>}
                     </div>
 
                     <div className={showDetails? "flex flex-col w-full gap-[1.5rem]" : "hidden"}>
                         <InfoBlock title="Skills">{skills}</InfoBlock>
+                        <InfoBlock title="Interest">{interests}</InfoBlock>
                     </div>
 
                     <div className="w-full flex justify-center ">

@@ -16,11 +16,11 @@ const Search = (props) => {
     },[searchCtx.query]);
 
     return (
-        <div className={dimesions + " flex items-center  rounded-full px-3 py-1 gap-1 " + props.style}>
+        <div className={dimesions + " flex items-center   px-0 py-1 gap-2  " + props.style}>
             <button className="h-full">
                 <img src={props.icon} className="h-full" />
             </button>
-            <input type="text" className={" text-[8pt] p-0 border-none bg-transparent focus:border-none focus:ring-0 "+ placeholderColor} 
+            <input type="text" className={" text-[10pt] p-0 border-none bg-transparent focus:border-none focus:ring-0 "+ placeholderColor} 
                 placeholder={props.placeholder } 
                 ref={inputRef}
                 onKeyDown={props.onEnterButtonClicked}

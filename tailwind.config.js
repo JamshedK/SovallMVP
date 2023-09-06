@@ -87,7 +87,7 @@ module.exports = {
             },
 
             fontFamily: {
-                'nunito': ['Nunito', 'sans-serif'],
+                // 'nunito': ['Nunito', 'sans-serif'],
                 'inter': ['Inter', 'sans-serif'],
 
             },
@@ -103,9 +103,7 @@ module.exports = {
         },
     },
     plugins: [
-        require("@tailwindcss/forms")({
-            strategy: 'class', // only generate classes
-          }),
+        require('@tailwindcss/forms'),
         require('tailwind-scrollbar-hide')
     ],
 }

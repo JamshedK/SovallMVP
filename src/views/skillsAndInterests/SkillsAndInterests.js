@@ -10,6 +10,11 @@ import interestsText from '../../data/interests.txt';
 import magnifying_glass from '../../assets/account/magnifying_glass.svg';
 
 
+
+
+//TODO: make the conection with the contexts in ./store
+//update the card components to scroll horizontally
+
 const SkillsAndInterests = (props) => {
     const [selectedSkills, setSelectedSkills] = useState([]);
     const [selectedInterests, setSelectedInterests] = useState([]);
@@ -59,7 +64,7 @@ const SkillsAndInterests = (props) => {
             "skills": selectedSkills,
             "interests": selectedInterests
         })
-        navigate('/profile')
+        navigate('/home')
     };
 
 
