@@ -135,11 +135,11 @@ function HeaderLoggedIn(props) {
   const profilePicStyle = currentMenuOption === 4 ? "bg-yellow-2" : "";
 
   return (
-    <div className="h-[5rem] w-full bg-[#044A54] px-2 py-1 flex flex-wrap gap-[0.3  rem] items-center justify-center text-white drop-shadow-xl z-20">
-      <div className="flex flex-1 flex-1 items-center justify-left gap-5">
+    <div className="h-[5rem] w-full bg-[#044A54] px-8 py-1 flex flex-wrap gap-[0.3  rem] items-center justify-center text-white drop-shadow-xl z-20">
+      <div className="flex flex-1 flex-1 items-center justify-left gap-8">
         <div className="flex items-center gap-2">
           <a href="/mainfeed">
-            <img className="h-8" src={sovall} />
+            <img className="h-9 " src={sovall} />
           </a>
         </div>
         <div className="flex">
