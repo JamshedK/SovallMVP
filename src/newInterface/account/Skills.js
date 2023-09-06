@@ -49,14 +49,16 @@ const Skills = (props) => {
     };
 
     return (
-        <div className="bg-[#044A54] w-full h-full flex flex-col items-center justify-start gap-20">
-            <img 
-                className='w-40 mt-[20%]' 
-                src={sovall_logo}
-            />
-            <div className='flex flex-col gap-4'>
+        <div className="bg-[#044A54] w-full h-full flex flex-col items-center justify-center gap-20">
+            <div>
+                <img 
+                    className='w-40 mt-[20%]' 
+                    src={sovall_logo}
+                />
+            </div>
+            <div className='flex flex-col gap-4 md:w-[50%] lg:w-[30%] xl:w-[30%] mb-16'>
                 <div 
-                    className="flex max-md:flex-col gap-8 max-md:items-center md:justify-center md:gap-8 px-10 "
+                    className="flex flex-col gap-8 md:gap-8 px-10 "
                 >
                     <div className='flex flex-col items-center'>
                         <h1 className='text-white text-[27px] w-fit '>My skills</h1>
@@ -78,9 +80,9 @@ const Skills = (props) => {
                         </button>
                 </div>
                 <span 
-                    className='text-white pb-5 px-6 text-[16px]'
+                    className='text-white pb-5 px-6 text-[16px] text-center'
                 > 
-                    By joining, I agree to making the world more exciting and agree to Sovall's{' '}
+                    <strong>By joining, I agree to making the world more exciting</strong> and agree to Sovall's{' '}
                     <a 
                         href='https://docs.google.com/document/d/13tB0fN7BY4HWO-0wXTR6dxqY_FxrOrVASthmgs81GLY/edit' 
                         className="underline"
@@ -169,7 +171,7 @@ export const SkillsItem = (props) => {
         setChecked(prev => !prev);
     }
     return (
-        <button className={"h-fit w-fit px-4 py-2 rounded-md " + style} onClick={handleClick}>
+        <button className={"h-fit w-fit px-4 py-2 rounded-md text-[14px] md:text-[1rem] lg:text-[1rem] " + style} onClick={handleClick}>
             {props.value}
         </button>
         );
