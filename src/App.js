@@ -26,10 +26,10 @@ import AuthContext, { AuthContextProvider } from "./contexts/auth-context";
 import { SearchContextProvider } from "./contexts/search-context";
 import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
 import ShowPostById from "./views/search/ShowPostById";
-import BottomNavBar from "./newInterface/NavBar/BottomNavBar";
+import BottomNavBar from "./newInterface/navbar/BottomNavBar";
 import { NewProjectMobile } from "./newInterface/home/NewProject";
 import { TabsMobile } from "./newInterface/home/Tabs";
-import ProjectPageMain from "./newInterface/ProjectPage/ProjectPageMain";
+import ProjectPageMain from "./newInterface/projectPage/ProjectPageMain";
 import Skills from "./newInterface/account/Skills";
 
 export default function App() {
