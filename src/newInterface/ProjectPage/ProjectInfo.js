@@ -261,7 +261,7 @@ export const ProjectInfo = (props) => {
 
 
                 {/* Edit and delete button */}
-                <div className='flex flex-row text-[12px] space-x-4 mt-2 text-[#3C9A9A]'>
+                <div className='flex flex-row text-[12px] space-x-10 mt-2 text-[#3C9A9A]'>
                     <button onClick={handleEditClick}>Edit</button>
                     <button onClick={handleDeleteClick}>Delete</button>
                     {/*Save Button */}
