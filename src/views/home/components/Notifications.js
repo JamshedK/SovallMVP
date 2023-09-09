@@ -1,159 +1,50 @@
-import { useState } from 'react';
-import leftExpandArrow from '../../../assets/home/left_expand_arrow_green.svg';
+import { useEffect, useState } from 'react';
+import {db} from '../../firebase-config';
+import { collection, onSnapshot } from '../../firebase-config'; // Import firestore functions
+import leftExpandArrow from '../../../assets/home/right_expand_arrow_green.svg';
 import notification from '../../../assets/home/notifications_green.svg';
 import profile from '../../../assets/common/profile.jpg';
-import searchIcon from '../../../assets/common/search_icon_gray.svg';
-
-import Search from "../../common/Search";
-
-//Dummy data
-const data = [
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-    {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    }, {
-        ts: "8 min",
-        pic: "This is just a placeHolder",
-        username: "salazar_rich",
-        action: "commented your post."
-    },
-]
-
-
-const Tab = (props) => {
-    
-    const handleClick = () => {
-        props.setValue(props.value);
-    }
-    return <button className={"w-full border-b text-[7pt] " + (props.isCurrent ? "text-black border-green-2 font-bold" : " text-gray-500 font-medium ")} onClick={handleClick} >{props.value} </button>
-}
-
-const notifications = data.map((n,i) => {
-    return (
-        <button key={"notification"+i} className="flex text-[8pt] gap-2 items-center">
-            <p className="flex text-[6pt] w-fit">{n.ts}</p>
-            <img className="h-6 rounded-full" src={profile} />
-            <p><span className="font-semibold">{n.username}</span> {n.action}</p>
-        </button>
-    );
-})
-
 
 const Notifications = (props) => {
+const [current, setCurrent] = useState("All");
+const [notifications, setNotifications] = useState([]); // State to store notifications
 
-    const [current, setCurrent] = useState("All");
-    const handleToggle = () => {
-        props.setValue(prev => !prev);
-    }
+const handleToggle = () => {
+props.setValue(prev => !prev);
+}
 
-    const handleTabClick = (e) => {
-        const value = e.target.value;
-        setCurrent(value);
-    }
-    return (
-        <div className={props.value ? "w-[16rem] h-full bg-white flex flex-col py-2 drop-shadow-xl" : "hidden"}>
-            <div className="flex gap-4 px-4 h-5">
-                <div className="flex gap-2 h-full items-center p-0">
-                    <button className="h-fit w-fit" onClick={handleToggle}>
-                        <img className="h-2 w-fit" src={leftExpandArrow} />
+const handleTabClick = (e) => {
+    const value = e.target.value;
+    setCurrent(value);
+}
+
+// Fetch notifications from Firestore
+useEffect(() => {
+    // Assuming you have a Firestore collection named 'notifications'
+    const notificationsRef = collection(db, 'notifications');
+
+// Use onSnapshot to listen for real-time updates
+const unsubscribe = onSnapshot(notificationsRef, (snapshot) => {
+    const updatedNotifications = snapshot.docs.map(doc => doc.data());
+    setNotifications(updatedNotifications);
+});
+
+// Clean up the listener when component unmounts
+return () => {
+    unsubscribe();
+};
+}, []); // Empty dependency array to fetch only once
+
+return (
+    <div className={props.value ? "w-[19rem] h-full  flex flex-col py-2 drop-shadow-xl " : "hidden b"}>
+        {/* ... rest of the component ... */}
+        <div className="w-full h-fit flex flex-col gap-4 pt-4 px-4 overflow-auto">
+            {notifications.map((n, i) => (
+                <button key={"notification" + i} className="flex text-[7pt] gap-2 items-center bg-white rounded">
+                    {/* Render notification content here */}
                     </button>
-                    <button className="w-fit h-fit" onClick={handleToggle}>
-                        <img className="h-full" src={notification} />
-                    </button>
-                    
-                </div>
-                <Search placeholder="Search" style=" border border-green-2 text-green-2" icon={searchIcon}/>
-            </div>
-            <div className="flex w-full pt-2 drop-shadow-lg">
-                <Tab value="All" isCurrent={current === "All" ? true : false} setValue={setCurrent} />
-                <Tab value="Last 24 hours" isCurrent={current === "Last 24 hours" ? true : false} setValue={setCurrent} />
-
-            </div>
-            <div className="w-full h-fit flex flex-col gap-2 pt-4 px-3 overflow-auto">
-                {notifications}
-                <p className="text-[8pt] w-full text-center">All done</p>
             </div>
         </div>
-        );
+);
 }
 export default Notifications;
