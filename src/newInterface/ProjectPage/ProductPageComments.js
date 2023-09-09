@@ -181,7 +181,7 @@ const SingleComment = (props) => {
                 <div className='flex flex-col space-y-5 w-full'>
                     <div className='flex flex-col px-4'>
                         {/* username info  */}
-                        <div className='flex flex-row space-x-1 text-xs'>
+                        <div className='flex flex-row space-x-1 text-xs md:text-[10px] lg:text-[11px]'>
                             <div className="rounded-full h-3 w-3">
                                 <img 
                                     className="rounded-full h-full w-full object-cover cursor-pointer" 
@@ -192,9 +192,9 @@ const SingleComment = (props) => {
                             <label className=""> - </label>
                             <label className="">{timeForComment}</label>
                         </div>
-                        <label className='text-[12px]'>{props.commentData.text}</label>
+                        <label className='text-[12px] md:text-[14px] lg:text-[15px]'>{props.commentData.text}</label>
                         {containsImage && <img src={imageURL}></img>}
-                        <div className='flex flex-row space-x-10 text-[#6C6C6C] text-xs'>
+                        <div className='flex flex-row space-x-10 text-[#6C6C6C] text-xs md:text-[10px] lg:text-[11px]'>
                             <button className='' onClick={ ()=> setShowNewReplyBox(!showNewReplyBox)}> Reply </button>
                             {showDeleteBtn && <button onClick={onDeleteBtnClicked}>Delete</button>}
                         </div>
@@ -275,7 +275,7 @@ const CommentReplies = (props) => {
     return (
         <div className='w-full flex flex-col space-x-4 space-y-1'>
                 {/* username info  */}
-                <div className='flex flex-row space-x-1 text-xs'>
+                <div className='flex flex-row space-x-1 text-xs md:text-[10px] lg:text-[11px]'>
                     <div className="rounded-full h-3 w-3">
                         <img 
                             className="rounded-full h-full w-full object-cover cursor-pointer" 
@@ -287,7 +287,7 @@ const CommentReplies = (props) => {
                     <label className="">{timeForComment}</label>
                 </div>
             <div className='flex flex-col space-y-1 text-xs'>
-                <label className='text-[12px]'>{props.reply_data.text}</label>
+                <label className='text-[12px] md:text-[14px] lg:text-[15px]'>{props.reply_data.text}</label>
                 {containsImage && <img src={imageURL}></img>}
                 <div className='flex flex-row space-x-10 text-[#6C6C6C]'>
                     {showDeleteBtn && <button onClick={onDeleteBtnClicked}>Delete</button>}
@@ -408,7 +408,7 @@ const NewCommentBox = (props) => {
                 <div className='flex flex-row items-start space-x-2'>
                     <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                     <textarea 
-                        className="form-textarea w-full text-[12px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-10 text-black" 
+                        className="form-textarea w-full text-[12px] md:text-[14px] lg:text-[15px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-10 text-black" 
                         placeholder={commentPageText[stCtx.selectedTab].inputPlaceholder}
                         ref={textAreaRef}
                         onChange={onTextAreaChange}
@@ -522,10 +522,10 @@ const NewReplyBox = (props) => {
     return (
             <div className='w-full flex flex-col items-center bg-[#E9E9E9] rounded-lg px-2 py-2 '>
                 <div className='flex w-full space-x-2'>
-                    <div className='flex flex-row items-start space-x-2'>
+                    <div className='flex flex-row items-start space-x-2 border-2 w-full'>
                         <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                         <textarea 
-                            className="form-textarea w-full text-[10px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-6 text-black" 
+                            className="form-textarea w-full text-[10px] md:text-[13px] lg:text-[14px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-6 text-black" 
                             placeholder='Reply'
                             ref={textAreaRef}
                             onChange={onTextAreaChange}

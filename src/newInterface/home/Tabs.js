@@ -27,7 +27,7 @@ export const TabsMobile = (props) => {
     return (
         <div className="flex w-full bg-white items-center justify-center h-fit">
             {/* Header Tabs */}
-            <div className="flex flex-row justify-between items-center text-[10px] font-inter w-full">
+            <div className="flex flex-row justify-between items-center text-[10px] md:text-[14px] lg:text-[15px] font-inter w-full">
                 <div
                     className={` w-1/3 text-center cursor-pointer py-2 ${getTabStyle('discussions')}`}
                     onClick={() => handleTabClick('discussions')}

@@ -228,7 +228,7 @@ export const ProjectInfo = (props) => {
             <div className='px-3'>
                 {/* username, date, save and notification button */}
                 <div className="flex flex-row justify-between text-xs w-full pr-3">
-                    <div className='flex flex-row space-x-1'>
+                    <div className='flex flex-row space-x-1 lg:text-[11px] md:text-[11px]'>
                         <div className="rounded-full h-3 w-3">
                             <img 
                                 className="rounded-full h-full w-full object-cover cursor-pointer" 
@@ -248,9 +248,9 @@ export const ProjectInfo = (props) => {
                         </button>
                     </div>
                 </div>
-                <h1 className='pt-2 pb-1 text-sm font-bold'>{data?.title}</h1>
+                <h1 className='pt-2 pb-1 text-sm lg:text-xl md:text-lg font-bold'>{data?.title}</h1>
                 {/* Text and image */}
-                <div className="text-[12px]">
+                <div className="text-[12px] md:text-[13px] lg:text-[15px]">
                     <div className='focus:outline-none'
                         ref={descriptionRef}
                         contentEditable={isEditMode}
@@ -276,7 +276,7 @@ export const ProjectInfo = (props) => {
             </div>
             <img className='pt-2' src={imageURL}></img>
             {/* Bottom buttons */}
-            <div className='flex justify-between text-xs pt-4 px-6'>
+            <div className='flex justify-between pt-4 px-6 text-xs md:text-[11px] lg:text-[12px]'>
                 {bottomButtons}
             </div>
         </div>
