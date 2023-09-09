@@ -405,7 +405,7 @@ const NewCommentBox = (props) => {
     return (
         <div className='w-full flex flex-col items-center bg-[#E9E9E9] rounded-lg px-2 py-2 '>
             <div className='flex w-full space-x-2'>
-                <div className='flex flex-row items-start space-x-2'>
+                <div className='flex flex-row items-start space-x-2 w-full'>
                     <img className="h-4 rounded-full mt-1" src = {userCtx.profilePicPath}></img>
                     <textarea 
                         className="form-textarea w-full text-[12px] md:text-[14px] lg:text-[15px] border-none pl-0 pt-0 focus:ring-0 resize-none bg-[#E9E9E9] h-10 text-black" 
