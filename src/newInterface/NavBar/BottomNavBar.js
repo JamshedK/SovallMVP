@@ -1,5 +1,5 @@
-import launch_logo_selected from '../../assets/newInterface/navbar/launch_logo_selected.svg';
-import launch_logo_unselected from '../../assets/newInterface/navbar/launch_logo_unselected.svg';
+import bell_icon_selected from '../../assets/newInterface/navbar/bell_icon_selected.svg';
+import bell_icon_unselected from '../../assets/newInterface/navbar/bell_icon_unselected.svg';
 import save_icon_selected from '../../assets/newInterface/navbar/save_icon_selected.svg';
 import save_icon_unselected from '../../assets/newInterface/navbar/save_icon_unselected.svg';
 import add_project_icon_selected from '../../assets/newInterface/navbar/add_project_icon_selected.svg';
@@ -17,16 +17,22 @@ const BottomNavBar = () => {
     const userCtx = useContext(UserContext)
     const navigate = useNavigate()
     const menuOptionsArray = [
-        [launch_logo_unselected, launch_logo_selected, '/comingsoon'],
+        [bell_icon_unselected, bell_icon_selected, '/comingsoon'],
         [save_icon_unselected,save_icon_selected, 'comingsoon'],
-        [add_project_icon_unselected,add_project_icon_selected, 'newproject'],
-        [home_icon_unselected,home_icon_selected, '/newhome']
+        [add_project_icon_unselected,add_project_icon_selected, '/newproject'],
+        [home_icon_unselected,home_icon_selected, '/']
     ]
 
     const handleMenuOptionSelected = (e) =>{
         const value = parseInt(e.currentTarget.value)
+        // If profile page is selected, navigate to /profile
+        if(value==4){
+            navigate('/profile')
+        } else{
+            navigate(menuOptionsArray[value][2])
+        }
+        // Update the current selected menu option
         setCurrentMenuOption(parseInt(value));
-        navigate(menuOptionsArray[value][2])
     }
 
     const menuOptions = menuOptionsArray.map((item, i) =>{
