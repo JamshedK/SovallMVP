@@ -329,13 +329,24 @@ export const ProjectCard = (props) => {
                                     <p className='text-[15px]'>{data?.description}</p>
                                 </div>
                                 <div className="flex-grow"></div> {/* This div will push the issueCount to the bottom */}
-                                {issueCount > 0 &&
-                                    <label 
-                                        className='text-[13px] text-[#BD1B1B] mb-5'
+                                <div className='flex flex-row mb-5 text-[13px] justify-between mr-5'>
+                                    <button 
+                                        className="w-fit text-[#7A7A7A]"
+                                        onClick={() => handleRedirect()}
                                     >
-                                        {`+${issueCount} unsolved issues`}
-                                    </label>
-                                }
+                                        View full project
+                                    </button>
+                                    {issueCount > 0 &&
+                                        <div className='flex flex-row gap-2'>
+                                            <img src={issue_icon}></img>
+                                            <label 
+                                                className='text-[13px] text-[#BD1B1B]'
+                                            >
+                                                {`${issueCount} Issues`}
+                                            </label>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                             {/* image */}
                             <div className='mr-0'>
