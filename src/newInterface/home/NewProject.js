@@ -178,15 +178,20 @@ export const NewProjectMobile = (props) => {
                     <div className="rounded-full h-5 w-5">
                         <img className="rounded-full h-full w-full object-cover" src={user.image_path} alt="Profile" />
                     </div>
-                    <div className='flex flex-col'>
-                        <label className="text-[10px]">{user.fullname.trim()}</label>
-                        <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
+                    <div className='flex flex-row items-start gap-1'>
+                        <div className='flex flex-col'>
+                            <label className="text-[10px]">{user.fullname.trim()}</label>
+                            <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
+                        </div>
+                        <button 
+                            className='mt-1'
+                            onClick={() => removeCollaborator(i)}
+                        >
+                            <img
+                                className='h-3' 
+                                src={close_image_icon}></img>
+                        </button>
                     </div>
-                    <button onClick={() => removeCollaborator(i)}>
-                        <img
-                            className='h-3' 
-                            src={close_image_icon}></img>
-                    </button>
                 </div>
             )
         })    
