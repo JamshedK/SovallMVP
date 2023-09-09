@@ -18,7 +18,7 @@ import EditProfile from "./views/home/components/EditProfile";
 import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";
-import HeaderLoggedIn from "./views/common/HeaderLoggedIn";
+import TopNavBar from "./newInterface/navbar/TopNavBar"; 
 import Profile from "./newInterface/profile/Profile";
 import NewPost from "./views/Post/NewPost";
 import ComingSoon from "./views/common/ComingSoon";
@@ -57,7 +57,7 @@ export default function App() {
             {!isMobile && <header className="flex h-fit w-full sticky top-0 z-20">
                 {/*different headers for if the user is logged in*/}
                     {!authCtx.isLoggedIn && <SearchContextProvider></SearchContextProvider>}
-                    {authCtx.isLoggedIn && <HeaderLoggedIn/>} 
+                    {authCtx.isLoggedIn && <TopNavBar/>} 
             </header>}
             
             <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
