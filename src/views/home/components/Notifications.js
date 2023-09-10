@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import {db} from '../../firebase-config';
-import { collection, onSnapshot } from '../../firebase-config'; // Import firestore functions
+import { db } from '../../../firebase-config';
+import { collection, onSnapshot } from 'firebase/firestore';
 import leftExpandArrow from '../../../assets/home/right_expand_arrow_green.svg';
 import notification from '../../../assets/home/notifications_green.svg';
 import profile from '../../../assets/common/profile.jpg';
@@ -42,9 +42,9 @@ return (
             {notifications.map((n, i) => (
                 <button key={"notification" + i} className="flex text-[7pt] gap-2 items-center bg-white rounded">
                     {/* Render notification content here */}
-                    </button>
-            </div>
+            </button>))}
         </div>
+    </div>
 );
 }
 export default Notifications;
