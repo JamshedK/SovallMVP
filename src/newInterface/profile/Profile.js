@@ -3,8 +3,7 @@ import FeedCard from '../../views/home/components/FeedCard';
 
 /*assests*/
 import profile from '../../assets/common/profile.jpg';
-import company from '../../assets/home/company.png';
-import InfoPanel from '../../views/home/components/InfoPanel';
+import ProfileInfoPanel from './ProfileInfoPanel';
 /*API stuff*/
 import {collection, query, where, getDocs } from "firebase/firestore";
 import {db} from '../../firebase-config'
@@ -14,34 +13,10 @@ import { useEffect, useState, useContext } from 'react';
 // TODO: adjust dotted border for NewPost
 // Fix the scroll for the "members who interacted with this post"
 const Profile = (props) => {
-    const [notification, setNotification] = useState(false);
-    const [messages, setMessages] = useState(false);
-    const [notepad, setNotepad] = useState(false); //Not used for the MVP but let's leave it here
-    const [chatQueue, setChatQueue] = useState([]);
-    const [learnMore, setLearnMore] = useState(false);
     const width = "w-full md:w-[24rem] lg:w-[28rem] xl:w-[32rem]";
     
     const [postsData, setpostsData] = useState([]);
     const authCtx = useContext(AuthContext);
-
-
-    /*Handlers*/
-    const handleChatClose = (id) => {
-        const index = chatQueue.indexOf(id);
-        let temp = [...chatQueue];
-        temp.splice(index, 1);
-        setChatQueue(temp);
-
-    }
-
-    const handleChatOpen = (id) => {
-        if (!chatQueue.includes(id)) {
-            setChatQueue(prev => [...prev, id]);
-        } else {
-            console.log("already included");
-        }
-
-    }
 
     // Get the user posts data
     useEffect(() => {
@@ -89,49 +64,17 @@ const Profile = (props) => {
         });
     }
 
-    // const chats = chatQueue.map(id => {
-    //     return <Chat key={"chat-" + id} onClose={handleChatClose} data={chats_data[id]} />
-    // })
-
-
     return (
         <div className="relative h-full w-full flex flex-col items-center bg-[#3C9A9A]">
             <div className="w-full flex flex-col h-full items-center">
 
                 {/*central panel*/ }
                 <div className=" w-full h-full overflow-auto flex flex-col gap-4 items-center">
-                    <InfoPanel width={width} own={true} user_id = {authCtx.userID}/>
+                    <ProfileInfoPanel width={width} own={true} user_id = {authCtx.userID}/>
                     <div className={"flex flex-col gap-4 " + width }>
                         {postItems}
                     </div>
                 </div>
-
-                {/*left panel*/}
-                <div className={"flex flex-col w-fit absolute left-0 top-0 " + (notification ? "h-full" : "h-fit")}>
-                    {/* <NotificationsToggle value={notification} setValue={setNotification} /> */}
-                    {/* <Notifications value={notification} setValue={setNotification} /> */}
-                    {/* <ComingSoonNotifications value={notification} setValue={setNotification} /> */}
-                </div>
-
-
-                {/*right panel*/}
-                <div className={"flex flex-col w-fit items-end absolute right-0 top-0 " + (messages ? "h-full" : "h-fit")} >
-                    {/* <MessagesToggle value={messages} setValue={setMessages} /> */}
-                    {/* <ChatHistory value={messages} setValue={setMessages} onClick={handleChatOpen} data={chat_history} /> */}
-                    {/* <ComingSoonMessages value={messages} setValue={setMessages} /> */}
-                </div>
-
-
-                {/*chat panel*/}
-                <div className="absolute bottom-0 right-0 h-[20rem] w-fit flex gap-3 ">
-                    {/* {chats} */}
-                </div>
-
-                {/* Learn More */}
-                {/* <div className=''>
-                    <LearnMore value={learnMore} setValue = {setLearnMore} />
-                </div> */}
-
         </div>
     </div>
         
