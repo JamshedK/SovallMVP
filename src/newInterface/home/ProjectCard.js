@@ -232,9 +232,9 @@ export const ProjectCard = (props) => {
                         <label className="">{timeForPost}</label>
                     </div>
                     <div className='flex flex-row space-x-8'>
-                        <button>
+                        {/* <button>
                             <img className='w-3' src={save_icon}/>
-                        </button>
+                        </button> */}
                         <button>
                             <img className='w-[14px]' src={notification_icon}/>
                         </button>
@@ -276,7 +276,7 @@ export const ProjectCard = (props) => {
             {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
             {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote},
             {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : "", onClick: handleRedirect},
-            {icon: save_icon}
+            // {icon: save_icon}
         ];
 
         const buttonsComp = buttonsArray.map((obj, i) => {
