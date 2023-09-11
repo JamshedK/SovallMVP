@@ -338,7 +338,7 @@ const NewProjectMobile = (props) => {
                 <hr className='left-0 right-0 border-[#3C9A9A] my-4 -mx-5'/>
                 {/* collaborators */}
                 <div className='mb-16 md:mb-5 lg:mb-5'>
-                    <h1 className='text-center text-[12px] md:text-[16px] lg:text-[16px] pb-2'>Project Collaborators</h1>
+                    <h1 className='text-center text-[14px] lg:text-[16px] pb-4'>Project Collaborators</h1>
                     <div className='flex flex-row justify-around align-top items-start flex-wrap'>
                         <div className='flex flex-col space-y-3'>
                             {collaborators.length > 0 && 
@@ -348,7 +348,7 @@ const NewProjectMobile = (props) => {
                             <div className= 'w-[9rem] flex flex-col'>
                                 <div className='inline-flex space-x-1 w-[9rem] pl-1'>
                                     <img src={magnifying_glass}/>
-                                    <input className='outline-none text-[11px] md:text-[12px] lg:text-[14px]' placeholder='Add a collaborator' 
+                                    <input className='outline-none text-[12px] lg:text-[14px]' placeholder='Add a collaborator' 
                                         ref={collaboratorSearchRef} onChange={handleCollaboratorSearch}/>
                                 </div>
                                 {collaboratorsSuggestions.length > 0 && <div className='flex flex-col rounded-b-md border-2 w-[9rem] px-2 py-2'>
@@ -357,7 +357,7 @@ const NewProjectMobile = (props) => {
                             </div>
                         </div>  
                         <div>
-                            <div className='flex items-start text-[9px] md:text-[12px] lg:text-[14px] '>
+                            <div className='flex items-start text-[11px] md:text-[12px] lg:text-[14px] '>
                                 <div className='flex flex-col items-center rounded-md px-3 pb-2 border-2 bg-[#E9E9E9]'>
                                     <input 
                                         ref={recruitmentNoticeInputRef} 
@@ -377,11 +377,10 @@ const NewProjectMobile = (props) => {
                         </div>  
                     </div>
                 </div>
-                <div className='flex items-center justify-center text-[11px] mb-5'>   
+                <div className='flex items-center justify-center  text-[14px] lg:text-[16px] mb-5'>   
                     <button 
                         type="submit" 
-                        className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg text-[9px] flex 
-                            justify-center md:text-[12px] lg:text-[14px] md:py-2  lg:py-2'
+                        className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg flex justify-center md:py-2  lg:py-2'
                         onClick={handleProjectSubmission}> 
                         Start my project    
                     </button>
