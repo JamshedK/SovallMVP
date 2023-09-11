@@ -28,7 +28,8 @@ const NewHome = (props) => {
             <div className="relative h-full w-full bg-[#3C9A9A] overflow-auto">
                 <div className="flex flex-row justify-center mt-12">
                     <div className="flex flex-col space-y-2 md:space-y-4">
-                        <NewProjectMobile/>
+                        {/* Do not display new project on mobile */}
+                        {!props.isMobile && <NewProjectMobile/>}
                         {projectDataList.length > 0 &&
                             projectDataList.map((project) => (
                                 <ProjectCard key={project.projectID} data={project} width={width} />

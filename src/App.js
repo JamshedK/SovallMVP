@@ -66,7 +66,7 @@ export default function App() {
                         Routing permission depends on the state of the user. authCtx.isLoggedIn is either true
                         or false, which shows if the user is logged in. 
                     */}
-                    <Route path="/" element={isLoggedIn ? <NewHome/> : <Login />} />
+                    <Route path="/" element={isLoggedIn ? <NewHome isMobile={isMobile}/> : <Login />} />
                     <Route path="/forgotpassword" element={<ForgotPassword />} />
                     <Route path="/changepassword" element={<ChangePassword />} />
                     <Route path="/accountsetup" element={<AccountSetup/>} />
@@ -80,7 +80,7 @@ export default function App() {
                     <Route path="/newproject" element={<NewProjectMobile/>}/>
                     <Route path="/project-page" element={<ProjectPageMain/>}/> 
                     <Route path="/discussion" element={<TabsMobile/>}/>
-                    <Route path='/mainfeed' element={<NewHome/>}></Route>
+                    <Route path='/mainfeed' element={<NewHome isMobile={isMobile}/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
                     <Route path="/search/posts/id" element={<ShowPostById/>}/>
@@ -88,7 +88,10 @@ export default function App() {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
-            {isMobile && isLoggedIn && <BottomNavBar />}
+            {isMobile && isLoggedIn && 
+                <div className="bottom-0 w-full fixed z-10">
+                    <BottomNavBar />
+                </div>}
         </div>        
       );
 }
