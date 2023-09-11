@@ -60,7 +60,7 @@ export default function App() {
                     {authCtx.isLoggedIn && <TopNavBar/>} 
             </header>}
             
-            <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow">
+            <div className="relative w-full flex justify-center overflow-auto scrollbar-auto z-10 grow overscroll-contain">
                 <Routes>
                     {/*
                         Routing permission depends on the state of the user. authCtx.isLoggedIn is either true
