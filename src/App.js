@@ -27,7 +27,7 @@ import { SearchContextProvider } from "./contexts/search-context";
 import AboutSoftLaunch from "./views/about/AboutSoftLaunch";
 import ShowPostById from "./views/search/ShowPostById";
 import BottomNavBar from "./newInterface/navbar/BottomNavBar";
-import { NewProjectMobile } from "./newInterface/home/NewProject";
+import NewProjectMobile  from "./newInterface/home/NewProjectMobile";
 import { TabsMobile } from "./newInterface/home/Tabs";
 import ProjectPageMain from "./newInterface/projectPage/ProjectPageMain";
 import Skills from "./newInterface/account/Skills";

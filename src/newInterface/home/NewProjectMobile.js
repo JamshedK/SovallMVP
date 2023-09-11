@@ -15,7 +15,7 @@ import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
 import {auth, db, storage} from '../../firebase-config'
 
-export const NewProjectMobile = (props) => {
+const NewProjectMobile = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     const [collaborators, setCollaborators] = useState([])
     const [showPostButton, setShowPostButton] = useState(false)
@@ -178,17 +178,17 @@ export const NewProjectMobile = (props) => {
                     <div className="rounded-full h-5 w-5">
                         <img className="rounded-full h-full w-full object-cover" src={user.image_path} alt="Profile" />
                     </div>
-                    <div className='flex flex-row items-start gap-1'>
-                        <div className='flex flex-col'>
-                            <label className="text-[10px]">{user.fullname.trim()}</label>
-                            <label className='text-[9px] text-[#767676]'>{user.skill[0]}</label>
+                    <div className='flex flex-row items-start gap-1 md:gap-2 lg:gap-3'>
+                        <div className='flex flex-col text-[10px] md:text-[12px] lg:text-[14px]'>
+                            <label >{user.fullname.trim()}</label>
+                            <label className='text-[#767676]'>{user.skill[0]}</label>
                         </div>
                         <button 
                             className='mt-1'
                             onClick={() => removeCollaborator(i)}
                         >
                             <img
-                                className='h-3' 
+                                className='h-3 md:h5 lg:h-5' 
                                 src={close_image_icon}></img>
                         </button>
                     </div>
@@ -202,7 +202,7 @@ export const NewProjectMobile = (props) => {
     if (recruitmentArray.length > 0){
         recruitmentsComp = recruitmentArray.map((message, i)=>{
             return(
-                <div className='text-[9px] space-y-1'>
+                <div className='text-[9px] md:text-[12px] lg:text-[14px] space-y-1'>
                      <div className='rounded-md px-3 py-2 bg-[#016A69] mt-4 text-white'>
                         {message}
                     </div>
@@ -290,26 +290,31 @@ export const NewProjectMobile = (props) => {
 
 
     return (
-        <div className="relative w-full bg-[#3C9A9A] flex items-center justify-center h-screen">
-            <div className={"flex flex-col justify-center rounded-xl bg-green w-[99%] bg-white pl-3 pt-4 mx-2 pr-5"}>
+        <div className="relative w-full bg-[#3C9A9A] flex items-center justify-center">
+            <div className={"flex flex-col justify-center rounded-xl bg-green w-[99%] bg-white pl-3 pt-4 mx-2 pr-5 md:w-[50%] lg:w-[40%]"}>
                 {/* username and profile NewProjectMobile */}
                 <div className='flex flex-row space-x-1 text-[13px]'>
                     <div className="rounded-full h-5 w-5">
-                        <img className="rounded-full h-full w-full object-cover cursor-pointer" src={userCtx.profilePicPath} alt="Profile" />
+                        <img 
+                            className="rounded-full h-full w-full object-cover cursor-pointer" 
+                            src={userCtx.profilePicPath} 
+                            alt="Profile" 
+                        />
                     </div>
                     <label className="">{userCtx.username}</label>
                 </div>
                 {/* project details */}
                 <input 
-                    className="font-medium pt-3 outline-none" 
+                    className="font-medium pt-3 outline-none md:text-[20px] lg:text-[20px]" 
                     placeholder='Project Title ... (35 characters)'
                     onChange={(e) => {
                         setProjectTitle(e.target.value)
                         }}>
-                    </input>
-                <div className='h-fit'>
+                </input>
+                <div className=''>
                     <textarea 
-                        className='form-textarea text-[14px] border-none w-full pl-0 focus:ring-0 resize-none' 
+                        className='form-textarea text-[14px] lg:text-[16px] border-none w-full pl-0 focus:ring-0 resize-none
+                            min-h-[10rem] md:min-h-fit lg:min-h-fit' 
                         placeholder='Project Description'
                         onChange={handleTextareaChange}
                         ref = {textRef}>
@@ -332,9 +337,9 @@ export const NewProjectMobile = (props) => {
                 {/* Negative margin is to ignore the margin in parent component */}
                 <hr className='left-0 right-0 border-[#3C9A9A] my-4 -mx-5'/>
                 {/* collaborators */}
-                <div>
-                    <h1 className='text-center text-[12px] pb-2'>Project Collaborators</h1>
-                    <div className='flex flex-row justify-around align-top min-h-[8rem] items-start flex-wrap'>
+                <div className='mb-16 md:mb-5 lg:mb-5'>
+                    <h1 className='text-center text-[12px] md:text-[16px] lg:text-[16px] pb-2'>Project Collaborators</h1>
+                    <div className='flex flex-row justify-around align-top items-start flex-wrap'>
                         <div className='flex flex-col space-y-3'>
                             {collaborators.length > 0 && 
                                 <div className='flex flex-col space-y-3'>
@@ -343,7 +348,7 @@ export const NewProjectMobile = (props) => {
                             <div className= 'w-[9rem] flex flex-col'>
                                 <div className='inline-flex space-x-1 w-[9rem] pl-1'>
                                     <img src={magnifying_glass}/>
-                                    <input className='outline-none text-[11px]' placeholder='Add a collaborator' 
+                                    <input className='outline-none text-[11px] md:text-[12px] lg:text-[14px]' placeholder='Add a collaborator' 
                                         ref={collaboratorSearchRef} onChange={handleCollaboratorSearch}/>
                                 </div>
                                 {collaboratorsSuggestions.length > 0 && <div className='flex flex-col rounded-b-md border-2 w-[9rem] px-2 py-2'>
@@ -352,8 +357,8 @@ export const NewProjectMobile = (props) => {
                             </div>
                         </div>  
                         <div>
-                            <div className='flex items-start '>
-                                <div className='flex flex-col items-center rounded-md px-3 pb-2 border-2 bg-[#E9E9E9] text-[9px] '>
+                            <div className='flex items-start text-[9px] md:text-[12px] lg:text-[14px] '>
+                                <div className='flex flex-col items-center rounded-md px-3 pb-2 border-2 bg-[#E9E9E9]'>
                                     <input 
                                         ref={recruitmentNoticeInputRef} 
                                         onChange={onRecruitmentNoticeInputChange}
@@ -362,7 +367,7 @@ export const NewProjectMobile = (props) => {
                                     {showPostButton && 
                                         <button 
                                             onClick={handleAddRecruitmentNotice} 
-                                            className="bg-[#00AAC1] text-white w-fit rounded-md text-[9px] px-4 py-0.5 mt-2"
+                                            className="bg-[#00AAC1] text-white w-fit rounded-md px-4 py-0.5 md:py-1 lg:py-1 mt-2"
                                         >
                                             Post
                                         </button>}
@@ -375,12 +380,14 @@ export const NewProjectMobile = (props) => {
                 <div className='flex items-center justify-center text-[11px] mb-5'>   
                     <button 
                         type="submit" 
-                        className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg text-[9px] flex justify-center'
+                        className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg text-[9px] flex 
+                            justify-center md:text-[12px] lg:text-[14px] md:py-2  lg:py-2'
                         onClick={handleProjectSubmission}> 
-                        Start my project
+                        Start my project    
                     </button>
                 </div>
             </div>
         </div>
     );
-}
+};
+export default NewProjectMobile;
