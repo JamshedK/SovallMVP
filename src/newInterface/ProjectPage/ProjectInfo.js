@@ -39,6 +39,7 @@ export const ProjectInfo = (props) => {
     const [isEditMode, setIsEditMode] = useState(false);
     const [editedDescription, setEditedDescription] = useState(data?.description); 
     const [editedTitle, setEditedTitle] = useState(data?.title) 
+    const [canDelete, setCanDelete] = useState(false)
     const intereactionColRef = collection(db, 'interactions')
     const projectDocRef = doc(db, "projects", data?.projectID);
     const descriptionRef = useRef(null);    
@@ -109,6 +110,31 @@ export const ProjectInfo = (props) => {
             getUserInfo();
     }, []);
     
+    useEffect(() => {
+        const getCollaborators = async () => {
+            const projectDocRef = doc(db, 'projects', data.projectID); // Use the document ID
+            try {
+                const projectDocSnapshot = await getDoc(projectDocRef);
+    
+                if (projectDocSnapshot.exists()) {
+                    const collaborators = projectDocSnapshot.data().collaborators;
+    
+                    // Check if the current user's userID is in the collaborators array
+                    const currentUserID = authCtx.userID;
+                    const isCollaborator = collaborators.some(collaborator => collaborator.user_id === currentUserID);
+                    console.log(collaborators);
+                    
+                    // Set canDelete to true if the current user is a collaborator
+                    setCanDelete(isCollaborator);
+                }
+            } catch (error) {
+                console.error("Error fetching project document:", error);
+            }
+        };
+        getCollaborators();
+    }, [data.projectID, authCtx.userID]);
+    
+
     const handleEditClick = () => {
         setIsEditMode(true);
     };
@@ -274,7 +300,7 @@ export const ProjectInfo = (props) => {
                     {!isEditMode &&
                         <button onClick={handleEditClick}>Edit</button>
                     }
-                    {!isEditMode &&
+                    {!isEditMode && canDelete &&
                         <button onClick={handleDeleteClick}>Delete</button>
                     }
                     {/*Save Button */}
