@@ -14,7 +14,7 @@ import PostSearch from "./views/search/PostSearch";
 import About from "./views/about/About";
 import Home from "./views/home/Home";
 import NewHome from "./newInterface/home/NewHome";
-import EditProfile from "./views/home/components/EditProfile";
+import EditProfile from "./newInterface/profile/EditProfile";
 import MainFeed from "./views/mainFeed/MainFeed";
 import NotFound from "./views/notFound/NotFound";
 import HeaderA from "./views/common/HeaderA";

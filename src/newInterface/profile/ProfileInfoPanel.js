@@ -11,7 +11,7 @@ const QuickAccess = (props) => {
     return (
         <a href={props.href} className="flex flex-col h-[1.25rem]">
             <label 
-                className="text-[8pt] md:text-[10px] lg:text-[12px]"
+                className="text-[8pt] md:text-[10px] lg:text-[12px] cursor-pointer"
             >
                 {props.label}
             </label>
@@ -33,7 +33,7 @@ const InfoBlock = (props) => {
 
 const Own = () => {
     return (
-        <div className="flex gap-[0.5rem] text-gray-500" >
+        <div className="flex gap-[0.5rem] text-gray-500 " >
             {/* <QuickAccess label="network" src={network} href="/search/people" /> */}
             <QuickAccess label="Edit" href="/edit-profile" />
         </div>
