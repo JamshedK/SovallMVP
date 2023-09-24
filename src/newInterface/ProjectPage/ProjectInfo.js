@@ -135,8 +135,8 @@ export const ProjectInfo = (props) => {
           // Delete the project from Firebase
           await deleteDoc(projectDocRef);
     
-          // Navigate to "/newhome"
-          navigate('/newhome')
+          // Navigate to "/"
+          navigate('/')
         }
     };
     
@@ -240,9 +240,9 @@ export const ProjectInfo = (props) => {
                         <label className="">{timeForPost}</label>
                     </div>
                     <div className='flex flex-row space-x-8'>
-                        <button>
+                        {/* <button>
                             <img className='w-3' src={save_icon}/>
-                        </button>
+                        </button> */}
                         <button>
                             <img className='w-[14px]' src={notification_icon}/>
                         </button>

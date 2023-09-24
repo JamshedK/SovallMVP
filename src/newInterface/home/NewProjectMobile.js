@@ -255,7 +255,7 @@ const NewProjectMobile = (props) => {
         try {
           const projectDoc = await addDoc(projectRef, projectData);
           alert('Project submitted')
-          navigate('/home')
+          navigate('/')
           // Handle success or perform additional operations
         } catch (error) {
           console.error('Error submitting project:', error);
@@ -322,7 +322,7 @@ const NewProjectMobile = (props) => {
                     {!containsImage &&    
                         <div className="flex justify-end mr-7">
                             <label htmlFor="photoInput" className="cursor-pointer">
-                                <img src={add_image_icon}/>
+                                <img className='lg:h-5 md:h-5' src={add_image_icon}/>
                             </label>
                             <input id="photoInput" type="file" accept="image/*" ref={imageRef} className="hidden" onChange={handleImageSelected}/>
                         </div> }
@@ -337,7 +337,7 @@ const NewProjectMobile = (props) => {
                 {/* Negative margin is to ignore the margin in parent component */}
                 <hr className='left-0 right-0 border-[#3C9A9A] my-4 -mx-5'/>
                 {/* collaborators */}
-                <div className='mb-16 md:mb-5 lg:mb-5'>
+                <div className='mb-16 md:mb-5 lg:mb-10'>
                     <h1 className='text-center text-[14px] lg:text-[16px] pb-4'>Project Collaborators</h1>
                     <div className='flex flex-row justify-around align-top items-start flex-wrap'>
                         <div className='flex flex-col space-y-3'>
@@ -377,7 +377,7 @@ const NewProjectMobile = (props) => {
                         </div>  
                     </div>
                 </div>
-                <div className='flex items-center justify-center  text-[14px] lg:text-[16px] mb-5'>   
+                <div className='flex items-center justify-center  text-[12px] lg:text-[14px] mb-5'>   
                     <button 
                         type="submit" 
                         className='bg-[#00AAC1] text-white py-1 px-4 rounded-lg flex justify-center md:py-2  lg:py-2'

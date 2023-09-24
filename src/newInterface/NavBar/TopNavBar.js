@@ -39,7 +39,6 @@ function TopNavBar(props) {
 
   /*Hardtyped arrays*/
   const menuOptionsData = [
-        [bell_icon_unselected, bell_icon_selected, '/comingsoon'],
         [save_icon_unselected,save_icon_selected, 'comingsoon'],
         [add_project_icon_unselected,add_project_icon_selected, '/newproject'],
         [home_icon_unselected,home_icon_selected, '/']
