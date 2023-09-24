@@ -37,10 +37,12 @@ export const ProjectInfo = (props) => {
     const [username, setUserName] = useState('');
     const [profilePicPath, setProfilePicPath] = useState(''); 
     const [isEditMode, setIsEditMode] = useState(false);
-    const [editedDescription, setEditedDescription] = useState(data?.description);  
+    const [editedDescription, setEditedDescription] = useState(data?.description); 
+    const [editedTitle, setEditedTitle] = useState(data?.title) 
     const intereactionColRef = collection(db, 'interactions')
     const projectDocRef = doc(db, "projects", data?.projectID);
     const descriptionRef = useRef(null);    
+    const titleRef = useRef(null)
 
     const navigate = useNavigate()
     const authCtx = useContext(AuthContext)
@@ -115,10 +117,11 @@ export const ProjectInfo = (props) => {
         setIsEditMode(false);
         // Get the updated description content from the ref
         const updatedDescription = descriptionRef.current.textContent.trim();
-        setEditedDescription(updatedDescription);
-
+        const updatedTitle = titleRef.current.textContent.trim()
+        setEditedDescription(updatedDescription)
+        setEditedTitle(updatedTitle)
         // Update the description in Firebase
-        await updateDoc(projectDocRef, { description: editedDescription });
+        await updateDoc(projectDocRef, { description: updatedDescription, title: updatedTitle});
     };
 
     const handleCancelClick = () => {
@@ -248,7 +251,13 @@ export const ProjectInfo = (props) => {
                         </button>
                     </div>
                 </div>
-                <h1 className='pt-2 pb-1 text-sm lg:text-xl md:text-lg font-bold'>{data?.title}</h1>
+                <h1 
+                    className='pt-2 pb-1 text-sm lg:text-xl md:text-lg font-bold focus:outline-none'
+                    contentEditable={isEditMode}
+                    ref={titleRef}
+                >
+                    {editedTitle}
+                </h1>
                 {/* Text and image */}
                 <div className="text-[12px] md:text-[13px] lg:text-[15px]">
                     <div className='focus:outline-none'
@@ -262,8 +271,12 @@ export const ProjectInfo = (props) => {
 
                 {/* Edit and delete button */}
                 <div className='flex flex-row text-[12px] space-x-10 mt-2 text-[#3C9A9A]'>
-                    <button onClick={handleEditClick}>Edit</button>
-                    <button onClick={handleDeleteClick}>Delete</button>
+                    {!isEditMode &&
+                        <button onClick={handleEditClick}>Edit</button>
+                    }
+                    {!isEditMode &&
+                        <button onClick={handleDeleteClick}>Delete</button>
+                    }
                     {/*Save Button */}
                     {isEditMode && (
                         <button onClick={handleSaveClick}>Save</button>

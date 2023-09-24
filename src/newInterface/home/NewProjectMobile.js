@@ -256,6 +256,7 @@ const NewProjectMobile = (props) => {
           const projectDoc = await addDoc(projectRef, projectData);
           alert('Project submitted')
           navigate('/')
+          window.location.reload()
           // Handle success or perform additional operations
         } catch (error) {
           console.error('Error submitting project:', error);
