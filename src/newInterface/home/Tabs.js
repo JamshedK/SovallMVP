@@ -19,6 +19,11 @@ export const TabsMobile = (props) => {
         setSelectedTab(tab);
         stCtx.setSelectedTab(tab)
     };
+    console.log('Project data')
+    console.log(props.data)
+    const issueCount = props.data?.issueCount !== undefined ? props.data.issueCount : 0;
+    const discussionCount = props.data?.discussionCount !== undefined ? props.data.discussionCount : 0;
+    const progressCount = props.data?.progressCount !== undefined ? props.data.progressCount : 0;
 
     const getTabStyle = (tabName) => {
         return selectedTab === tabName  ? "bg-white" : "bg-[#D9D9D9]";
@@ -39,20 +44,20 @@ export const TabsMobile = (props) => {
                         lg:rounded-tl-lg  ${getTabStyle('discussions')}`}
                     onClick={() => handleTabClick('discussions')}
                 >
-                    discussions
+                    {`${discussionCount} discussions`}
                 </div>
                 <div
                     className={`w-1/3 text-center cursor-pointer py-2 ${getTabStyle('issues')}`}
                     onClick={() => handleTabClick('issues')}
                 >
-                    issues
+                    {`${issueCount} issues`}
                 </div>
                 <div
                     className={`w-1/3 text-center cursor-pointer py-2 md:rounded-tr-lg
                         lg:rounded-tr-lg ${getTabStyle('progress')}`}
                     onClick={() => handleTabClick('progress')}
                 >
-                    Progress updates
+                    {`Progress updates (${progressCount}) `}
                 </div>
             </div>
         </div>

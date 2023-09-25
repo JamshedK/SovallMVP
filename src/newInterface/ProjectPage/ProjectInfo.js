@@ -122,7 +122,6 @@ export const ProjectInfo = (props) => {
                     // Check if the current user's userID is in the collaborators array
                     const currentUserID = authCtx.userID;
                     const isCollaborator = collaborators.some(collaborator => collaborator.user_id === currentUserID);
-                    console.log(collaborators);
                     
                     // Set canDelete to true if the current user is a collaborator
                     setCanDelete(isCollaborator);

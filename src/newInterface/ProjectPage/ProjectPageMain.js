@@ -13,6 +13,7 @@ const ProjectPageMain = (props) => {
     const [commentCount, setCommentCount] = useState(0);
     const [upvotedCount, setUpvotedCount] = useState(0);
     const [downvotedCount, setDownvotedCount ] = useState(0);
+    const [updateStats, setUpdateStats] = useState()
     
     useEffect(() => {
         // Function to fetch the project data based on the props.id
@@ -31,7 +32,13 @@ const ProjectPageMain = (props) => {
             }
         };  
         fetchProjectData();
-    },[queryParameters])
+    },[queryParameters, updateStats])
+
+    useEffect(() => {
+        console.log('useEffect in ProjectPageMain triggered');
+        // Fetch data from Firebase or perform actions when updateStats changes
+      }, [updateStats]);
+    
     return (
         <div className="">
             {projectData && 
@@ -41,8 +48,9 @@ const ProjectPageMain = (props) => {
                         className="flex flex-col mt-4 h-fit lg:max-w-[40%] w-full bg-white
                         md:rounded-t-lg lg:rounded-lg"
                     >
-                        <TabsMobile/>
+                        <TabsMobile data={projectData} projectID={projectData.projectID}/>
                         <ProductPageCommentArea 
+                            setUpdateStats={setUpdateStats}
                             commentCount={commentCount}
                             setCommentCount={setCommentCount}
                             projectID={projectData.projectID}

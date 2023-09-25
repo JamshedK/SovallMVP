@@ -29,6 +29,12 @@ import SelectedTabContext from '../../contexts/selected-tab-context';
     return userInfo;
 }
 
+const statsObj = {
+    'discussions': 'discussionCount',
+    'issues': 'issueCount',
+    'progress': 'progressCount'
+}
+
 // Main parent component
 const ProductPageCommentArea = (props) => {
     const [commentsArray, setCommentsArray] = useState([]);
@@ -69,7 +75,9 @@ const ProductPageCommentArea = (props) => {
         commentItems = filteredComments.map((comment, i) => {
             // Having key for each Comment is required per React docs  
             return <SingleComment key={"comment-card-" + i} 
+                        setUpdateStats = {props.setUpdateStats}
                         commentData={comment}
+                        projectID={props.projectID}
                         setNewCommentAdded = {setNewCommentAdded}
                         setCommentDeleted = {setCommentDeleted}
                         positionInCommentsArray = {i}
@@ -84,6 +92,7 @@ const ProductPageCommentArea = (props) => {
             <div className='bg-white border-4 border-white md:rounded-t-lg lg:rounded-lg'>
                 <div className='mx-4 mt-2 mb-2'>
                     <NewCommentBox 
+                        setUpdateStats = {props.setUpdateStats}
                         projectID = {props.projectID}
                         setNewCommentAdded = {setNewCommentAdded}
                         commentCount = {props.commentCount}
@@ -105,6 +114,7 @@ const SingleComment = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const authCtx = useContext(AuthContext);
+    const stCtx = useContext(SelectedTabContext)
     const [showDeleteBtn, setShowDeleteBtn] = useState(props.commentData.userID === authCtx.userID)
     // Create an array of CommentReplies components to be displayed under the comment
     let replyItems = []
@@ -166,12 +176,17 @@ const SingleComment = (props) => {
         console.log(props.commentData)
         if (window.confirm("Are you sure you want to delete the comment?")) {
             props.deleteComment(props.commentData.commentID);
+            const projectsDocRef = doc(db, "projects",props.projectID);
             /* TODO: 
                 - Do not delete comment but set the deleted field for collection to true
                 - Decrease the comment count 
             */
             await deleteDoc(doc(db, 'projectComments', props.commentData.commentID))
-            setShowDeleteBtn(false);
+                    // update discussion/progress/issueCount
+            const updateField = {};
+            updateField[statsObj[stCtx.selectedTab]] = increment(-1);
+            await updateDoc(projectsDocRef, updateField);
+            props.setUpdateStats(new Date())
         }
     }
     return (
@@ -391,6 +406,11 @@ const NewCommentBox = (props) => {
         // console.log(props.commentCount);
         // update comment_count for posts
         await updateDoc(projectsDocRef, {commentCount: increment(1)});
+        // update discussion/progress/issueCount
+        const updateField = {};
+        updateField[statsObj[stCtx.selectedTab]] = increment(1);
+        await updateDoc(projectsDocRef, updateField);
+
         // add in interactions collections
         const interactionsColRef = collection(db, 'projectInteractions')
         await addDoc(interactionsColRef, {
@@ -401,6 +421,7 @@ const NewCommentBox = (props) => {
             type: "discussionComment"
         })
         setShowCommentButton(false)
+        props.setUpdateStats(new Date())
     }
     return (
         <div className='w-full flex flex-col items-center bg-[#E9E9E9] rounded-lg px-2 py-2 '>
@@ -431,12 +452,12 @@ const NewReplyBox = (props) => {
     const [imageSource, setImageSource] = useState();
     const [selectedImage, setSelectedImage] = useState(null);   // reference to the image that was selected
     const [showReplyButton, setShowReplyButton] = useState(false);  // control whether to show reply button or not
-
+    const stCtx = useContext(SelectedTabContext)
 
     const textAreaRef = useRef();  
     const commentRef = doc(db, 'projectComments', props.commentID)    // reference to comments collection in firestore
     const postsDocRef = doc(db, "projects", props.projectID);
-
+    const projectsDocRef = doc(db, "projects", props.projectID);
     const authCtx = useContext(AuthContext);
     const userCtx = useContext(UserContext)
 
@@ -503,7 +524,11 @@ const NewReplyBox = (props) => {
         // update the state of commentCount
         props.setCommentCount(props.commentCount + 1)
         // update comment_count for posts
-        await updateDoc(postsDocRef, {comment_count: increment(1)});
+        await updateDoc(postsDocRef, {commentCount: increment(1)});
+        // update discussion/progress/issueCount
+        const updateField = {};
+        updateField[statsObj[stCtx.selectedTab]] = increment(1);
+        await updateDoc(projectsDocRef, updateField);
         // add in interactions collections
         const interactionsColRef = collection(db, 'interactions')
         await addDoc(interactionsColRef, {
