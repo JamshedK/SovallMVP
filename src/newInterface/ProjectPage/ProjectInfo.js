@@ -24,12 +24,9 @@ const MAX_LINES = 2; // Maximum number of lines before showing "See more"
 
 export const ProjectInfo = (props) => {
     const data = props.data
-
-    const [commentCount, setCommentCount] = useState(props.data.commentCount)
     const [upvotedCount, setUpvotedCount] = useState(props.data.upvotedCount)
     const [downvotedCount, setDownvotedCount] = useState(props.data.downvotedCount || 0)
     const [recruitingCount, setRecruitingCount] = useState(props.data.recruitingCount || 0);
-    const [issueCount, setIssueCount] = useState(props.data?.issueCount || 0)
     const [isUpvoted, setIsUpvoted] = useState(false);  // to swithc icons when upvoted or not
     const [isDownvoted, setIsDownvoted] = useState(false);  // to swithc icons when downvoted or not
     const [imageURL, setImageURL] = useState('');
@@ -232,9 +229,9 @@ export const ProjectInfo = (props) => {
     }
 
     const buttonsArray = [
-                {icon: issue_icon, text: `${issueCount} Issues`},
+                {icon: issue_icon, text: `${data?.issueCount} Issues`},
                 {icon: recruiting_icon, text: `${recruitingCount} Recruiting`,},
-                {icon: comment_icon, text: commentCount > 0 ? commentCount.toString() : ""},
+                {icon: comment_icon, text: props.data.commentCount > 0 ? props.data.commentCount.toString() : ""},
                 {icon: isUpvoted ? upvote_icon_enabled : upvote_icon_disabled, text: upvotedCount > 0 ? upvotedCount.toString() : "", onClick: handleUpvote},
                 {icon: isDownvoted ? downvote_icon_enabled : downvote_icon, text: downvotedCount > 0 ? downvotedCount.toString() : "", onClick: handleDownvote}
         ];
