@@ -166,7 +166,13 @@ const SingleComment = (props) => {
         var replies = props.commentData.replies;
         replyItems = replies.map((reply, i) => {
             // Having key for each Comment is required per React docs
-            return <CommentReplies key={"reply-card-" + i} reply_data={reply} i={i}  deleteReply={deleteReply}/>
+            return <CommentReplies
+                        setUpdateStats={props.setUpdateStats} 
+                        projectID={props.projectID}
+                        key={"reply-card-" + i} 
+                        reply_data={reply} i={i}  
+                        deleteReply={deleteReply}
+                    />
         })
     }
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
@@ -182,7 +188,8 @@ const SingleComment = (props) => {
                 - Decrease the comment count 
             */
             await deleteDoc(doc(db, 'projectComments', props.commentData.commentID))
-                    // update discussion/progress/issueCount
+            await updateDoc(projectsDocRef, {commentCount: increment(-1)});
+            // update discussion/progress/issueCount
             const updateField = {};
             updateField[statsObj[stCtx.selectedTab]] = increment(-1);
             await updateDoc(projectsDocRef, updateField);
@@ -217,7 +224,8 @@ const SingleComment = (props) => {
                     {/* Display newReplyBox if the reply button is clicked */}
                     {showNewReplyBox && 
                         <div className='mx-3'>
-                            <NewReplyBox 
+                            <NewReplyBox
+                                setUpdateStats={props.setUpdateStats} 
                                 commentID = {props.commentData.commentID}
                                 setNewCommentAdded = {props.setNewCommentAdded}
                                 projectID = {props.commentData.projectID}
@@ -244,6 +252,7 @@ const CommentReplies = (props) => {
     const [containsImage, setContainsImage] = useState(false);
     const [userInfo, setUserInfo] = useState({});
     const authCtx = useContext(AuthContext);
+    const stCtx = useContext(SelectedTabContext)
     const [showDeleteBtn, setShowDeleteBtn] = useState(props.reply_data.user_id === authCtx.userID);
     // const tsForDisplay = moment(ts).fromNow();
     // Use moment library to format when the comment was made. Docs: https://momentjs.com/docs/#/displaying/fromnow/
@@ -285,6 +294,14 @@ const CommentReplies = (props) => {
            props.deleteReply(props.i)
         }
         setShowDeleteBtn(false);
+        const projectsDocRef = doc(db, "projects", props.projectID);
+        const postsDocRef = doc(db, "projects", props.projectID);
+        await updateDoc(postsDocRef, {commentCount: increment(-1)});
+        // update discussion/progress/issueCount
+        const updateField = {};
+        updateField[statsObj[stCtx.selectedTab]] = increment(-1);
+        await updateDoc(projectsDocRef, updateField);
+        props.setUpdateStats(new Date())
     }
     console.log(props)
     return (
@@ -541,6 +558,7 @@ const NewReplyBox = (props) => {
         })
         // update the state to rerender CommentArea to fetch the new comment
         props.setNewCommentAdded(new Date());
+        props.setUpdateStats(new Date())
         setShowReplyButton(false)
     }
 
