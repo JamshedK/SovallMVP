@@ -25,11 +25,18 @@ export const TabsMobile = (props) => {
     };
 
     return (
-        <div className="flex w-full bg-white items-center justify-center h-fit">
+        <div 
+            className="flex w-full bg-white items-center justify-center h-fit
+                md:rounded-lg lg:rounded-lg"
+        >
             {/* Header Tabs */}
-            <div className="flex flex-row justify-between items-center text-[10px] md:text-[14px] lg:text-[15px] font-inter w-full">
+            <div 
+                className="flex flex-row justify-between items-center text-[10px] 
+                    md:text-[14px] lg:text-[15px] font-inter w-full "
+                >
                 <div
-                    className={` w-1/3 text-center cursor-pointer py-2 ${getTabStyle('discussions')}`}
+                    className={` w-1/3 text-center cursor-pointer py-2 md:rounded-tl-lg
+                        lg:rounded-tl-lg  ${getTabStyle('discussions')}`}
                     onClick={() => handleTabClick('discussions')}
                 >
                     discussions
@@ -41,7 +48,8 @@ export const TabsMobile = (props) => {
                     issues
                 </div>
                 <div
-                    className={`w-1/3 text-center cursor-pointer py-2 ${getTabStyle('progress')}`}
+                    className={`w-1/3 text-center cursor-pointer py-2 md:rounded-tr-lg
+                        lg:rounded-tr-lg ${getTabStyle('progress')}`}
                     onClick={() => handleTabClick('progress')}
                 >
                     Progress updates

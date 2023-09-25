@@ -80,8 +80,8 @@ const ProductPageCommentArea = (props) => {
         })
     }
     return (
-        <div className="w-full">
-            <div className='bg-white border-2 border-white'>
+        <div className="w-full ">
+            <div className='bg-white border-4 border-white md:rounded-t-lg lg:rounded-lg'>
                 <div className='mx-4 mt-2 mb-2'>
                     <NewCommentBox 
                         projectID = {props.projectID}
