@@ -175,15 +175,15 @@ const EditProfile = (props) => {
                     <div className='flex flex-col justify-center items-center gap-5 mt-8'>
                         <button
                                 className="bg-white text-[#044A54] w-fit px-4 py-2 text-[15px] rounded-md disabled:bg-gray-400 disabled:hover:cursor-no-drop"
-                                onClick={handleChangePassword}
-                            >
-                                Click here to change password
-                        </button>
-                        <button
-                                className="bg-white text-[#044A54] w-fit px-4 py-2 text-[15px] rounded-md disabled:bg-gray-400 disabled:hover:cursor-no-drop"
                                 onClick={handleSaveChanges}
                             >
                                 Save changes
+                        </button>
+                        <button
+                                className=" text-white w-fit px-4 py-2 text-[15px] underline rounded-md disabled:bg-gray-400 disabled:hover:cursor-no-drop"
+                                onClick={handleChangePassword}
+                            >
+                                Change password
                         </button>
                     </div>
                     

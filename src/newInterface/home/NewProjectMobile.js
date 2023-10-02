@@ -6,7 +6,7 @@ import magnifying_glass from '../../assets/newInterface/new_project/magnifying_g
 import add_recruitment_notice_icon from '../../assets/newInterface/new_project/add_recruitment_notice_icon.svg';
 import close_image_icon from '../../assets/newInterface/new_project/close_image_icon.svg';
 import add_image_icon from '../../assets/newInterface/new_project/add_image_icon.svg';
-
+import {marked} from 'marked'
 import { useContext, useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../../contexts/user';
@@ -53,6 +53,10 @@ const NewProjectMobile = (props) => {
         getUsers()
     }, [])
 
+    const convertToHtml = (markdownText) => {
+        return marked(markdownText);
+      };
+      
     // Show preview of an image when it's selected
     const handleImageSelected = (e) => {
         if(e.target.files[0] != null){
@@ -243,6 +247,7 @@ const NewProjectMobile = (props) => {
         const projectData = {
           title: projectTitle,
           description: projectDescription,
+          descriptionHtml: convertToHtml(projectDescription), // Store HTML representation here
           imagePath: dbImagePath,
           collaborators: collaborators,
           recruitmentNotices: recruitmentArray,

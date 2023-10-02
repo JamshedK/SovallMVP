@@ -243,9 +243,11 @@ export const ProjectCard = (props) => {
                 <h1 className='pt-2 pb-1 text-sm font-bold'>{data?.title}</h1>
                 {/* Text and image */}
                 <div className="text-[12px]">
-                    <div className={getDescriptionStyle()} ref={descriptionRef}>
+                    <div dangerouslySetInnerHTML={{ __html: data.descriptionHtml }}></div>
+                    
+                    {/* <div className={getDescriptionStyle()} ref={descriptionRef}>
                         <p>{data?.description}</p>
-                    </div>
+                    </div> */}
                     <div className='flex flex-row justify-between w-full text-[10px] py-2 px-4'>
                         {!isExpanded && (
                             <button className="w-fit cursor-pointer text-[#7A7A7A]" onClick={toggleExpanded}> Read more </button>
@@ -325,9 +327,10 @@ export const ProjectCard = (props) => {
                             <div className='flex flex-col flex-grow ml-3 mt-5 max-w-[400px]'>
                                 <h1 className='text-xl'>{data?.title}</h1>
                                 <label className="text-[11px]">{`${username.split(" ")[0]} - ${timeForPost}` }</label>
-                                <div className={getDescriptionStyle()} ref={descriptionRef}>
+                                <div dangerouslySetInnerHTML={{ __html: data.descriptionHtml }}></div>
+                                {/* <div className={getDescriptionStyle()} ref={descriptionRef}>
                                     <p className='text-[15px]'>{data?.description}</p>
-                                </div>
+                                </div> */}
                                 <div className="flex-grow"></div> {/* This div will push the issueCount to the bottom */}
                                 <div className='flex flex-row mb-5 text-[13px] justify-between mr-5'>
                                     <button 
