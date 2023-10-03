@@ -43,7 +43,36 @@ function TopNavBar(props) {
         [add_project_icon_unselected,add_project_icon_selected, '/newproject'],
         [home_icon_unselected,home_icon_selected, '/']
   ];
-  const filterOptionsData = []
+  const filterOptionsData = [
+    ["Projects", "/"],
+    ["Posts", "/"],
+  ];
+
+  const handleFilter = (e) => {
+    const value = parseInt(e.target.value);
+    setCurrentFilter(value);
+    if(value===1){
+      searchCtx.updateEnterPressed();
+      navigate('/posts');
+    }
+    if(value === 0){
+      navigate('/mainfeed');
+    }
+  };
+
+  const filterOptions = filterOptionsData.map((item, i) => {
+    const style = i === currentFilter ? "bg-white text-green-4" : "bg-green-7 text-white";
+    return (
+        <button 
+            key={"filter-option-" + i}
+            value={i}
+            className={"h-full rounded-full flex items-center text-[8pt] px-2 " + style}
+            onClick={handleFilter}
+        >
+            {item[0]}
+        </button>
+    );
+  });
     
   const handleMenuOptionSelected = (e) =>{
     const value = parseInt(e.currentTarget.value)
@@ -66,6 +95,7 @@ function TopNavBar(props) {
       </button>
     );
   });
+
 
   const onEnterButtonClicked = (e) => {
     // if (e.key === 'Enter') {
@@ -106,6 +136,7 @@ function TopNavBar(props) {
           />
         </div>
       </div>
+      <div className="flex flex-2 py-1 gap-4 items-center">{filterOptions}</div>
 		<div className="flex flex-1 gap-8 justify-end items-center">
           {menuOptions}
           <a href="/profile">

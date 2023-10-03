@@ -81,6 +81,7 @@ export default function App() {
                     <Route path="/project-page" element={<ProjectPageMain isMobile={isMobile}/>}/> 
                     <Route path="/discussion" element={<TabsMobile/>}/>
                     <Route path='/mainfeed' element={<NewHome isMobile={isMobile}/>}></Route>
+                    <Route path='/posts' element={<MainFeed/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
                     <Route path="/search/posts" element={<PostSearch/>}/>
                     <Route path="/search/posts/id" element={<ShowPostById/>}/>
