@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { collection, getDocs, updateDoc, arrayUnion, doc } from 'firebase/firestore';
-
+import hide_collaborators from '../../assets/newInterface/hide_collaborators.svg';
 import AuthContext from '../../contexts/auth-context';
 import magnifying_glass from '../../assets/newInterface/new_project/magnifying_glass.svg';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage'
@@ -124,7 +124,7 @@ const Collaborators = (props) => {
         )
     })    
   return (
-    <div className='px-2 py-4 w-52 bg-white rounded-r-xl h-full border-l-[2px] border-[#3C9A9A]'>
+    <div className='px-2 py-4 w-52 bg-white rounded-r-xl h-full border-l-[2px] flex flex-row items-start'>
         <div className='flex flex-col gap-2'>
             <h1 className='font-inter text-[14px] font-medium'>Collaborators:</h1>
             <div className='flex flex-col space-y-3'>
@@ -146,6 +146,9 @@ const Collaborators = (props) => {
                 }
             </div>
         </div>
+        {props.isMobile && <button onClick={()=>props.setShowCollab(false)}>
+            <img className='w-2' src={hide_collaborators}/>
+        </button>}
     </div>
   );
 };

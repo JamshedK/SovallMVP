@@ -78,7 +78,7 @@ export default function App() {
                     <Route path="/signout" element={<Logout />} />
                     <Route path="/newpost" element={<NewPost/>}/>
                     <Route path="/newproject" element={<NewProjectMobile/>}/>
-                    <Route path="/project-page" element={<ProjectPageMain/>}/> 
+                    <Route path="/project-page" element={<ProjectPageMain isMobile={isMobile}/>}/> 
                     <Route path="/discussion" element={<TabsMobile/>}/>
                     <Route path='/mainfeed' element={<NewHome isMobile={isMobile}/>}></Route>
                     <Route path="/search/people" element={<PeopleSearch/>}/>
