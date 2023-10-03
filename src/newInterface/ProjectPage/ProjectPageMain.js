@@ -6,6 +6,7 @@ import { db } from "../../firebase-config";
 import { getDoc, doc, collection } from "firebase/firestore";
 import ProductPageCommentArea from "./ProductPageComments";
 import { TabsMobile } from "../home/Tabs";
+import Collaborators from "./Collaborators";
 
 const ProjectPageMain = (props) => {
     const [queryParameters] = useSearchParams()
@@ -34,15 +35,19 @@ const ProjectPageMain = (props) => {
         fetchProjectData();
     },[queryParameters, updateStats])
 
-    useEffect(() => {
-        console.log('useEffect in ProjectPageMain triggered');
-        // Fetch data from Firebase or perform actions when updateStats changes
-      }, [updateStats]);
     
     return (
         <div className="">
             {projectData && 
                 <div className="flex flex-col pt-8 w-screen items-center bg-[#3C9A9A] h-screen overflow-y-auto">
+                    {/* Place the Collaborators component in the top-left corner */}
+                    <div className="fixed top-30 left-0 z-50">
+                        <Collaborators
+                            collaborators={projectData.collaborators}
+                            projectID={projectData.projectID}
+                            setUpdateStats={setUpdateStats}
+                        />
+                    </div>
                     <ProjectInfo data={projectData}/>
                     <div 
                         className="flex flex-col mt-4 h-fit lg:max-w-[40%] w-full bg-white
