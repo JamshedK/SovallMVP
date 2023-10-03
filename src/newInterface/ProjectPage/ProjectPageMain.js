@@ -41,10 +41,10 @@ const ProjectPageMain = (props) => {
     const showCollabComp = () => {
         return (
                 <button 
-                    className="bg-white rounded-l-xl"
+                    className="bg-white rounded-l-xl py-[1px]"
                     onClick={()=>setShowCollab(true)}
-                    >
-                    <div className='flex flex-row gap-2 pr-2 pl-[1px]'>
+                >
+                    <div className='flex flex-row gap-2 pr-2 pl-[1px] text-[14px]'>
                         <img className="w-5" src={add_project_icon_selected}/>
                         <h1>Project Collaborators</h1>
                     </div>

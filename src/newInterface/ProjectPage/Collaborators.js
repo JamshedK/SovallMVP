@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useRef, useState, useEffect } from 'react';
 import { collection, getDocs, updateDoc, arrayUnion, doc } from 'firebase/firestore';
 import hide_collaborators from '../../assets/newInterface/hide_collaborators.svg';
@@ -11,7 +11,8 @@ const Collaborators = (props) => {
     const [collaboratorsSuggestions, setCollaboratorsSuggestions] = useState([]) 
     const [allUser, setAllUsers] = useState([])
     const collaboratorSearchRef = useRef()
-
+    const [userIsCollaborator, setIsUserCollaborator] = useState(false)
+    const authCtx = useContext(AuthContext)
     useEffect(()=>{
         // Get the list of all users so we can filter for collaborators search
         const getUsers = async () => {
@@ -27,6 +28,14 @@ const Collaborators = (props) => {
         }
         getUsers()
     }, [])
+
+    useEffect(() => {
+        // Check if the user is a collaborator
+        const isUserCollaborator = props.collaborators.some((collaborator) => {
+            return collaborator.user_id === authCtx.userID;
+        });
+        setIsUserCollaborator(isUserCollaborator);
+    }, [props.collaborators, authCtx.userID]);
 
     const handleCollaboratorSearch = async () => {
         const searchValue = collaboratorSearchRef.current.value.trim();
@@ -130,6 +139,7 @@ const Collaborators = (props) => {
             <div className='flex flex-col space-y-3'>
                 {collaboratorsComp}
             </div>
+            {userIsCollaborator &&
             <div className= 'flex flex-col'>
                 <div className='inline-flex space-x-1 pl-1'>
                     <img src={magnifying_glass}/>
@@ -144,7 +154,7 @@ const Collaborators = (props) => {
                         {suggestionsComp}
                     </div>
                 }
-            </div>
+            </div>}
         </div>
         {props.isMobile && <button onClick={()=>props.setShowCollab(false)}>
             <img className='w-2' src={hide_collaborators}/>
